@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Tue Oct 13 10:36:13 +0200 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Pige API</h1>
+<p>
+Output formats : html, xml, json
+</p>
+<h2>Source</h2>
+<h3>Attributes</h3>
+<table>
+<tr><td valign="top">id :</td><td>unique identifier (1 by default)
+
+</td></tr>
+<tr><td valign="top">name :</td><td>string (&#8216;default&#8217; by default)
+
+</td></tr>
+</table>
+<p>
+other settings should be added in the future (audio inputs, status,
+&#8230;)
+</p>
+<h2>Chunk</h2>
+<h3>Attributes</h3>
+<table>
+<tr><td valign="top">begin,end :</td><td>date
+
+</td></tr>
+<tr><td valign="top">completion_rate :</td><td>float in 0..1
+
+</td></tr>
+<tr><td valign="top">source :</td><td>associated Source
+
+</td></tr>
+<tr><td valign="top">encoding :</td><td>string (ogg;quality=n, mp3;quality=n, wav, flac)
+
+</td></tr>
+</table>
+<h3>Action create</h3>
+<table>
+<tr><td valign="top">begin,end :</td><td>Date range
+
+</td></tr>
+<tr><td valign="top">begin_chunck, end_chunck :</td><td>Chunck identifier
+
+</td></tr>
+</table>
+<h3>Action show</h3>
+<table>
+<tr><td valign="top">id :</td><td>date
+
+</td></tr>
+</table>
+<p>
+GET /sources/1/chunks/1.xml
+</p>
+<p>
+GET /sources/1/chunks/1.mp3
+</p>
+<h3>Action index</h3>
+<h3>Action destroy</h3>
+<h2>TimeLabel</h2>
+<h3>Attributes</h3>
+<table>
+<tr><td valign="top">id :</td><td>unique identifier
+
+</td></tr>
+<tr><td valign="top">name :</td><td>string
+
+</td></tr>
+<tr><td valign="top">type :</td><td>string
+
+</td></tr>
+<tr><td valign="top">mark_at :</td><td>date
+
+</td></tr>
+<tr><td valign="top">source :</td><td>associated Source
+
+</td></tr>
+</table>
+<h3>Action create</h3>
+<table>
+<tr><td valign="top">name, type :</td><td>string
+
+</td></tr>
+<tr><td valign="top">date :</td><td>optional
+
+</td></tr>
+</table>
+<p>
+POST /sources/1/time_labels
+</p>
+<h3>Action index</h3>
+<table>
+<tr><td valign="top">after, before :</td><td>date range
+
+</td></tr>
+<tr><td valign="top">name_contains :</td><td>partial string search
+
+</td></tr>
+<tr><td valign="top">type :</td><td>exact match
+
+</td></tr>
+</table>
+<p>
+GET /sources/1/time_labels.xml?after=2009-09-24
+20:38:51.277764163+02:00&amp;name_contains=SPORT
+</p>
+<h3>Action destroy</h3>
+<table>
+<tr><td valign="top">id :</td><td>identifier
+
+</td></tr>
+</table>
+<p>
+DELETE /sources/1/time_labels/1
+</p>
+<h3>Action update</h3>
+<table>
+<tr><td valign="top">id :</td><td>identifier
+
+</td></tr>
+<tr><td valign="top">name :</td><td>string
+
+</td></tr>
+</table>
+<p>
+PUT /sources/1/time_labels/1
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

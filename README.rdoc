@@ -1,0 +1,74 @@
+= Pige API
+
+Output formats : html, xml, json
+
+== Source
+
+=== Attributes
+id :: unique identifier (1 by default)
+name :: string ('default' by default)
+
+other settings should be added in the future (audio inputs, status, ...)
+
+== Chunk
+
+=== Attributes
+
+begin,end :: date
+completion_rate :: float in 0..1
+source :: associated Source
+encoding :: string (ogg;quality=n, mp3;quality=n, wav, flac)
+
+=== Action create
+
+begin,end :: Date range
+begin_chunck, end_chunck :: Chunck identifier
+
+=== Action show
+
+id :: date
+
+GET /sources/1/chunks/1.xml
+
+GET /sources/1/chunks/1.mp3
+
+=== Action index
+=== Action destroy
+
+== TimeLabel
+
+=== Attributes
+
+id :: unique identifier
+name :: string
+type :: string
+mark_at :: date
+source :: associated Source
+
+=== Action create
+
+name, type :: string
+date :: optional
+
+POST /sources/1/time_labels
+
+=== Action index
+
+after, before :: date range
+name_contains :: partial string search
+type :: exact match
+
+GET /sources/1/time_labels.xml?after=2009-09-24 20:38:51.277764163+02:00&name_contains=SPORT
+
+=== Action destroy
+
+id :: identifier
+
+DELETE /sources/1/time_labels/1
+
+=== Action update
+
+id :: identifier
+name :: string
+
+PUT /sources/1/time_labels/1
