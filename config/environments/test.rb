@@ -26,3 +26,4 @@ config.gem "rspec-rails",      :lib => false
 config.gem "thoughtbot-factory_girl",
            :lib    => "factory_girl",
            :source => "http://gems.github.com"
+config.gem "remarkable_rails", :lib => false
