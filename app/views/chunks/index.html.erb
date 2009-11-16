@@ -1,0 +1,23 @@
+<h1>Listing chunks</h1>
+
+<table>
+  <tr>
+    <th>Begin</th>
+    <th>End</th>
+    <th>Completion</th>
+  </tr>
+
+<% for chunk in @chunks %>
+  <tr>
+    <td><%=h chunk.begin %></td>
+    <td><%=h chunk.end %></td>
+    <td><%=h chunk.completion_rate %></td>
+    <td><%= link_to 'Show', [chunk.source, chunk] %></td>
+    <td><%= link_to 'Destroy', [chunk.source, chunk], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New chunk', new_source_chunk_path(@source) %>

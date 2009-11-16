@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091116081758) do
+ActiveRecord::Schema.define(:version => 20091116085701) do
+
+  create_table "chunks", :force => true do |t|
+    t.datetime "begin"
+    t.datetime "end"
+    t.float    "completion_rate"
+    t.integer  "source_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sources", :force => true do |t|
     t.string   "name"

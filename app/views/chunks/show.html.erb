@@ -1,0 +1,17 @@
+<p>
+  <b>Begin:</b>
+  <%=h @chunk.begin %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%=h @chunk.end %>
+</p>
+
+<p>
+  <b>Completion rate:</b>
+  <%=h @chunk.completion_rate %>
+</p>
+
+<%= link_to 'Destroy', [@chunk.source, @chunk], :confirm => 'Are you sure?', :method => :delete %>
+<%= link_to 'Back', source_chunks_path(@chunk.source) %>
