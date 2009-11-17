@@ -107,6 +107,10 @@ describe Record do
           "2009/11-Nov/16-Mon/18h30.wav"]
       Dir.stub!(:chdir).and_yield
       Dir.stub!(:glob).and_return(@filenames)
+
+      File.stub!(:expand_path).and_return do |file|
+        "/root/#{file}"
+      end
     end
 
     it "should change directory to given one" do
@@ -121,7 +125,7 @@ describe Record do
 
     it "should find_or_create Records with found filenames" do
       @filenames.each do |filename|
-        Record.should_receive(:find_or_create_by_filename).with hash_including(:filename => filename)
+        Record.should_receive(:find_or_create_by_filename).with hash_including(:filename => "/root/#{filename}")
       end
       Record.index @directory
     end
