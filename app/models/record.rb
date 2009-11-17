@@ -58,7 +58,7 @@ class Record < ActiveRecord::Base
 
   def self.index(directory)
     Dir.chdir(directory) do
-      Dir.glob("**/.wav", "**/.ogg", File::FNM_CASEFOLD).collect do |filename|
+      Dir.glob(["**/*.wav", "**/*.ogg"], File::FNM_CASEFOLD).collect do |filename|
         Record.find_or_create_by_filename :filename => filename, :begin => Time.utc(*filename.scan(/\d+/))
       end
     end
