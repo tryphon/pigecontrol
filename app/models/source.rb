@@ -4,5 +4,6 @@ class Source < ActiveRecord::Base
   validates_uniqueness_of :name
 
   has_many :chunks
+  has_many :records
 
 end
