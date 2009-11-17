@@ -24,6 +24,16 @@ describe Record do
       @record.file_duration.should == 14
     end
 
+    it "should support ogg file" do
+      @record.filename = test_file(:ogg)
+      @record.file_duration.should == 14
+    end
+
+    it "should support wav file" do
+      @record.filename = test_file(:wav)
+      @record.file_duration.should == 15
+    end
+
     it "should be nil when file isn't found" do
       @record.filename = "dummy"
       @record.file_duration.should be_nil
