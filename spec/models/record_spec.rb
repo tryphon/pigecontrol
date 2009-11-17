@@ -122,5 +122,35 @@ describe Record do
     end
 
   end
+  
+end
 
+describe Record, "including" do
+
+  def t(time_definition)
+    Time.parse(time_definition).utc
+  end
+  
+  def hour_record(hour)
+    Factory :record, :begin => t("#{hour}h"), :duration => 1.hour, :end => nil
+  end
+  
+  before(:each) do
+    @records = [ hour_record(8), hour_record(9), hour_record(10) ]
+    @before = hour_record(7)
+    @after = hour_record(11)
+  end
+
+  it "should select Records which ends after range begin and starts before range end" do
+    Record.including(t("8h30"), t("10h30")).should == @records
+  end
+
+  it "should not include Records ended before the range begin" do
+    Record.including(t("8h30"), t("10h30")).should_not include(@before)
+  end
+
+  it "should not include Records started after the range end" do
+    Record.including(t("8h30"), t("10h30")).should_not include(@after)
+  end
+  
 end

@@ -7,6 +7,27 @@ class Record < ActiveRecord::Base
 
   before_validation :compute_time_range
 
+  named_scope :including, lambda { |from, to|
+    { :conditions => Record.including_conditions(from, to) }
+  }
+
+  def self.including_conditions(from, to)
+    conditions = 
+      [ ["begin <= ? and end >= ?", from, from],
+        ["begin >= ? and end <= ?", from, to],
+        ["begin <= ? and end >= ?", to, to] ]
+
+    expression_parts = []
+    parameters = []
+
+    conditions.each do |condition|
+      expression_parts << "(#{condition.shift})"
+      parameters = parameters + condition
+    end
+
+    [ expression_parts.join(" or ") ] + parameters
+  end
+
   def file_duration
     return nil if self.filename.blank?
 
