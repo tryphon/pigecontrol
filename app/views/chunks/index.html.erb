@@ -13,7 +13,7 @@
     <td><%=h chunk.end %></td>
     <td><%=h chunk.completion_rate %></td>
     <td><%= link_to 'Show', [chunk.source, chunk] %></td>
-    <td><%= link_to_if chunk.completed?, 'Download', source_chunk_path(chunk.source, chunk, :format => "wav") %></td>
+    <td><%= link_to_if chunk.status.completed?, 'Download', source_chunk_path(chunk.source, chunk, :format => "wav") %></td>
     <td><%= link_to 'Destroy', [chunk.source, chunk], :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

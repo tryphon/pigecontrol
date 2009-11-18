@@ -10,4 +10,11 @@ describe "/chunks/show.html.erb" do
     render
     response.should have_text(/0.8/)
   end
+
+  it "should render a Download link when chunck is completed" do
+    @chunk.completion_rate = 1
+
+    render
+    response.should have_tag("a[href=?]", source_chunk_path(@chunk.source, @chunk, :format => "wav"))
+  end
 end

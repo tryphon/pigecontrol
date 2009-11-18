@@ -13,6 +13,6 @@
   <%=h @chunk.completion_rate %>
 </p>
 
-<%= link_to_if @chunk.completed?, 'Download', source_chunk_path(@chunk.source, @chunk, :format => "wav") %>
+<%= link_to_if @chunk.status.completed?, 'Download', source_chunk_path(@chunk.source, @chunk, :format => "wav") %>
 <%= link_to 'Destroy', [@chunk.source, @chunk], :confirm => 'Are you sure?', :method => :delete %>
 <%= link_to 'Back', source_chunks_path(@chunk.source) %>

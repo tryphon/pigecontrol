@@ -8,22 +8,30 @@ describe Chunk do
 
   it { should validate_presence_of(:begin) }
   it { should validate_presence_of(:end) }
-  it { should validate_presence_of(:completion_rate) }
 
   it { should belong_to(:source) }
 
-  it "should have a completion rate of zero when created" do
-    Chunk.new.completion_rate.should be_zero
+  it "should have a nil completion rate" do
+    Chunk.new.completion_rate.should be_nil
   end
 
-  it "should be completed when completion rate is 1.0" do
-    @chunk.completion_rate = 1.0
-    @chunk.should be_completed
-  end
+  describe "status" do
+    
+    it "should be created when completion_rate is nil" do
+      @chunk.completion_rate = nil
+      @chunk.status.should be_created
+    end
 
-  it "should not be completed when completion rate is lower than 1.0" do
-    @chunk.completion_rate = 0.8
-    @chunk.should_not be_completed
+    it "should be pending when completion rate is between 0 and 1.0" do
+      @chunk.completion_rate = 0
+      @chunk.status.should be_pending
+    end
+    
+    it "should not completed when completion rate is 1.0" do
+      @chunk.completion_rate = 1.0
+      @chunk.status.should be_completed
+    end
+
   end
 
   describe "records" do
@@ -99,15 +107,49 @@ describe Chunk do
       @chunk.create_file!
     end
 
-    it "should be completed? when file is created" do
+    it "should be completed when file is created" do
       @chunk.create_file!
-      @chunk.should be_completed
+      @chunk.status.should be_completed
     end
 
-    it "should not be completed? when file creation fails" do
+    it "should be pending while sox is running" do
+      @sox.stub!(:command).and_return do
+        @chunk.status.should be_pending
+        true
+      end
+      @chunk.create_file!
+    end
+
+    it "should be created when file creation fails" do
       Sox.stub!(:command).and_return(false)
       @chunk.create_file!
-      @chunk.should_not be_completed
+      @chunk.status.should be_created
+    end
+
+  end
+
+  it "should check_file_status when Chunk is created" do
+    @chunk = Factory.build(:chunk)
+    @chunk.should_receive(:check_file_status)
+    @chunk.save!
+  end
+
+  describe "check_file_status" do
+
+    def status(string_value)
+      ActiveSupport::StringInquirer.new(string_value)
+    end
+    
+    it "should create_file later if status is created" do
+      @chunk.stub!(:status).and_return(status("created"))
+      @chunk.should_receive(:send_later).with(:create_file!)
+      @chunk.check_file_status
+    end
+
+    it "should create_file if status is pending" do
+      @chunk.stub!(:status).and_return(status("pending"))
+      @chunk.should_not_receive(:send_later)
+      @chunk.check_file_status
     end
 
   end

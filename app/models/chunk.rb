@@ -1,11 +1,9 @@
 class Chunk < ActiveRecord::Base
   belongs_to :source
 
-  validates_presence_of :begin, :end, :completion_rate
+  validates_presence_of :begin, :end
 
-  def after_initialize
-    self.completion_rate ||= 0
-  end
+  after_create :check_file_status
 
   def records
     if self.begin and self.end
@@ -33,6 +31,8 @@ class Chunk < ActiveRecord::Base
   end
 
   def create_file!
+    update_attribute :completion_rate, 0
+
     if Sox.command do |sox|
         records.each do |record|
           sox.input record.filename
@@ -41,10 +41,26 @@ class Chunk < ActiveRecord::Base
       end
       update_attribute :completion_rate, 1.0
     end
+  ensure
+    update_attribute :completion_rate, nil unless status.completed?
   end
 
-  def completed?
-    completion_rate >= 1.0
+  def check_file_status
+    if status.created?
+      send_later :create_file!
+    end
+  end
+
+  def status
+    string_value = case completion_rate 
+    when nil
+      "created"
+    when 1.0
+      "completed"
+    else
+      "pending"
+    end
+    ActiveSupport::StringInquirer.new(string_value)
   end
 
 end
