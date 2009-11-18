@@ -8,8 +8,23 @@ describe Chunk do
 
   it { should validate_presence_of(:begin) }
   it { should validate_presence_of(:end) }
+  it { should validate_presence_of(:completion_rate) }
 
   it { should belong_to(:source) }
+
+  it "should have a completion rate of zero when created" do
+    Chunk.new.completion_rate.should be_zero
+  end
+
+  it "should be completed when completion rate is 1.0" do
+    @chunk.completion_rate = 1.0
+    @chunk.should be_completed
+  end
+
+  it "should not be completed when completion rate is lower than 1.0" do
+    @chunk.completion_rate = 0.8
+    @chunk.should_not be_completed
+  end
 
   describe "records" do
 
@@ -64,7 +79,7 @@ describe Chunk do
 
     before(:each) do
       @sox = mock(Sox::Command, :input => nil, :output => nil)
-      Sox.stub!(:command).and_yield(@sox)
+      Sox.stub!(:command).and_yield(@sox).and_return(true)
       
       @records = Array.new(3) do |n| 
         mock(Record, :filename => "file#{n}")
@@ -82,6 +97,17 @@ describe Chunk do
     it "should use chunk filename as sox output" do
       @sox.should_receive(:output).with(@chunk.filename)
       @chunk.create_file!
+    end
+
+    it "should be completed? when file is created" do
+      @chunk.create_file!
+      @chunk.should be_completed
+    end
+
+    it "should not be completed? when file creation fails" do
+      Sox.stub!(:command).and_return(false)
+      @chunk.create_file!
+      @chunk.should_not be_completed
     end
 
   end

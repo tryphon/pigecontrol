@@ -3,4 +3,10 @@ class ChunksController < InheritedResources::Base
 
   actions :all, :except => [ :edit, :update ]
   respond_to :html, :xml, :json
+
+  def show
+    show! do |format|
+      format.wav { send_file @chunk.file }
+    end
+  end
 end

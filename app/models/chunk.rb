@@ -1,7 +1,11 @@
 class Chunk < ActiveRecord::Base
   belongs_to :source
 
-  validates_presence_of :begin, :end
+  validates_presence_of :begin, :end, :completion_rate
+
+  def after_initialize
+    self.completion_rate ||= 0
+  end
 
   def records
     if self.begin and self.end
@@ -29,12 +33,18 @@ class Chunk < ActiveRecord::Base
   end
 
   def create_file!
-    Sox.command do |sox|
-      records.each do |record|
-        sox.input record.filename
+    if Sox.command do |sox|
+        records.each do |record|
+          sox.input record.filename
+        end
+        sox.output filename
       end
-      sox.output filename
+      update_attribute :completion_rate, 1.0
     end
+  end
+
+  def completed?
+    completion_rate >= 1.0
   end
 
 end
