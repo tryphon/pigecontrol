@@ -14,11 +14,12 @@ module Sox
   #  end
   class Command
 
-    attr_accessor :inputs
+    attr_accessor :inputs, :effects
     attr_writer :output
 
     def initialize(&block)
       @inputs = []
+      @effects = []
       yield self if block_given?
     end
     
@@ -34,12 +35,20 @@ module Sox
       end
     end
 
+    def effect(name, *arguments)
+      self.effects << Effect.new(name, *arguments)
+    end
+
     def command_line
       "sox #{command_arguments}"
     end
 
     def command_arguments
-      (inputs + [output]).collect(&:command_arguments).join(' ')      
+      returning([]) do |arguments|
+        arguments << inputs.collect(&:command_arguments)
+        arguments << output.command_arguments
+        arguments << effects.collect(&:command_arguments).join(' : ')
+      end.flatten.delete_if(&:blank?).join(' ')
     end
 
     def run
@@ -72,6 +81,27 @@ module Sox
         other and 
           other.filename == filename and 
           other.options == options
+      end
+
+    end
+
+    class Effect
+
+      attr_accessor :name, :arguments
+
+      def initialize(name, *arguments)
+        @name = name
+        @arguments = arguments
+      end
+
+      def ==(other)
+        other and 
+          other.name == name and 
+          other.arguments == arguments
+      end
+
+      def command_arguments
+        [ @name, *arguments].join(' ')
       end
 
     end

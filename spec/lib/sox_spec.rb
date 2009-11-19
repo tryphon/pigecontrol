@@ -43,7 +43,7 @@ describe Sox::Command do
 
   describe "input" do
     
-    it "should create a File with specified arguments and adds it in command input" do
+    it "should create a File with specified arguments and adds it in command inputs" do
       @command.input @filename, @options
       @command.inputs.should == [ Sox::Command::File.new(@filename, @options) ]
     end
@@ -59,17 +59,35 @@ describe Sox::Command do
 
   end
 
+  describe "effect" do
+
+    before(:each) do
+      @arguments = Array.new(3) { |n| "argument#{n}" }
+    end
+    
+    it "should create an Effect with specified argument and adds it in command effects" do
+      @command.effect :effect_name, @arguments
+      @command.effects.should == [ Sox::Command::Effect.new(:effect_name, @arguments) ]
+    end
+
+  end
+
   describe "command_arguments" do
 
     def mock_file(command_arguments)
       mock(Sox::Command::File, :command_arguments => command_arguments)
     end
+
+    def mock_effect(command_arguments)
+      mock(Sox::Command::Effect, :command_arguments => command_arguments)
+    end
     
-    it "should concat inputs and output command arguments" do
+    it "should concat inputs, output and effects command arguments" do
       @command.inputs = Array.new(3) { |n| mock_file "input#{n}" }
       @command.output = mock_file("output")
+      @command.effects = Array.new(3) { |n| mock_effect "effect#{n}" }
       
-      @command.command_arguments.should == "input0 input1 input2 output"
+      @command.command_arguments.should == "input0 input1 input2 output effect0 : effect1 : effect2"
     end
 
   end
@@ -116,6 +134,21 @@ describe Sox::Command do
       @file.command_arguments.should == "--option1 value1 --option2 value2 filename"
     end
 
+  end
+
+  describe Sox::Command::Effect do
+
+    before(:each) do
+      @effect = Sox::Command::Effect.new("test")
+    end
+
+    it "should create command_arguments with name and arguments" do 
+      @effect.name = "name"
+      @effect.arguments = ["argument1", "argument2"]
+
+      @effect.command_arguments.should == "name argument1 argument2"
+    end
+    
   end
 
 end
