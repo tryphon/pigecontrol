@@ -83,6 +83,12 @@ describe Chunk do
 
   end
 
+  it "should remove fil when destroyed" do
+    FileUtils.touch(@chunk.filename)
+    @chunk.destroy
+    File.exist?(@chunk.filename).should be_false
+  end
+
   describe "create_file!" do
 
     before(:each) do
@@ -132,6 +138,24 @@ describe Chunk do
     @chunk = Factory.build(:chunk)
     @chunk.should_receive(:check_file_status)
     @chunk.save!
+  end
+
+  describe "delete_file" do
+    
+    it "should delete file if file exists" do
+      @chunk.stub!(:file).and_return("file")
+
+      File.should_receive(:delete).with(@chunk.file)
+      @chunk.delete_file
+    end
+
+    it "should not delete file if file doesn't exist" do
+      @chunk.stub!(:file)
+
+      File.should_not_receive(:delete)
+      @chunk.delete_file
+    end
+
   end
 
   describe "check_file_status" do

@@ -4,6 +4,7 @@ class Chunk < ActiveRecord::Base
   validates_presence_of :begin, :end
 
   after_create :check_file_status
+  before_destroy :delete_file
 
   def records
     if self.begin and self.end
@@ -49,6 +50,10 @@ class Chunk < ActiveRecord::Base
     if status.created?
       send_later :create_file!
     end
+  end
+
+  def delete_file
+    File.delete(file) if file
   end
 
   def status
