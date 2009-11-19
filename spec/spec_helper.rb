@@ -52,4 +52,12 @@ Spec::Runner.configure do |config|
   # == Notes
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+
+  config.before(:each) {
+    FileUtils.mkdir_p Chunk.test_storage_directory
+  }
+
+  config.after(:each) {
+    FileUtils.rm_rf Chunk.test_storage_directory
+  }
 end

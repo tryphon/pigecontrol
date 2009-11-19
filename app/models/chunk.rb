@@ -14,6 +14,7 @@ class Chunk < ActiveRecord::Base
     end
   end
 
+  cattr_writer :storage_directory
   def self.storage_directory
     unless @storage_directory
       @storage_directory = "#{Rails.root}/tmp/chunks"

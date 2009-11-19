@@ -27,3 +27,10 @@ config.gem "thoughtbot-factory_girl",
            :lib    => "factory_girl",
            :source => "http://gems.github.com"
 config.gem "remarkable_rails", :lib => false
+
+config.after_initialize do
+  def Chunk.test_storage_directory
+    "#{Rails.root}/tmp/chunks_test"
+  end
+  Chunk.storage_directory = Chunk.test_storage_directory
+end
