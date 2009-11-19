@@ -1,3 +1,29 @@
+= Install
+
+To setup a execution environment :
+
+  gem install rails
+  apt-get install libtagc0-ruby
+  rake gems:install db:create db:migrate
+
+  rake jobs:work &
+  ./script/server &
+
+The application should be available on http://localhost:3000/
+
+To index recording files :
+
+  ./script/console
+  >> Record.index "/path/to/record/directory"
+
+Recording filenames are used to known the Record#begin, this kind of AlsaBackup configuration will work fine :
+
+  AlsaBackup.config do |recorder|
+    recorder.file = Proc.new {
+      Time.now.utc.floor(:min, 1).strftime("%Y/%m-%b/%d-%a/%Hh%M.wav")
+    }
+  end
+
 = Pige API
 
 Output formats : html, xml, json
