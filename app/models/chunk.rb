@@ -2,6 +2,7 @@ class Chunk < ActiveRecord::Base
   belongs_to :source
 
   validates_presence_of :begin, :end
+  validate :end_is_after_begin
 
   after_create :check_file_status
   before_destroy :delete_file
@@ -74,6 +75,14 @@ class Chunk < ActiveRecord::Base
       "pending"
     end
     ActiveSupport::StringInquirer.new(string_value)
+  end
+
+  private
+
+  def end_is_after_begin
+    if self.duration and self.duration <= 0
+      errors.add(:end, "should be after #{self.begin}") 
+    end
   end
 
 end

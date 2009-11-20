@@ -5,6 +5,8 @@ class Record < ActiveRecord::Base
   validates_presence_of :begin, :end, :filename
   validates_uniqueness_of :filename
 
+  validate :end_is_after_begin
+
   before_validation :compute_time_range
 
   named_scope :including, lambda { |from, to|
@@ -62,6 +64,14 @@ class Record < ActiveRecord::Base
         Record.find_or_create_by_filename :filename => File.expand_path(filename), :begin => Time.utc(*filename.scan(/\d+/))
                                             
       end
+    end
+  end
+
+  private
+
+  def end_is_after_begin
+    if self.duration and self.duration <= 0
+      errors.add(:end, "should be after #{self.begin}") 
     end
   end
 

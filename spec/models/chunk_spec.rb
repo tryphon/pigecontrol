@@ -15,6 +15,11 @@ describe Chunk do
     Chunk.new.completion_rate.should be_nil
   end
 
+  it "should validate that end is after begin" do
+    @chunk.end = @chunk.begin - 1
+    @chunk.should have(1).error_on(:end)
+  end
+
   describe "status" do
     
     it "should be created when completion_rate is nil" do
@@ -83,7 +88,7 @@ describe Chunk do
 
   end
 
-  it "should remove fil when destroyed" do
+  it "should remove file when destroyed" do
     FileUtils.touch(@chunk.filename)
     @chunk.destroy
     File.exist?(@chunk.filename).should be_false

@@ -13,6 +13,11 @@ describe Record do
 
   it { should belong_to(:source) }
 
+  it "should validate that end is after begin" do
+    @record.end = @record.begin - 1
+    @record.should have(1).error_on(:end)
+  end
+
   it "should be created with a begin and a filename" do
     Record.new(:begin => Time.now, :filename => test_file).should be_valid
   end
