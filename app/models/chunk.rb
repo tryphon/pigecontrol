@@ -6,6 +6,12 @@ class Chunk < ActiveRecord::Base
   after_create :check_file_status
   before_destroy :delete_file
 
+  def duration
+    if self.begin and self.end
+      self.end - self.begin
+    end
+  end
+
   def records
     if self.begin and self.end
       self.source.records.including(self.begin, self.end)
@@ -40,6 +46,7 @@ class Chunk < ActiveRecord::Base
           sox.input record.filename
         end
         sox.output filename
+        sox.effect :trim, self.begin - records.first.begin, duration
       end
       update_attribute :completion_rate, 1.0
     end

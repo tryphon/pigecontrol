@@ -92,12 +92,14 @@ describe Chunk do
   describe "create_file!" do
 
     before(:each) do
-      @sox = mock(Sox::Command, :input => nil, :output => nil)
+      @sox = mock(Sox::Command, :input => nil, :output => nil, :effect => nil)
       Sox.stub!(:command).and_yield(@sox).and_return(true)
       
       @records = Array.new(3) do |n| 
-        mock(Record, :filename => "file#{n}")
+        mock(Record, :filename => "file#{n}", :duration => 10)
       end
+      @records.first.stub!(:begin).and_return(@chunk.begin)
+
       @chunk.stub!(:records).and_return(@records)
     end
 
@@ -110,6 +112,21 @@ describe Chunk do
 
     it "should use chunk filename as sox output" do
       @sox.should_receive(:output).with(@chunk.filename)
+      @chunk.create_file!
+    end
+
+    it "should trim the output file when chunk duration is shorter than record files" do
+      @chunk.begin = @records.first.begin
+      @chunk.end = @chunk.begin + 5
+
+      @sox.should_receive(:effect).with(:trim, 0, @chunk.duration)
+      @chunk.create_file!
+    end
+
+    it "should trim the output file when chunk begins after the first record begin" do
+      @chunk.begin = @records.first.begin + 5
+
+      @sox.should_receive(:effect).with(:trim, 5, @chunk.duration)
       @chunk.create_file!
     end
 
