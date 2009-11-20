@@ -4,6 +4,7 @@ To setup a execution environment :
 
   gem install rails
   apt-get install libtagc0-ruby
+  cp config/database.yml.sample config/database.yml
   rake gems:install db:create db:migrate
 
   rake jobs:work &
