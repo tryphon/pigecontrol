@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <title>Pige - <%= title %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/tryphon.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <ul id="access">
+      <li><a href="#content">Aller au contenu</a></li>
+      <li><a href="#menu">Aller au menu</a></li>
+      <li><a href="#sidebar">Aller dans la sidebar</a></li>
+    </ul>
+    <hr/>
+    <div id="header">
+      <div>
+        <ul id="menu">
+          <li><a href="#">Tableau de bord</a></li>
+          <li><a href="#">Aide</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr/>
+    <div id="frame">
+      <%= flash_tag(flash) %>
+
+      <div id="content">
+        <%= yield %>
+      </div>
+      <hr/>
+      <div id="sidebar">
+        <h2>PigeBox<sup>beta</sup></h2>
+
+        <ul>
+          <li><a href="#">Link 1</a></li>
+          <li><a href="#">Link 2</a></li>
+        </ul>
+
+        <h2>Information</h2>
+        <p>
+          For more information about <%= link_to "PigeBox", "http://www.tryphon.eu/products/pigebox" %>, please visit our website&nbsp;: <%= link_to "tryphon.eu", "http://www.tryphon.eu/" %>
+        </p>
+      </div>
+    </div>
+    <hr/>
+    <div id="footer">
+      <div>
+        &nbsp;
+      </div>
+    </div>
+  </body>
+</html>

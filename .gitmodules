@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/user_interface"]
+	path = vendor/plugins/user_interface
+	url = www.dbx.tryphon.priv:/srv/git/user_interface
