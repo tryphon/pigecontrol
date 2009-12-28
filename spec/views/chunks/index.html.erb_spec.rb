@@ -11,7 +11,7 @@ describe "/chunks/index.html.erb" do
 
   it "renders a list of chunks" do
     render
-    response.should have_tag("tr>td", 0.8.to_s, 2)
+    response.should have_tag("h3", @chunks.first.title)
   end
 
   it "should render a Download link when chunck is completed" do

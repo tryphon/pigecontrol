@@ -189,12 +189,13 @@ img {
 #content .actions .note { background: url("../images/ui/note.png") no-repeat; }
 #content .actions .signup { background: url("../images/ui/author.png") no-repeat; }
 #content .actions .unavailable { background: url("../images/ui/unavailable.png") no-repeat; }
-#content .errors { margin: 0 12px 14px 12px; }
-#content .errors li {
+#content #errorExplanation ul { margin: 0 12px 14px 12px; }
+#content #errorExplanation ul li {
   margin: 3px 0;
+  padding: 0;
   color: #ca4f35;
 }
-#content .errors li a { color: #ca4f35; }
+#content #errorExplanation ul li a { color: #ca4f35; }
 #content .tags {
   clear: both;
   padding: 4px 0;
@@ -322,7 +323,9 @@ form input.openid {
   background: url("../images/ui/openid.png") no-repeat 4px;
   width: 20em;
 }
-form .field_with_errors input {
+form .fieldWithErrors { display: inline; }
+form .fieldWithErrors input {
   border: 1px solid #ca4f35;
   background: #ffbdbd;
 }
+form .fieldWithErrors select { color: #ca4f35; }

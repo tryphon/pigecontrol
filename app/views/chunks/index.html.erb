@@ -1,24 +1,22 @@
-<h1>Listing chunks</h1>
-
-<table>
-  <tr>
-    <th>Begin</th>
-    <th>End</th>
-    <th>Completion</th>
-  </tr>
+<%= title_tag "Extraits" %>
 
 <% for chunk in @chunks %>
-  <tr>
-    <td><%=h chunk.begin %></td>
-    <td><%=h chunk.end %></td>
-    <td><%=h chunk.completion_rate %></td>
-    <td><%= link_to 'Show', [chunk.source, chunk] %></td>
-    <td><%= link_to_if chunk.status.completed?, 'Download', source_chunk_path(chunk.source, chunk, :format => "wav") %></td>
-    <td><%= link_to 'Destroy', [chunk.source, chunk], :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <h3><a href="#"><%= link_to chunk.title, source_chunk_path(chunk.source, chunk) %></a></h3>
+  <div class="description">
+    du <%= I18n.localize chunk.begin %> au <%= I18n.localize chunk.end %>
+    <% if chunk.completion_rate %>- complété à <%= h chunk.completion_rate * 100 %>% <% end %>
+  </div>
+  <div class="details in_actions">
+    <span class="length"><%= chunk.duration.to_i / 60 %> min.</span>
+  </div>
+  <div class="actions">
+    <%= link_to_if chunk.status.completed?, 'Télécharger', source_chunk_path(chunk.source, chunk, :format => "wav"), :class => "download" %>
+    <%= link_to 'Supprimer', [chunk.source, chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
+  </div>
 <% end %>
-</table>
 
 <br />
 
-<%= link_to 'New chunk', new_source_chunk_path(@source) %>
+<div class="actions">
+  <%= link_to 'Nouvel extrait', new_source_chunk_path(@source), :class => "create" %>
+</div>

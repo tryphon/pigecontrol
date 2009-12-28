@@ -1,0 +1,14 @@
+fr:
+  activerecord:
+    attributes:
+      chunk:
+        begin: Horaire de début
+        end: Horaire de fin
+    models:
+      chunk: Extrait
+    errors:
+      models:
+        chunk:
+          attributes:
+            end:
+              before_begin: "avant l'horaire de début"

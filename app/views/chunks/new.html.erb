@@ -1,19 +1,19 @@
-<h1>New chunk</h1>
+<%= title_tag "Nouvel extrait" %>
 
 <% form_for([@chunk.source, @chunk]) do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :begin %><br />
+    <%= f.label :begin, Chunk.human_attribute_name(:begin) %><br/>
     <%= f.datetime_select :begin %>
   </p>
   <p>
-    <%= f.label :end %><br />
+    <%= f.label :end, Chunk.human_attribute_name(:end) %><br/>
     <%= f.datetime_select :end %>
   </p>
   <p>
-    <%= f.submit "Create" %>
+    <%= f.submit "Créer" %>
+    ou <%= link_to 'Revenir', source_chunks_path(@source) %>
   </p>
 <% end %>
 
-<%= link_to 'Back', source_chunks_path(@source) %>

@@ -1,18 +1,17 @@
-<p>
-  <b>Begin:</b>
-  <%=h @chunk.begin %>
-</p>
+<%= title_tag @chunk.title %>
 
+<div class="description">
+  du <%= I18n.localize @chunk.begin %><br/>
+  au <%= I18n.localize @chunk.end %><br/>
+  <% if @chunk.completion_rate %>complété à <%= h @chunk.completion_rate * 100 %>% <% end %>
+</div>
+<div class="details in_actions">
+  <span class="length"><%= @chunk.duration.to_i / 60 %> min.</span>
+</div>
 <p>
-  <b>End:</b>
-  <%=h @chunk.end %>
-</p>
 
-<p>
-  <b>Completion rate:</b>
-  <%=h @chunk.completion_rate %>
-</p>
-
-<%= link_to_if @chunk.status.completed?, 'Download', source_chunk_path(@chunk.source, @chunk, :format => "wav") %>
-<%= link_to 'Destroy', [@chunk.source, @chunk], :confirm => 'Are you sure?', :method => :delete %>
-<%= link_to 'Back', source_chunks_path(@chunk.source) %>
+<div class="actions">
+  <%= link_to_if @chunk.status.completed?, 'Télécharger', source_chunk_path(@chunk.source, @chunk, :format => "wav"), :class => "download" %>
+  <%= link_to 'Supprimer', [@chunk.source, @chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
+  <%= link_to 'Retour', source_chunks_path(@chunk.source) %>
+</div>

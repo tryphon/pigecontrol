@@ -7,6 +7,14 @@ class Chunk < ActiveRecord::Base
   after_create :check_file_status
   before_destroy :delete_file
 
+  def title
+    read_attribute(:title) or default_title
+  end
+
+  def default_title
+    "Extrait du #{I18n.localize self.begin}"
+  end
+
   def duration
     if self.begin and self.end
       self.end - self.begin
@@ -81,7 +89,7 @@ class Chunk < ActiveRecord::Base
 
   def end_is_after_begin
     if self.duration and self.duration <= 0
-      errors.add(:end, "should be after #{self.begin}") 
+      errors.add(:end, :before_begin) 
     end
   end
 

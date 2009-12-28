@@ -34,13 +34,13 @@
         <h2>PigeBox<sup>beta</sup></h2>
 
         <ul>
-          <li><a href="#">Link 1</a></li>
-          <li><a href="#">Link 2</a></li>
+          <li><%= link_to "Extraits", source_chunks_path(Source.find(1)) %></li>
+          <li><%= link_to "Nouvel extrait", new_source_chunk_path(Source.find(1)) %></li>
         </ul>
 
         <h2>Information</h2>
         <p>
-          For more information about <%= link_to "PigeBox", "http://www.tryphon.eu/products/pigebox" %>, please visit our website&nbsp;: <%= link_to "tryphon.eu", "http://www.tryphon.eu/" %>
+          Pour plus d'information à propos de <%= link_to "PigeBox", "http://www.tryphon.eu/fr/produits/pigebox" %>, visitez notre site&nbsp;: <%= link_to "tryphon.eu", "http://www.tryphon.eu/fr" %>
         </p>
       </div>
     </div>

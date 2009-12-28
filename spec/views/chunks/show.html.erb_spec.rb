@@ -6,9 +6,9 @@ describe "/chunks/show.html.erb" do
     assigns[:chunk] = @chunk = Factory(:chunk, :completion_rate => 0.8)
   end
 
-  it "renders attributes in <p>" do
+  it "renders attributes in description" do
     render
-    response.should have_text(/0.8/)
+    response.should have_tag("div[class=description]", /#{I18n.localize(@chunk.begin)}/)
   end
 
   it "should render a Download link when chunck is completed" do
