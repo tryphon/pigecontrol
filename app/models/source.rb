@@ -6,4 +6,8 @@ class Source < ActiveRecord::Base
   has_many :chunks
   has_many :records
 
+  def self.default
+    find(1)
+  end
+
 end
