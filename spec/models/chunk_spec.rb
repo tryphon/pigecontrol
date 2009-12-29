@@ -88,6 +88,21 @@ describe Chunk do
 
   end
 
+  describe "size" do
+
+    it "should return the File size if exists" do
+      @chunk.stub!(:file).and_return("dummy")
+      File.should_receive(:size).with(@chunk.file).and_return(file_size = 10)
+      @chunk.size.should == file_size
+    end
+
+    it "should return zero if file doesn't exist" do
+      @chunk.stub!(:file)
+      @chunk.size.should be_zero
+    end
+
+  end
+
   it "should remove file when destroyed" do
     FileUtils.touch(@chunk.filename)
     @chunk.destroy

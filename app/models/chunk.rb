@@ -43,6 +43,10 @@ class Chunk < ActiveRecord::Base
     filename if File.exist?(filename)
   end
 
+  def size
+    file ? File.size(file) : 0
+  end
+
   def filename
     @filename ||= "#{Chunk.storage_directory}/#{self.id}.wav"
   end
