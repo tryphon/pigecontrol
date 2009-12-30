@@ -13,10 +13,14 @@ describe Source do
   it { should have_many(:records) }
 
   describe "default" do
-    
-    it "should return Source with id 1" do
-      Source.should_receive(:find).with(1).and_return(@source)
+
+    it "should find or create a Source with id 1" do
+      Source.should_receive(:find_or_create_by_name).with('default').and_return(@source)
       Source.default.should == @source
+    end
+
+    it "should not be a new record" do
+      Source.default.should_not be_new_record
     end
 
   end
