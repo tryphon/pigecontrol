@@ -1,0 +1,19 @@
+<%= title_tag "Ajouter un repère" %>
+
+<% form_for([@label.source, @label]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name, Label.human_attribute_name(:name) %><br/>
+    <%= f.text_field :name, :size => 70 %>
+  </p>
+  <p>
+    <%= f.label :timestamp, Label.human_attribute_name(:timestamp) %><br/>
+    <%= f.datetime_select :timestamp, :include_seconds => true %>
+  </p>
+  <p>
+    <%= f.submit "Créer" %>
+    ou <%= link_to 'revenir &#8250;', source_labels_path(@source) %>
+  </p>
+<% end %>
+

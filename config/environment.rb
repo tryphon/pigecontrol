@@ -29,6 +29,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
 
   config.gem "inherited_resources"
+  config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.

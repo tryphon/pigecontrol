@@ -12,3 +12,6 @@ fr:
           attributes:
             end:
               before_begin: "avant l'horaire de début"
+  will_paginate:
+    previous: Précédent
+    next: Suivant

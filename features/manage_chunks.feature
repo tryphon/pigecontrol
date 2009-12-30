@@ -25,7 +25,7 @@ Feature: Manage chunks
   Scenario: Create a new chunk
     Given I am on the new chunk page
     And I select "January 1, 2010 7:00" as the "Begin" date and time
-    And I select "Janvier 1, 2010 8:00" as the "End" date and time
+    And I select "January 1, 2010 8:00" as the "End" date and time
     When I press "Créer"
     Then I should see "Chunk was successfully created"
     And I should see "Extrait du Fri, 01 Jan 2010 07:00"

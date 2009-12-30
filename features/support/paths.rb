@@ -10,13 +10,13 @@ module NavigationHelpers
     
     when /the home\s?page/
       '/'
-    when /the new chunk page/
-      new_source_chunk_path(Source.default)
-    when /the chunks page/
-      source_chunks_path(Source.default)
-    when /the chunk's page/
-      chunk = model('chunk')
-      source_chunk_path chunk.source, chunk
+    when /the new (chunk|label) page/
+      send "new_source_#{$1}_path", Source.default
+    when /the (chunk|label)s page/
+      send "source_#{$1}s_path", Source.default
+    when /the (chunk|label)'s page/
+      model = model($1)
+      send "source_#{$1}_path", model.source, model
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

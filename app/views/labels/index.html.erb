@@ -1,0 +1,26 @@
+<%= title_tag "Repères" %>
+
+<% @labels.group_by(&:date).each do |date, labels| %>
+  <h3><%= I18n.localize date, :format => :long %></h3>
+  <table>
+    <% for label in labels %>
+    <tr>
+      <td>
+        <%= link_to label.timestamp.strftime("%H:%M:%S"), source_label_path(label.source, label) %>
+      </td>
+      <td style="width: 100%">
+        <%= link_to truncate(label.name, 60), source_label_path(label.source, label) %>
+      </td>
+      <td>
+        <%= link_to "&#8250;", source_label_path(label.source, label) %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<%= will_paginate @labels %>
+
+<div class="actions">
+  <%= link_to 'Nouveau repère', new_source_label_path(@source), :class => "create" %>
+</div>
