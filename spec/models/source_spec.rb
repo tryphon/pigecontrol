@@ -9,8 +9,9 @@ describe Source do
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
 
-  it { should have_many(:chunks) }
-  it { should have_many(:records) }
+  it { should have_many(:chunks, :dependent => :destroy) }
+  it { should have_many(:records, :dependent => :destroy) }
+  it { should have_many(:labels, :dependent => :destroy) }
 
   describe "default" do
 

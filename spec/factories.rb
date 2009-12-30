@@ -13,3 +13,10 @@ Factory.define :record do |record|
   record.end Time.now
   record.filename { |n| "file#{n}" }
 end
+
+Factory.define :label do |label|
+  label.name "name"
+  label.timestamp Time.now
+  label.source Source.default
+end
+
