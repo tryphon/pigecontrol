@@ -10,7 +10,7 @@ describe ChunksController do
 
     it "assigns the requested chunk as @chunk" do
       File.stub!(:exists?).and_return(true)
-      controller.should_receive(:send_file).with(@chunk.file)
+      controller.should_receive(:send_file).with(@chunk.file, :type => :wav)
 
       get :show, :id => @chunk, :source_id => @chunk.source, :format => "wav"
     end

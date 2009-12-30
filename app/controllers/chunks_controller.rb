@@ -6,7 +6,7 @@ class ChunksController < InheritedResources::Base
 
   def show
     show! do |format|
-      format.wav { send_file @chunk.file }
+      format.wav { send_file @chunk.file, :type => :wav }
     end
   end
 end

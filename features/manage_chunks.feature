@@ -8,6 +8,11 @@ Feature: Manage chunks
     When I follow "Gérer les extraits"
     Then I should be on the chunks page
 
+  Scenario: Create a chunk from homepage
+    Given I am on the homepage
+    When I follow "Ajouter un extrait"
+    Then I should be on the new chunk page
+
   Scenario: List all chunks
     Given the following chunks exist
     | begin                | end                  |
@@ -16,7 +21,7 @@ Feature: Manage chunks
     When I am on the chunks page
     Then I should see "Extrait du Fri, 01 Jan 2010 07:00"
     And I should see "Extrait du Sat, 02 Jan 2010 08:00"
-  
+
   Scenario: Create a new chunk
     Given I am on the new chunk page
     And I select "January 1, 2010 7:00" as the "Begin" date and time
@@ -32,5 +37,12 @@ Feature: Manage chunks
     Then I should be on the chunks page
     And I should see "Chunk was successfully destroyed"
     And the chunk should not exist
+
+  Scenario: Download a chunk
+    Given a chunk exists 
+    And the chunk is completed
+    And I am on the chunk's page
+    When I follow "Télécharger"
+    Then I should download a wav file
     
     

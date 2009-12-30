@@ -1,3 +1,5 @@
+require 'ftools'
+
 class Chunk < ActiveRecord::Base
   belongs_to :source
 
@@ -65,6 +67,15 @@ class Chunk < ActiveRecord::Base
     end
   ensure
     update_attribute :completion_rate, nil unless status.completed?
+  end
+
+  def complete_with(file)
+    update_attribute :completion_rate, 0
+    if File.copy(file, filename)
+      update_attribute :completion_rate, 1.0
+    else
+      update_attribute :completion_rate, nil
+    end
   end
 
   def check_file_status
