@@ -5,7 +5,7 @@ end
 Factory.define :chunk do |chunk|
   chunk.begin 15.minutes.ago
   chunk.end Time.now
-  chunk.association :source
+  chunk.source Source.default
 end
 
 Factory.define :record do |record|
