@@ -3,5 +3,5 @@ ActionController::Routing::Routes.draw do |map|
     source.resources :chunks
   end
 
-  map.root :controller => "chunks", :action => "index", :source_id => "1"
+  map.root :controller => "welcome"
 end
