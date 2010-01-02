@@ -4,6 +4,11 @@ class LabelsController < InheritedResources::Base
   actions :all, :except => [ :edit, :update ]
   respond_to :html, :xml, :json
 
+  def select
+    user_session.label_selection << resource
+    redirect_to :back
+  end
+
   protected
 
   def collection

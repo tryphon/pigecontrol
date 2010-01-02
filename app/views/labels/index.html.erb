@@ -12,7 +12,7 @@
         <%= link_to truncate(label.name, 60), source_label_path(label.source, label) %>
       </td>
       <td>
-        <%= link_to "&#8250;", source_label_path(label.source, label) %>
+        <%= link_to "&#8250;", select_source_label_path(label.source, label) %>
       </td>
     </tr>
     <% end %>
