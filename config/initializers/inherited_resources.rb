@@ -1,1 +1,1 @@
-DO_NOT_SET_DEPRECATED_FLASH = true
+InheritedResources.flash_keys = [ :success, :failure ]
