@@ -5,3 +5,42 @@
 #content table td a {
     color: #000;
 }
+
+#content table td.select {
+    width: 36px;
+}
+
+#content table td.select img {
+    vertical-align:top;
+}
+
+#content table tr.selected {
+    font-weight: bold;
+}
+
+#sidebar div.label_selection ul {
+    margin-left: 0;
+}
+
+#sidebar div.label_selection ul li {
+    list-style-type: none;
+}
+
+#sidebar div.label_selection ul li .timestamp {
+    font-weight: bold;
+    padding-left: 18px;
+}
+
+#sidebar div.label_selection ul li.begin .timestamp {
+    background: url("../images/begin.png") no-repeat;
+}
+
+#sidebar div.label_selection ul li.end .timestamp {
+    background: url("../images/end.png") no-repeat;
+}
+
+#sidebar div.label_selection .actions { font-size: 90%; text-align: right; }
+#sidebar div.label_selection .actions a { padding: 0 4px 0 20px; }
+
+#sidebar div.label_selection a.create { background: url("../images/ui/add.png") no-repeat; }
+#sidebar div.label_selection a.destroy { background: url("../images/ui/destroy.png") no-repeat; }

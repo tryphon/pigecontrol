@@ -4,18 +4,18 @@
   <h3><%= I18n.localize date, :format => :long %></h3>
   <table>
     <% for label in labels %>
-    <tr>
+    <tr <%= 'class="selected"' if user_session.label_selection.include?(label) %>
+      <td class="select">
+        <%= link_to_select_label(label, user_session.label_selection) %>
+      </td>
       <td>
         <%= link_to label.timestamp.strftime("%H:%M:%S"), source_label_path(label.source, label) %>
       </td>
-      <td style="width: 100%">
+      <td>
         <%= link_to truncate(label.name, 60), source_label_path(label.source, label) %>
       </td>
-      <td>
-        <%= link_to "&#8250;", select_source_label_path(label.source, label) %>
-      </td>
-    </tr>
     <% end %>
+    </tr>
   </table>
 <% end %>
 

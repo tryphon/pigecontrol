@@ -1,0 +1,17 @@
+<% unless label_selection.empty? %>
+<% div_for label_selection do %>
+<ul>
+  <% for label in label_selection %>
+  <li class="<%= class_for_label_in_selection(label_selection, label) %>">
+    <%= link_to label.timestamp.strftime("%H:%M:%S"), source_label_path(label.source, label), :class => "timestamp" %>
+    <%= link_to truncate(label.name, :length => 40), source_label_path(label.source, label) %>
+  </li>
+  <% end %>
+</ul>
+
+<div class="actions">
+  <%= link_to "Nouvel extrait", new_source_chunk_path(label_selection.source), :title => "Nouvel extrait à partir de ce repère", :class => "create" %>
+  <%= link_to "Vider", label_selection_path, :method => :delete, :title => "Vider la sélection de repère", :class => "destroy" %>
+</div>
+<% end %>
+<% end -%>

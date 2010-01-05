@@ -67,4 +67,22 @@ class LabelSelection
     @on_change_handler.call labels if @on_change_handler
   end
 
+  def begin
+    labels.first
+  end
+
+  def end
+    labels.last
+  end
+
+  def can_begin?(label)
+    not completed? and
+      (empty? or labels.first.timestamp > label.timestamp)
+  end
+
+  def can_end?(label)
+    not completed? and
+      (empty? or labels.first.timestamp < label.timestamp)
+  end
+
 end

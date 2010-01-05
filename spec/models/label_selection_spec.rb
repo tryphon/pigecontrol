@@ -164,4 +164,40 @@ describe LabelSelection do
 
   end
 
+  describe "can_begin?" do
+    
+    it "should be false when selection is completed" do
+      @selection.stub!(:completed?).and_return(true)
+      @selection.can_begin?(@first_label).should be_false
+    end
+
+    it "should be true when selection is empty" do
+      @selection.can_begin?(@first_label).should be_true
+    end
+
+    it "should be true when label is before the selected one" do
+      @selection << @second_label
+      @selection.can_begin?(@first_label).should be_true
+    end
+    
+  end
+
+  describe "can_end?" do
+    
+    it "should be false when selection is completed" do
+      @selection.stub!(:completed?).and_return(true)
+      @selection.can_end?(@first_label).should be_false
+    end
+
+    it "should be true when selection is empty" do
+      @selection.can_end?(@first_label).should be_true
+    end
+
+    it "should be true when label is before the selected one" do
+      @selection << @first_label
+      @selection.can_end?(@second_label).should be_true
+    end
+    
+  end
+  
 end

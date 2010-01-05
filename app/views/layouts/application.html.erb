@@ -46,13 +46,11 @@
 
         <h2>Sélection</h2>
 
-        <ul>
-          <% user_session.label_selection.each do |label| %>
-          <li><%= label.timestamp %></li>
-          <% end %>
-        </ul>
+        <p>
+          En sélectionnant <%= link_to "2 repères", source_labels_path(Source.default) %>, vous pouvez créer un extrait en quelques clics.
+        </p>
 
-        <%= link_to "Vider", label_selection_path, :method => :delete %>
+        <%= render user_session.label_selection %>
 
         <h2>Information</h2>
         <p>

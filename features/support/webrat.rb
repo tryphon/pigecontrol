@@ -39,9 +39,37 @@ module Webrat
       select date.day, :from => select_id(id_prefix, :day)
     end
 
+    def selected_datetime(options = {})
+      id_prefix = locate_id_prefix(options) do
+        hour_field = FieldByIdLocator.new(@session, dom, /#{select_id("(.*?)",:hour)}$/).locate
+        raise NotFoundError.new("No time fields were found") unless hour_field && hour_field.id =~ /(.*?)_4i/
+        $1
+      end
+
+      time_parts = (1..6).collect do |index|
+        begin
+          field_with_id("#{id_prefix}_#{index}i").value
+        rescue Webrat::NotFoundError
+          nil
+        end
+      end.compact
+
+      Time.local *time_parts
+    end
+
     def month_matcher(date)
       Regexp.new I18n.translate('date.abbr_month_names')[date.month]
     end
 
   end
 end
+
+module WebratExtensions
+
+  def selected_datetime(options = {})
+    webrat_session.current_scope.selected_datetime(options)
+  end
+
+end
+
+World(WebratExtensions)
