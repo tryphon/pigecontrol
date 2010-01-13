@@ -124,7 +124,7 @@ describe Record do
     end
 
     it "should list wav and ogg files into given directory" do
-      Dir.should_receive(:glob).with(["**/*.wav", "**/*.ogg"], File::FNM_CASEFOLD).and_return(@filenames)
+      Dir.should_receive(:glob).with("**/*.{wav,ogg}", File::FNM_CASEFOLD).and_return(@filenames)
       Record.index @directory
     end
 
