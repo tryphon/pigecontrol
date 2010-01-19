@@ -4,6 +4,7 @@ build:
 # TODO run gem with --no-rdoc --no-ri
 	rake gems:install
 	rake gems:unpack:dependencies
+	cd vendor/gems && gem unpack --version 1.0.1 rack
 	rake rails:freeze:gems
 
 # use rake installed by rubygem
