@@ -8,7 +8,7 @@ Homepage: http://projects.tryphon.eu/pige
 
 Package: pige
 Architecture: all
-Depends: ruby, libsqlite3-ruby, libtagc0-ruby, rake, rubygems
+Depends: ruby, libsqlite3-ruby, libtagc0-ruby, rake, rubygems, sox, libsox-fmt-all
 Recommends: libapache2-mod-passenger
 Description: Web interface to manage records and labels supported by a 
  PigeBox system
