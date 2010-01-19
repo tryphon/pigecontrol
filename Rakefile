@@ -35,6 +35,6 @@ begin
   end
 
   require 'debian/build/tasks'
-rescue => e
-  puts "WARNING: Can't load debian package tasks"
+rescue Exception => e
+  puts "WARNING: Can't load debian package tasks (#{e.to_s})"
 end
