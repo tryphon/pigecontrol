@@ -1,0 +1,3 @@
+var/log/pige usr/share/pige/log
+etc/pige/database.yml usr/share/pige/config/database.yml
+etc/pige/production.rb usr/share/pige/config/environments/production.rb

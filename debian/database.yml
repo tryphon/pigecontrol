@@ -1,0 +1,5 @@
+production:
+  adapter: sqlite3
+  database: /var/lib/pige/db/production.sqlite3
+  pool: 5
+  timeout: 5000

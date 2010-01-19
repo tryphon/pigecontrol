@@ -1,0 +1,16 @@
+Source: pige
+Section: sound
+Priority: optional
+Maintainer: Alban Peignier <alban@tryphon.eu>
+Build-Depends: debhelper, cdbs, rake, rubygems, libopenssl-ruby, libsqlite3-ruby, libtagc0-ruby
+Standards-Version: 3.8.1
+Homepage: http://projects.tryphon.eu/pige
+
+Package: pige
+Architecture: all
+Depends: ruby, libsqlite3-ruby, libtagc0-ruby, rake, rubygems
+Recommends: libapache2-mod-passenger
+Description: Web interface to manage records and labels supported by a 
+ PigeBox system
+ .
+ See <http://projects.tryphon.eu/pige/> for more info.

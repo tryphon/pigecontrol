@@ -1,0 +1,87 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          pige
+# Required-Start:    $network $named $remote_fs $syslog
+# Required-Stop:     $network $named $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+### END INIT INFO                                                                                                                                          
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/share/pige/bin/pige-job
+DAEMON_OPTS=""
+DAEMON_USER="www-data"
+NAME="pige"
+DESC="pige background job"
+
+test -x $DAEMON || exit 0
+
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+. /lib/lsb/init-functions
+
+start_daemon() {
+    database_file=`sed -n '/  database:/ s/  database:[ ]*//p' /etc/pige/database.yml`
+
+    if [ ! -f $database_file ]; then
+        echo -n "."
+
+        database_dir=`dirname $database_file`
+        mkdir -p $database_dir
+        cp "/usr/share/pige/db/production.sqlite3" $database_file
+        chown -R $DAEMON_USER $database_dir
+    fi
+
+    chunks_dir="/var/lib/pige/chunks"
+    if [ ! -d $chunks_dir ]; then
+        mkdir -p $chunks_dir
+        chown $DAEMON_USER $chunks_dir
+    fi
+
+    log_file="/var/log/pige/production.log"
+    if [ ! -f "log_file" ]; then
+        echo -n "."
+
+        mkdir -p `dirname $log_file`
+        touch $log_file
+        chown $DAEMON_USER $log_file
+    fi
+
+    if [ -n "$DAEMON_USER" ] ; then
+	      start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid --chuid $DAEMON_USER \
+	          --startas $DAEMON --background --make-pidfile -- $DAEMON_OPTS 
+    else
+	      echo ""
+	      echo "$NAME not configured to start, please edit /etc/default/$NAME enable"
+    fi
+}
+
+stop_daemon() {
+	  start-stop-daemon --stop --quiet --pidfile /var/run/$NAME.pid
+}
+
+case "$1" in
+    start)
+	      log_begin_msg "Starting $DESC"
+	      start_daemon
+	      log_end_msg 0
+	      ;;
+    stop)
+	      log_begin_msg "Stopping $DESC"
+	      stop_daemon
+	      log_end_msg 0
+	      ;;
+    restart|force-reload)
+	      log_begin_msg "Restarting $DESC"
+	      stop_daemon
+	      sleep 1
+	      start_daemon
+	      log_end_msg 0
+	      ;;
+    *)
+	      echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	      exit 1
+	      ;;
+esac
+
+exit 0
