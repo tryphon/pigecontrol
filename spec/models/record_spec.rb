@@ -103,7 +103,7 @@ describe Record do
 
   end
 
-  describe "index" do
+  describe "index_directory" do
 
     before(:each) do
       @directory = "dummy"
@@ -120,24 +120,65 @@ describe Record do
 
     it "should change directory to given one" do
       Dir.should_receive(:chdir).with(@directory)
-      Record.index @directory
+      Record.index_directory @directory
     end
 
     it "should list wav and ogg files into given directory" do
       Dir.should_receive(:glob).with("**/*.{wav,ogg}", File::FNM_CASEFOLD).and_return(@filenames)
-      Record.index @directory
+      Record.index_directory @directory
     end
 
     it "should find_or_create Records with found filenames" do
       @filenames.each do |filename|
         Record.should_receive(:find_or_create_by_filename).with hash_including(:filename => "/root/#{filename}")
       end
-      Record.index @directory
+      Record.index_directory @directory
     end
 
     it "should return records with begins parsed from filenames (using utc)" do
-      Record.index(@directory).collect(&:begin).should == 
+      Record.index_directory(@directory).collect(&:begin).should == 
         [ Time.utc(2009,11,16,18,17), Time.utc(2009,11,16,18,30) ]
+    end
+
+  end
+
+  describe "index_file" do
+
+    before(:each) do
+      @filename = "2009/11-Nov/16-Mon/18h17.wav"
+      File.stub!(:expand_path).and_return do |file|
+        "/root/#{file}"
+      end
+    end
+
+    it "should find_or_create Records with found filenames" do
+      Record.index_file(@filename).filename.should == "/root/#{@filename}"
+    end
+
+    it "should return records with begins parsed from filenames (using utc)" do
+      Record.index_file(@filename).begin.should == Time.utc(2009,11,16,18,17)
+    end
+
+  end
+
+  describe "index" do 
+
+    before(:each) do
+      @file = "/path/to/file"
+    end
+
+    it "should use Record.index_directory when the file is a directory" do
+      File.stub!(:directory?).and_return(true)
+      Record.should_receive(:index_directory).with(@file)
+
+      Record.index(@file)
+    end
+
+    it "should use Record.index_file when the file isn't a directory" do
+      File.stub!(:directory?).and_return(false)
+      Record.should_receive(:index_file).with(@file)
+
+      Record.index(@file)
     end
 
   end

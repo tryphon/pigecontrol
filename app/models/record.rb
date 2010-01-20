@@ -58,10 +58,22 @@ class Record < ActiveRecord::Base
     end
   end
 
-  def self.index(directory)
+  def self.index(filename)
+    if File.directory?(filename)
+      Record.index_directory filename
+    else
+      Record.index_file filename
+    end
+  end
+
+  def self.index_file(filename)
+    Record.find_or_create_by_filename :filename => File.expand_path(filename), :begin => Time.utc(*filename.scan(/\d+/))
+  end
+
+  def self.index_directory(directory)
     Dir.chdir(directory) do
       Dir.glob("**/*.{wav,ogg}", File::FNM_CASEFOLD).collect do |filename|
-        Record.find_or_create_by_filename :filename => File.expand_path(filename), :begin => Time.utc(*filename.scan(/\d+/))
+        Record.index_file filename
       end
     end
   end

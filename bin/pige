@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+options = { :rails_env => (ENV['RAILS_ENV'] or "production") }
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: pige [options] index directory/files"
+  
+  opts.on("-e", "--environment ENV", "Rails environment to be used") do |v|
+    options[:rails_env] = v
+  end
+end
+option_parser.parse!
+
+command = ARGV.shift
+
+if command == "index"
+  RAILS_ENV=options[:rails_env]
+  require File.dirname(__FILE__) + '/../config/environment'
+
+  Record.index ARGV.first
+else
+  puts option_parser
+end
