@@ -33,12 +33,12 @@ class Chunk < ActiveRecord::Base
 
   cattr_writer :storage_directory
   def self.storage_directory
-    unless @storage_directory
-      @storage_directory = "#{Rails.root}/tmp/chunks"
-      FileUtils.mkdir_p @storage_directory
+    unless @@storage_directory
+      @@storage_directory = "#{Rails.root}/tmp/chunks"
+      FileUtils.mkdir_p @@storage_directory
     end
 
-    @storage_directory
+    @@storage_directory
   end
 
   def file

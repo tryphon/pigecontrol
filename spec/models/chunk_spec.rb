@@ -74,6 +74,19 @@ describe Chunk do
 
   end
 
+  describe "storage_directory" do
+
+    it "should be configurable" do
+      Chunk.storage_directory = "/dummy"
+      Chunk.storage_directory.should == "/dummy"
+    end
+
+    after(:each) do
+      Chunk.storage_directory = nil
+    end
+
+  end
+
   describe "file" do
 
     it "should return the file containing chunk content if exists" do
