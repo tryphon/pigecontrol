@@ -13,6 +13,10 @@ class Record < ActiveRecord::Base
     { :conditions => Record.including_conditions(from, to) }
   }
 
+  def before_validation
+    self.source ||= Source.default
+  end
+
   def self.including_conditions(from, to)
     conditions = 
       [ ["begin <= ? and end >= ?", from, from],

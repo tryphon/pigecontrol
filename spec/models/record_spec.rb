@@ -19,7 +19,11 @@ describe Record do
   end
 
   it "should be created with a begin and a filename" do
-    Record.new(:begin => Time.now, :filename => test_file).should be_valid
+    Record.create(:begin => Time.now, :filename => test_file).should_not be_new_record
+  end
+
+  it "should be associated to the default source by default" do
+    Factory(:record).source.should == Source.default
   end
 
   describe "file_duration" do
@@ -211,6 +215,10 @@ describe Record, "including" do
 
   it "should not include Records started after the range end" do
     Record.including(t("8h30"), t("10h30")).should_not include(@after)
+  end
+
+  it "should select Records which includes range" do
+    Record.including(t("8h30"), t("08h31")).should == [@records.first]
   end
   
 end
