@@ -43,7 +43,9 @@ describe Chunk do
 
     before(:each) do
       @chunk.stub!(:source).and_return(mock(Source, :records => mock("source records")))
+
       @records = Array.new(3) { mock Record }
+      @chunk.source.records.stub!(:including).and_return(@records)
     end
     
     it "should retrieve source recordings including chunck begin and end" do
@@ -76,13 +78,34 @@ describe Chunk do
 
   describe "storage_directory" do
 
+    before(:each) do
+      @dummy_dir = "#{Rails.root}/tmp/dummy"
+      reset
+    end
+
     it "should be configurable" do
-      Chunk.storage_directory = "/dummy"
-      Chunk.storage_directory.should == "/dummy"
+      Chunk.storage_directory = @dummy_dir
+      Chunk.storage_directory.should == @dummy_dir
+    end
+
+    def exist
+      simple_matcher("exists") do |actual|
+        File.exists? actual
+      end
+    end
+
+    it "should create the directory" do
+      Chunk.storage_directory = @dummy_dir
+      Chunk.storage_directory.should exist
+    end
+
+    def reset
+      Dir.rmdir @dummy_dir if File.exists?(@dummy_dir)
+      Chunk.storage_directory = nil
     end
 
     after(:each) do
-      Chunk.storage_directory = nil
+      reset
     end
 
   end
