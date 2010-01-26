@@ -21,8 +21,12 @@ class ChunksController < InheritedResources::Base
   end
 
   def build_resource
-    if action_name == 'new' and label_selection.same_source?(source)
-      @chunk = label_selection.chunk
+    if action_name == 'new'
+      if label_selection.same_source?(source)
+        @chunk = label_selection.chunk
+      end
+
+      @chunk ||= source.default_chunk 
     end
 
     super

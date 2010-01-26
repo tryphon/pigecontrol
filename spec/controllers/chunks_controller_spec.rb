@@ -48,6 +48,13 @@ describe ChunksController do
       @label_selection.should_not_receive(:chunk)
       get :new, :source_id => Factory(:source)
     end
+
+    it "should use source default chunk when no label selection" do
+      @label_selection.stub!(:chunk)
+      controller.stub!(:source).and_return(mock(Source, :default_chunk => @chunk))
+      get :new, :source_id => Factory(:source)
+      assigns[:chunk].should == @chunk
+    end
     
   end
 
