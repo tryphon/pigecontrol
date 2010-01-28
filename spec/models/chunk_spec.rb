@@ -55,12 +55,17 @@ describe Chunk do
     before(:each) do
       @chunk.stub!(:source).and_return(mock(Source, :records => mock("source records")))
 
-      @records = Array.new(3) { mock Record }
+      @records = Array.new(3) { |n| mock Record, :time_range => n, :quality => 1 }
       @chunk.source.records.stub!(:including).and_return(@records)
     end
     
     it "should retrieve source recordings including chunck begin and end" do
       @chunk.source.records.should_receive(:including).with(@chunk.begin, @chunk.end).and_return(@records)
+      @chunk.records.should == @records
+    end
+
+    it "should use only uniq records (no records with the same time range)" do
+      @chunk.source.records.stub!(:including).and_return(@records + @records)
       @chunk.records.should == @records
     end
 

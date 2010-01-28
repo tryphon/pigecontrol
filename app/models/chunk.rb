@@ -26,7 +26,7 @@ class Chunk < ActiveRecord::Base
 
   def records
     if self.begin and self.end
-      self.source.records.including(self.begin, self.end)
+      Record.uniq self.source.records.including(self.begin, self.end)
     else
       []
     end
