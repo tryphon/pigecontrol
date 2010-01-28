@@ -186,6 +186,25 @@ describe Record do
     end
 
   end
+
+  describe "quality" do
+    
+    it "should be 1 when the file is in a wav format" do
+      @record.filename= "dummy.wav"
+      @record.quality.should == 1
+    end
+
+    it "should be 0.8 when the file is in an ogg format" do
+      @record.filename= "dummy.ogg"
+      @record.quality.should == 0.8
+    end
+
+    it "should support upcased extension" do
+      @record.filename = "dummy.OGG"
+      @record.quality.should == Factory(:record, :filename => "another.ogg").quality
+    end
+
+  end
   
 end
 

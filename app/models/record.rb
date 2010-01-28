@@ -34,6 +34,14 @@ class Record < ActiveRecord::Base
     [ expression_parts.join(" or ") ] + parameters
   end
 
+  def quality
+    file_extension = File.extname(filename).downcase
+    case file_extension
+    when ".wav": 1
+    when ".ogg": 0.8
+    end
+  end
+
   def file_duration
     return nil if self.filename.blank?
 
