@@ -34,6 +34,24 @@ class Record < ActiveRecord::Base
     [ expression_parts.join(" or ") ] + parameters
   end
 
+  def self.uniq(records)
+    records = records.dup
+    high_quality_records = {}
+
+    records.each do |record|
+      existing_record = high_quality_records[record.time_range]
+      if existing_record.nil? or record.quality > existing_record.quality
+        high_quality_records[record.time_range] = record
+      end
+    end
+
+    records & high_quality_records.values
+  end
+
+  def time_range
+    Range.new(self.begin, self.end)
+  end
+
   def quality
     file_extension = File.extname(filename).downcase
     case file_extension

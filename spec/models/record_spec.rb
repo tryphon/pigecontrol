@@ -69,7 +69,7 @@ describe Record do
   describe "duration" do
     
     it "should be the file duration by default (when begin or end is missing)" do
-      @record.begin = @record.end = nil
+      @record.begin = @record.end = @record.duration = nil
       @record.stub!(:file_duration).and_return(100)
 
       @record.duration.should == @record.file_duration
@@ -205,7 +205,7 @@ describe Record do
     end
 
   end
-  
+
 end
 
 describe Record, "including" do
@@ -240,4 +240,27 @@ describe Record, "including" do
     Record.including(t("8h30"), t("08h31")).should == [@records.first]
   end
   
+end
+
+describe Record, "uniq" do
+
+  before(:each) do
+    @high_quality_record = Factory(:record)
+    @low_quality_record = @high_quality_record.dup.tap do |record|
+      record.stub!(:quality).and_return(@high_quality_record.quality / 2)
+    end
+  end
+  
+  it "should keep the record with the best when two covert the same range" do
+    Record.uniq([@high_quality_record, @low_quality_record]).should == [ @high_quality_record ]
+  end
+
+  it "should keep the order of given records" do
+    # other records ... with different time ranges ;)
+    record_1 = Factory :record, :begin => 1.hour.ago 
+    record_2 = Factory :record, :begin => 2.hours.ago
+
+    Record.uniq([ record_1, @high_quality_record, @low_quality_record, record_2 ]).should == [ record_1, @high_quality_record, record_2 ]
+  end
+
 end
