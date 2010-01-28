@@ -40,7 +40,7 @@ describe Record do
 
     it "should support wav file" do
       @record.filename = test_file(:wav)
-      @record.file_duration.should == 15
+      @record.file_duration.should be_close(15,0.1)
     end
 
     it "should be nil when file isn't found" do
@@ -226,6 +226,7 @@ describe Record, "including" do
 
   it "should select Records which ends after range begin and starts before range end" do
     Record.including(t("8h30"), t("10h30")).should == @records
+    Record.including(t("8h"), t("11h")).should == @records
   end
 
   it "should not include Records ended before the range begin" do
@@ -238,6 +239,14 @@ describe Record, "including" do
 
   it "should select Records which includes range" do
     Record.including(t("8h30"), t("08h31")).should == [@records.first]
+  end
+
+  it "should not include Records started exactly at the range end" do
+    Record.including(t("10h00"), t("11h00")).should_not include(@after)
+  end
+
+  it "should not include Records ended exactly at the range begin" do
+    Record.including(t("8h"), t("8h10")).should_not include(@before)
   end
   
 end

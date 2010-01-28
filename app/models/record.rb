@@ -19,9 +19,9 @@ class Record < ActiveRecord::Base
 
   def self.including_conditions(from, to)
     conditions = 
-      [ ["begin <= ? and end >= ?", from, from],
+      [ ["begin <= ? and end > ?", from, from],
         ["begin >= ? and end <= ?", from, to],
-        ["begin <= ? and end >= ?", to, to] ]
+        ["begin < ? and end >= ?", to, to] ]
 
     expression_parts = []
     parameters = []
