@@ -5,6 +5,7 @@ class Chunk < ActiveRecord::Base
 
   validates_presence_of :begin, :end
   validate :end_is_after_begin
+  validate :records_available
 
   after_create :check_file_status
   before_destroy :delete_file
@@ -108,4 +109,15 @@ class Chunk < ActiveRecord::Base
     end
   end
 
+  def records_available
+    unless source.nil? or source.records.empty?
+      last_record = source.records.last
+
+      if self.end < last_record.end and self.records.empty?
+        errors.add(:begin, :no_record) 
+        errors.add(:end, :no_record)
+      end
+    end
+  end
+    
 end

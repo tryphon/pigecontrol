@@ -3,8 +3,8 @@ Factory.define :source do |source|
 end
 
 Factory.define :chunk do |chunk|
-  chunk.begin 15.minutes.ago
-  chunk.end Time.now
+  chunk.begin Time.now
+  chunk.end { |c| c.begin + 5.minutes }
   chunk.source Source.default
 end
 

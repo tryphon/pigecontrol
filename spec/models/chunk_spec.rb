@@ -6,6 +6,11 @@ describe Chunk do
     @chunk = Factory(:chunk)
   end
 
+  after(:each) do
+    # FIXME for unknown reason, @chunk.source is shared between specs ?!
+    @chunk.source.records.clear if @chunk.source.records.respond_to?(:clear)
+  end
+
   it { should validate_presence_of(:begin) }
   it { should validate_presence_of(:end) }
 
@@ -17,6 +22,12 @@ describe Chunk do
 
   it "should validate that end is after begin" do
     @chunk.end = @chunk.begin - 1
+    @chunk.should have(1).error_on(:end)
+  end
+
+  it "should have available records if ends before the last indexed record" do
+    @chunk.source.records.create :end => @chunk.end + 1.hour, :duration => 2.hours
+    @chunk.should have(1).error_on(:begin)
     @chunk.should have(1).error_on(:end)
   end
 
