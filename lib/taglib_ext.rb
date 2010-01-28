@@ -17,7 +17,9 @@ module TagLib
 
     def length_with_wav_support
       if @path =~ /\.wav/i
-         self.size / (self.bitrate / 8 * 1024)
+        bitrate = self.bitrate
+        bitrate = 1378.125 if bitrate == 1378
+        self.size / (bitrate / 8 * 1024)
       else
         length_without_wav_support
       end
