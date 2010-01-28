@@ -55,6 +55,7 @@ class Chunk < ActiveRecord::Base
   end
 
   def create_file!
+    logger.info "Create file for Chunk #{id}"
     update_attribute :completion_rate, 0
 
     if Sox.command do |sox|
@@ -64,10 +65,14 @@ class Chunk < ActiveRecord::Base
         sox.output filename
         sox.effect :trim, self.begin - records.first.begin, duration
       end
+      logger.info "Completed file for Chunk #{id}: #{filename}"
       update_attribute :completion_rate, 1.0
     end
   ensure
-    update_attribute :completion_rate, nil unless status.completed?
+    unless status.completed?
+      logger.info "Failed to create file for Chunk #{id}"
+      update_attribute :completion_rate, nil 
+    end
   end
 
   def complete_with(file)

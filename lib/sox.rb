@@ -1,5 +1,8 @@
 module Sox
 
+  @@logger = nil
+  mattr_accessor :logger
+
   def self.command
     command = Command.new
     yield command
@@ -22,7 +25,7 @@ module Sox
       @effects = []
       yield self if block_given?
     end
-    
+
     def input(filename, options = {})
       self.inputs << File.new(filename, options)
     end
@@ -52,6 +55,7 @@ module Sox
     end
 
     def run
+      Sox.logger.debug "Run #{self.command_line}" if Sox.logger
       system self.command_line
     end
 
