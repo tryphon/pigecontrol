@@ -31,11 +31,11 @@ class Source < ActiveRecord::Base
   end
 
   def remaining_storage_space
-    if storage_limit.nil? or storage_limit.zero?
-      free_space
-    else
-      storage_limit - chunks.collect(&:size).sum
+    spaces = [ free_space ]
+    unless storage_limit.nil? or storage_limit.zero?
+      spaces << storage_limit - chunks.collect(&:size).sum
     end
+    spaces.min
   end
 
   def free_space

@@ -65,6 +65,12 @@ describe Source do
       @source.remaining_storage_space.should == @source.free_space
     end
 
+    it "should be free space when it's low than the storage limit" do
+      @source.stub!(:free_space).and_return(1.megabyte)
+      @source.storage_limit = 1.gigabyte
+      @source.remaining_storage_space.should == @source.free_space
+    end
+
     it "should be the difference between the storage limit and the actual stored chunks" do
       @source.storage_limit = 1.gigabyte
       @source.remaining_storage_space.should == @source.storage_limit - @chunk.size
