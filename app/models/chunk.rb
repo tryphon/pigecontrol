@@ -6,6 +6,7 @@ class Chunk < ActiveRecord::Base
   validates_presence_of :begin, :end
   validate :end_is_after_begin
   validate :records_available
+  validate :source_can_store_it
 
   after_create :check_file_status
   before_destroy :delete_file
@@ -56,6 +57,11 @@ class Chunk < ActiveRecord::Base
 
   def filename
     @filename ||= "#{Chunk.storage_directory}/#{self.id}.wav"
+  end
+
+  def id=(id)
+    @filename = nil
+    super
   end
 
   def create_file!
@@ -126,6 +132,12 @@ class Chunk < ActiveRecord::Base
         errors.add(:begin, :no_record) 
         errors.add(:end, :no_record)
       end
+    end
+  end
+
+  def source_can_store_it
+    unless source.nil? or source.can_store?(self)
+      errors.add_to_base(:source_cant_store)
     end
   end
     

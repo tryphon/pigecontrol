@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091230145941) do
+ActiveRecord::Schema.define(:version => 20100130073632) do
 
   create_table "chunks", :force => true do |t|
     t.datetime "begin"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20091230145941) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "storage_limit"
   end
 
 end

@@ -10,6 +10,8 @@ fr:
       models:
         chunk:
           attributes:
+            base:
+              source_cant_store: "nécessite plus d'espace de stockage que disponible"
             begin:
               no_record: "en dehors des enregistrements disponibles"
             end:

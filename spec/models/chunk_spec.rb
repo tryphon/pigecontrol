@@ -282,4 +282,9 @@ describe Chunk do
 
   end
 
+  it "should validate that source can store it" do
+    @chunk.source.stub!(:can_store?).and_return(false)
+    @chunk.should have(1).error_on(:base)
+  end
+
 end
