@@ -47,7 +47,11 @@ class Chunk < ActiveRecord::Base
   end
 
   def size
-    file ? File.size(file) : 0
+    file ? File.size(file) : estimated_size
+  end
+
+  def estimated_size
+    duration * 176400 if duration
   end
 
   def filename

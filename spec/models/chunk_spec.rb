@@ -148,9 +148,24 @@ describe Chunk do
       @chunk.size.should == file_size
     end
 
-    it "should return zero if file doesn't exist" do
+    it "should return estimated size if file doesn't exist" do
       @chunk.stub!(:file)
-      @chunk.size.should be_zero
+      @chunk.stub!(:estimated_size).and_return(1.megabyte)
+      @chunk.size.should == @chunk.estimated_size
+    end
+
+  end
+
+  describe "estimated_size" do
+    
+    it "should be 10584000 bytes for a chunk of 1 minute" do
+      @chunk.stub!(:duration).and_return(1.minute)
+      @chunk.estimated_size.should == 10584000
+    end
+
+    it "should be nil if duration is unknown" do
+      @chunk.stub!(:duration)      
+      @chunk.estimated_size.should be_nil
     end
 
   end
