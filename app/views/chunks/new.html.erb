@@ -1,4 +1,4 @@
-<%= title_tag "Ajouter un extrait" %>
+<%= title_tag "Créer un extrait" %>
 
 <% form_for([@chunk.source, @chunk]) do |f| %>
   <%= f.error_messages %>
@@ -16,4 +16,11 @@
     ou <%= link_to 'revenir &#8250;', source_chunks_path(@source) %>
   </p>
 <% end %>
+
+<div class="inline_help">
+  <p>
+    Vous ne connaissez pas exactement le début et l'heure de l'extrait de vous souhaiter récupérer ?
+    Sélectionnez <%= link_to "2&nbsp;repères temporels", source_labels_path(@source) %>.
+  </p>
+</div>
 

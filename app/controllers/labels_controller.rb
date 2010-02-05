@@ -5,6 +5,12 @@ class LabelsController < InheritedResources::Base
   actions :all, :except => [ :edit, :update ]
   respond_to :html, :xml, :json
 
+  def create
+    create! do |format|
+      format.html { redirect_to source_labels_path(label.source) }
+    end
+  end
+
   def select
     user_session.label_selection << label
     if user_session.label_selection.completed?

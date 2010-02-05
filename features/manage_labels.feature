@@ -5,12 +5,12 @@ Feature: Manage labels
 
   Scenario: Manage chunks from homepage
     Given I am on the homepage
-    When I follow "Gérer les repères"
+    When I follow "Voir les repères"
     Then I should be on the labels page
 
   Scenario: Create a chunk from homepage
     Given I am on the homepage
-    When I follow "Ajouter un repère"
+    When I follow "Créer un repère manuel"
     Then I should be on the new label page
 
   Scenario: List all chunks
@@ -26,8 +26,8 @@ Feature: Manage labels
 
   Scenario: Create a new label
     Given I am on the new label page
-    And I fill in "Name" with "Label 1"
-    And I select "1 Janvier 2010 7:00:15" as the "Timestamp" date and time
+    And I fill in "Nom" with "Label 1"
+    And I select "1 Janvier 2010 7:00:15" as the "Horaire" date and time
     When I press "Créer"
     Then I should see "Label créé(e) avec succès"
     And I should see "1 janvier 2010 07:00:15"

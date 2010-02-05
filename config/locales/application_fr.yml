@@ -1,6 +1,9 @@
 fr:
   activerecord:
     attributes:
+      label:
+        name: Nom
+        timestamp: Horaire
       chunk:
         begin: Horaire de début
         end: Horaire de fin

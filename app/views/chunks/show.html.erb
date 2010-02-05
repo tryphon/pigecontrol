@@ -12,7 +12,7 @@
   <% if @chunk.status.completed? %>
   Prêt pour être téléchargé
   <% else %>
-  Pas encore prêt pour être téléchargé
+  En cours de préparation ...
   <% end %>
 </div>
 <div class="details in_actions">
@@ -28,5 +28,5 @@
   <%= link_to 'Supprimer', [@chunk.source, @chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
 </div>
 
-<%= link_to 'Tous les extraits &#8250;', source_chunks_path(@chunk.source) %>
+<%= link_to 'Voir tous les extraits &#8250;', source_chunks_path(@chunk.source) %>
 

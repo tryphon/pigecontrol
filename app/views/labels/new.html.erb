@@ -1,4 +1,4 @@
-<%= title_tag "Ajouter un repère" %>
+<%= title_tag "Créer un repère manuel" %>
 
 <% form_for([@label.source, @label]) do |f| %>
   <%= f.error_messages %>
@@ -17,3 +17,4 @@
   </p>
 <% end %>
 
+<%= render :partial => "inline_help" %>

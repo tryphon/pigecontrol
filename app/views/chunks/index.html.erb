@@ -14,8 +14,21 @@
   </div>
 <% end %>
 
-<br />
+<% if @chunks.empty? %>
+<p class="empty">Aucun extrait n'est disponible pour l'instant.</p>  
+<% end %>
 
 <div class="actions">
-  <%= link_to 'Nouvel extrait', new_source_chunk_path(@source), :class => "create" %>
+  <%= link_to 'Créer un extrait', new_source_chunk_path(@source), :class => "create" %>
+</div>
+
+<div class="inline_help">
+  <p>
+    L'enregistrement de votre antenne est continu. Ainsi à tout moment, vous pouvez extraire
+    une émission, une chronique, une réponse d'un invité pour le rediffuser ou le mettre en ligne.
+  </p>
+  <p>
+    Il suffit pour cela, soit d'indiquer <%= link_to "une heure de début et de fin", new_source_chunk_path(@source) %>,
+    soit de sélectionner <%= link_to "2&nbsp;repères temporels", source_labels_path(@source) %>.
+  </p>
 </div>

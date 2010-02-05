@@ -11,8 +11,7 @@
   <body>
     <ul id="access">
       <li><a href="#content">Aller au contenu</a></li>
-      <li><a href="#menu">Aller au menu</a></li>
-      <li><a href="#sidebar">Aller dans la sidebar</a></li>
+      <li><a href="#sidebar">Aller au menu</a></li>
     </ul>
     <hr/>
     <div id="header">
@@ -36,18 +35,18 @@
 
         <ul>
           <li><%= link_to "Gérer les extraits", source_chunks_path(Source.default) %></li>
-          <li><%= link_to "Ajouter un extrait", new_source_chunk_path(Source.default) %></li>
+          <li><%= link_to "Créer un extrait", new_source_chunk_path(Source.default) %></li>
         </ul>
 
         <ul>
-          <li><%= link_to "Gérer les repères", source_labels_path(Source.default) %></li>
-          <li><%= link_to "Ajouter un repère", new_source_label_path(Source.default) %></li>
+          <li><%= link_to "Voir les repères", source_labels_path(Source.default) %></li>
+          <li><%= link_to "Créer un repère manuel", new_source_label_path(Source.default) %></li>
         </ul>
 
         <h2>Sélection</h2>
 
         <p>
-          En sélectionnant <%= link_to "2 repères", source_labels_path(Source.default) %>, vous pouvez créer un extrait en quelques clics.
+          En sélectionnant <%= link_to_unless current_page?(source_labels_path(Source.default)), "2 repères", source_labels_path(Source.default) %>, vous pouvez créer un extrait en quelques clics.
         </p>
 
         <%= render user_session.label_selection %>

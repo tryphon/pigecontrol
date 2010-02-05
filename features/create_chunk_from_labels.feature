@@ -28,7 +28,7 @@ Feature: Create chunk from labels
   Scenario: Create a chunk with a single label
     Given a label exists with timestamp: "17:00:00"
     And that label is selected
-    When I follow "Nouvel extrait à partir de ce repère"
+    When I follow "Nouvel extrait à partir de ce(s) repère(s)"
     Then I should be on the new chunk page
     And the "Horaire de début" datetime should contain "17:00:00"    
     And the "Horaire de fin" datetime should contain "17:00:00"    

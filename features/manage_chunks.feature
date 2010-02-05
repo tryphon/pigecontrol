@@ -10,7 +10,7 @@ Feature: Manage chunks
 
   Scenario: Create a chunk from homepage
     Given I am on the homepage
-    When I follow "Ajouter un extrait"
+    When I follow "Créer un extrait"
     Then I should be on the new chunk page
 
   Scenario: List all chunks
