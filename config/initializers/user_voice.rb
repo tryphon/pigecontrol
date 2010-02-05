@@ -1,7 +1,7 @@
 UserVoice.config do |account|
-  account.key = 'pigebox'
-  account.host = 'pigebox.uservoice.com'
-  account.forum = 'general' 
+  account.key = 'tryphon'
+  account.host = 'tryphon.uservoice.com'
+  account.forum = '40185' 
   account.alignment = 'left'
   account.background_color = '#1273b4' 
   account.text_color = 'white'
