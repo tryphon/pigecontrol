@@ -75,6 +75,12 @@ class LabelSelection
     labels.last
   end
 
+  def time_range
+    if completed?
+      Range.new(self.begin.timestamp, self.end.timestamp) 
+    end
+  end
+
   def can_begin?(label)
     not completed? and
       (empty? or labels.first.timestamp > label.timestamp)

@@ -126,6 +126,41 @@ describe LabelSelection do
     @selection.should_not be_completed
   end
 
+  it "should not have a begin when empty" do
+    @selection.begin.should be_nil
+  end
+
+  it "should use first label as begin" do
+    @selection << @first_label
+    @selection.begin.should == @first_label
+  end
+
+  it "should use first label as end when no completed" do
+    @selection << @first_label
+    @selection.end.should == @first_label
+  end
+
+  it "should use second label as end when completed" do
+    @selection << @first_label
+    @selection << @second_label
+    @selection.end.should == @second_label
+  end
+
+  describe "time_range" do
+    
+    it "should be nil when selection is not completed" do
+      @selection.stub!(:completed?).and_return(false)
+      @selection.time_range.should be_nil
+    end
+
+    it "should be label timestamps when completed" do
+      @selection << @first_label
+      @selection << @second_label
+      @selection.time_range.should == (@first_label.timestamp..@second_label.timestamp)
+    end
+    
+  end
+
   describe "built chunck" do
 
     before(:each) do

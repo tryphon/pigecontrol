@@ -10,6 +10,14 @@ class ChunksController < InheritedResources::Base
     end
   end
 
+  def create
+    create!
+
+    if @chunk.valid? and @chunk.time_range == label_selection.time_range
+      label_selection.clear
+    end
+  end
+
   protected
 
   def source

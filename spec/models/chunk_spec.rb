@@ -176,6 +176,29 @@ describe Chunk do
     File.exist?(@chunk.filename).should be_false
   end
 
+  describe "time_range" do
+    
+    it "should be nil if begin is nil" do
+      @chunk.begin = nil
+      @chunk.time_range.should be_nil
+    end
+
+    it "should be nil if end is nil" do
+      @chunk.end = nil
+      @chunk.time_range.should be_nil
+    end
+
+    it "should be nil if begin is after end" do
+      @chunk.begin = @chunk.end + 5
+      @chunk.time_range.should be_nil
+    end
+
+    it "should be chunk's begin..end when available" do
+      @chunk.time_range.should == (@chunk.begin..@chunk.end)
+    end
+
+  end
+
   describe "create_file!" do
 
     before(:each) do

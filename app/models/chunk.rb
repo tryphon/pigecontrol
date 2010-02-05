@@ -116,6 +116,12 @@ class Chunk < ActiveRecord::Base
     ActiveSupport::StringInquirer.new(string_value)
   end
 
+  def time_range
+    if self.duration and self.duration > 0
+      Range.new(self.begin, self.end)
+    end
+  end
+
   private
 
   def end_is_after_begin

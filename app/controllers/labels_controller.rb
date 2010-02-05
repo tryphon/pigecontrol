@@ -6,8 +6,11 @@ class LabelsController < InheritedResources::Base
   respond_to :html, :xml, :json
 
   def create
-    create! do |format|
-      format.html { redirect_to source_labels_path(label.source) }
+    create! do |success, failure|
+      logger.info @label.inspect
+      success.html do
+        redirect_to source_labels_path(label.source) 
+      end
     end
   end
 

@@ -19,6 +19,20 @@ describe LabelsController do
 
   end
 
+  describe "POST /create" do
+    
+    it "should redirect to source labels path when label is created" do
+      post :create, :source_id => Source.default, :label => Factory.attributes_for(:label)
+      response.should redirect_to(source_labels_path(Source.default))
+    end
+
+    it "should render new template when label is not created" do
+      post :create, :source_id => Source.default
+      controller.should render_template('create')
+    end
+
+  end
+
   describe "GET /select" do
 
     before(:each) do

@@ -69,6 +69,15 @@ describe ChunksController do
       post :create, :source_id => @chunk.source
     end
 
+    it "should clear the LabelSelection when the created Chunk must selection labels" do
+      @label_selection.stub!(:time_range).and_return(Range.new(15.minutes.ago, 10.minutes.ago))
+
+      @label_selection.should_receive(:clear)
+      post :create, :source_id => @chunk.source, :chunk => { 
+        :begin => @label_selection.time_range.begin, :end => @label_selection.time_range.end 
+      }
+    end
+
   end
 
 end
