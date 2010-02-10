@@ -5,11 +5,11 @@
 
   <p>
     <%= f.label :begin, Chunk.human_attribute_name(:begin) %><br/>
-    <%= f.datetime_select :begin %>
+    <%= f.datetime_select :begin, :include_seconds => true %>
   </p>
   <p>
     <%= f.label :end, Chunk.human_attribute_name(:end) %><br/>
-    <%= f.datetime_select :end %>
+    <%= f.datetime_select :end, :include_seconds => true %>
   </p>
   <p>
     <%= f.submit "Créer" %>
