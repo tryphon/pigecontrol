@@ -3,11 +3,11 @@
 <div class="description">
   <p>
   Horaire de début :<br/>
-  <%= I18n.localize @chunk.begin %>
+  <%= I18n.localize @chunk.begin, :format => :long %>
   </p>
   <p>
   Horaire de fin :<br/>
-  <%= I18n.localize @chunk.end %>
+  <%= I18n.localize @chunk.end, :format => :long %>
   </p>
   <% if @chunk.status.completed? %>
   Prêt pour être téléchargé
