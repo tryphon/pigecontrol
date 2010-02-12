@@ -1,4 +1,4 @@
 etc/pige
 usr/share/pige
-var/lib/pige/db
+var/lib/pige
 var/log/pige

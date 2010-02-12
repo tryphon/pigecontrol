@@ -21,32 +21,6 @@ test -x $DAEMON || exit 0
 . /lib/lsb/init-functions
 
 start_daemon() {
-    database_file=`sed -n '/  database:/ s/  database:[ ]*//p' /etc/pige/database.yml`
-
-    if [ ! -f $database_file ]; then
-        echo -n "."
-
-        database_dir=`dirname $database_file`
-        mkdir -p $database_dir
-        cp "/usr/share/pige/db/production.sqlite3" $database_file
-        chown -R $DAEMON_USER $database_dir
-    fi
-
-    chunks_dir="/var/lib/pige/chunks"
-    if [ ! -d $chunks_dir ]; then
-        mkdir -p $chunks_dir
-        chown $DAEMON_USER $chunks_dir
-    fi
-
-    log_file="/var/log/pige/production.log"
-    if [ ! -f "log_file" ]; then
-        echo -n "."
-
-        mkdir -p `dirname $log_file`
-        touch $log_file
-        chown $DAEMON_USER $log_file
-    fi
-
     if [ -n "$DAEMON_USER" ] ; then
 	      start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid --chuid $DAEMON_USER \
 	          --startas $DAEMON --background --make-pidfile -- $DAEMON_OPTS 

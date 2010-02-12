@@ -1,0 +1,44 @@
+#!/bin/bash -e
+
+case "$1" in
+    configure)
+        pige_user="www-data"
+        pige_group="adm"
+
+        chunks_directory="/var/lib/pige/chunks"
+        # Create chunk store directory and set permissions.
+        if [ ! -d "$chunks_directory" ]; then
+            install --directory --mode 02775 --owner=$pige_user --group=$pige_group "$chunks_directory"
+        fi
+
+        # Create log file if needed
+        log_file="/var/log/pige/production.log"
+        if [ ! -f "$log_file" ]; then
+            touch "$log_file"
+            chown $pige_user:$pige_group "$log_file"
+            chmod 664 "$log_file"
+        fi
+
+        # Create database directory if needed
+        database_directory="/var/lib/pige/db"
+        if [ ! -d $database_directory ]; then
+            install --directory --mode 02775 --owner=$pige_user --group=$pige_group "$database_directory"
+        fi
+
+        # Create empty database file if needed
+        database_file="$database_directory/production.sqlite3"
+        if [ ! -f $database_file ]; then
+            install --mode 0664 --owner=$pige_user --group=$pige_group "/usr/share/pige/db/production.sqlite3" $database_directory
+        fi
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "$0 called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#
