@@ -17,6 +17,7 @@ img {
   border: none;
   vertical-align: middle;
 }
+strong { font-weight: bold; }
 #access { display: none; }
 #header {
   border-bottom: 4px solid #cccccc;
@@ -205,6 +206,14 @@ img {
   text-align: left;
   background: url("../images/ui/tags.png") no-repeat 0px 6px;
 }
+#content .inline_help {
+  padding-left: 20px;
+  font-size: 90%;
+  font-style: italic;
+  background: url("../images/ui/help.png") no-repeat;
+  margin-top: 20px;
+}
+#content .inline_help p { margin: 6px 0; }
 #sidebar {
   float: left;
   width: 200px;

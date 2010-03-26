@@ -44,14 +44,3 @@
 
 #sidebar div.label_selection a.create { background: url("../images/ui/add.png") no-repeat; }
 #sidebar div.label_selection a.destroy { background: url("../images/ui/destroy.png") no-repeat; }
-
-#content .inline_help {
-    padding-left: 20px;
-    font-size: 90%; 
-    font-style: italic;
-    background: url("../images/help.png") no-repeat;    
-    margin-top: 20px;
-}
-#content .inline_help p {
-    margin: 6px 0;
-}
