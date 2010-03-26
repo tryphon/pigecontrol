@@ -7,9 +7,7 @@ set :deploy_via, :copy
 
 set :deploy_to, "/var/www/pige"
 
-role :web, "radio.dbx.tryphon.priv"
-role :app, "radio.dbx.tryphon.priv"
-role :db,  "radio.dbx.tryphon.priv", :primary => true
+server "radio.dbx.tryphon.priv", :app, :web, :db, :primary => true
 
 # after "deploy:setup", "db:create"
 
