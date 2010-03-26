@@ -1,3 +1,10 @@
+pige (0.2-1) UNRELEASED; urgency=low
+
+  * New release
+  * Create needed storage directories, log or db files during package configuration
+
+ -- Alban Peignier <alban@tryphon.eu>  Fri, 12 Feb 2010 19:17:13 +0100
+
 pige (0.1-1) UNRELEASED; urgency=low
 
   * Initial release.
