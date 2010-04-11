@@ -44,3 +44,7 @@
 
 #sidebar div.label_selection a.create { background: url("../images/ui/add.png") no-repeat; }
 #sidebar div.label_selection a.destroy { background: url("../images/ui/destroy.png") no-repeat; }
+
+#content .actions a.download-pending { 
+    background: url("../images/download-pending.gif") no-repeat 0 5px;
+}

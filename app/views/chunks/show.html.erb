@@ -21,10 +21,14 @@
   <span class="size"><%= @chunk.size / 1.megabyte %> Mo</span>
   <% end %>
 </div>
-<p>
 
 <div class="actions">
-  <%= link_to_if @chunk.status.completed?, 'Télécharger', source_chunk_path(@chunk.source, @chunk, :format => "wav"), :class => "download" %>
+  <% if @chunk.status.completed? %>
+  <%= link_to 'Télécharger', source_chunk_path(@chunk.source, @chunk, :format => "wav"), :class => "download" %>
+  <% else %>
+  <%= link_to 'En préparation', source_chunk_path(@chunk.source, @chunk), :class => "download-pending", :title => "Vérifier l'état" %>
+  <% end %>
+
   <%= link_to 'Supprimer', [@chunk.source, @chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
 </div>
 
