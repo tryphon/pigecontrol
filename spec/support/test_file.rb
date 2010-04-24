@@ -3,10 +3,10 @@ module TestFileSupport
     filename = File.expand_path "#{File.dirname __FILE__}/../fixtures/test.#{format}"
     
     unless File.exists?(filename)
-      Sox.command do |sox| 
+      Sox::Command.new do |sox| 
         sox.input test_file(:ogg)
         sox.output filename
-      end
+      end.run!
     end
     
     filename

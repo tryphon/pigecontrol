@@ -59,6 +59,10 @@ module Sox
       system self.command_line
     end
 
+    def run!
+      raise "sox execution failed" unless run
+    end
+
     class File 
 
       attr_accessor :filename, :options
