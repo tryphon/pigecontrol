@@ -31,6 +31,7 @@ Rails::Initializer.run do |config|
   # inherited_resources 1.1.0 is only compatible with Rails 3
   config.gem "inherited_resources", :version => "1.0.3"
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
+  config.gem "delayed_job", :source => 'http://gemcutter.org'
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
