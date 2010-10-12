@@ -1,3 +1,15 @@
+pige (0.3-2) UNRELEASED; urgency=low
+
+  * Fix bundle install in debian build
+
+ -- Alban Peignier <alban@tryphon.eu>  Tue, 12 Oct 2010 22:11:42 +0200
+
+pige (0.3-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Alban Peignier <alban@tryphon.eu>  Tue, 12 Oct 2010 17:41:44 +0200
+
 pige (0.2-1) UNRELEASED; urgency=low
 
   * New release
