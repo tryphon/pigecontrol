@@ -3,13 +3,20 @@ Factory.define :source do |source|
 end
 
 Factory.define :chunk do |chunk|
-  chunk.begin 15.minutes.ago
-  chunk.end Time.now
-  chunk.association :source
+  chunk.begin Time.now
+  chunk.end { |c| c.begin + 5.minutes }
+  chunk.source Source.default
 end
 
 Factory.define :record do |record|
   record.begin 15.minutes.ago
-  record.end Time.now
-  record.filename { |n| "file#{n}" }
+  record.duration 15.minutes
+  record.filename { |n| "file#{n}.wav" }
 end
+
+Factory.define :label do |label|
+  label.name "name"
+  label.timestamp Time.now
+  label.source Source.default
+end
+

@@ -1,0 +1,19 @@
+<%= title_tag "Repère \"#{truncate @label.name, 40}\"" %>
+
+<div class="description">
+  <p>
+  <%= Label.human_attribute_name(:name) %><br/>
+  <%= h @label.name %>
+  </p>
+  <p>
+  <%= Label.human_attribute_name(:timestamp) %><br/>
+  <%= I18n.localize @label.timestamp, :format => :long %>
+  </p>
+</div>
+
+<div class="actions">
+  <%= link_to 'Supprimer', [@label.source, @label], :confirm => 'Vous êtes sûr de vouloir supprimer ce repère ?', :method => :delete, :class => "destroy" %>
+</div>
+
+<%= link_to 'Voir tous les repères &#8250;', source_labels_path(@label.source) %>
+

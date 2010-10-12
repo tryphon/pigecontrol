@@ -1,3 +1,9 @@
 [submodule "vendor/plugins/boxcontrol"]
 	path = vendor/plugins/boxcontrol
 	url = ../boxcontrol
+[submodule "vendor/plugins/user_interface"]
+	path = vendor/plugins/user_interface
+	url = ../user_interface
+[submodule "vendor/plugins/user_voice"]
+	path = vendor/plugins/user_voice
+	url = git://github.com/albanpeignier/user_voice.git

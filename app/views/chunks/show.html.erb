@@ -1,18 +1,36 @@
-<p>
-  <b>Begin:</b>
-  <%=h @chunk.begin %>
-</p>
+<%= title_tag @chunk.title %>
 
-<p>
-  <b>End:</b>
-  <%=h @chunk.end %>
-</p>
+<div class="description">
+  <p>
+  Horaire de début :<br/>
+  <%= I18n.localize @chunk.begin, :format => :long %>
+  </p>
+  <p>
+  Horaire de fin :<br/>
+  <%= I18n.localize @chunk.end, :format => :long %>
+  </p>
+  <% if @chunk.status.completed? %>
+  Prêt pour être téléchargé
+  <% else %>
+  En cours de préparation ...
+  <% end %>
+</div>
+<div class="details in_actions">
+  <span class="length"><%= @chunk.duration.to_i / 60 %> min.</span>
+  <% if @chunk.status.completed? %>
+  <span class="size"><%= @chunk.size / 1.megabyte %> Mo</span>
+  <% end %>
+</div>
 
-<p>
-  <b>Completion rate:</b>
-  <%=h @chunk.completion_rate %>
-</p>
+<div class="actions">
+  <% if @chunk.status.completed? %>
+  <%= link_to 'Télécharger', source_chunk_path(@chunk.source, @chunk, :format => "wav"), :class => "download" %>
+  <% else %>
+  <%= link_to 'En préparation', source_chunk_path(@chunk.source, @chunk), :class => "download-pending", :title => "Vérifier l'état" %>
+  <% end %>
 
-<%= link_to_if @chunk.status.completed?, 'Download', source_chunk_path(@chunk.source, @chunk, :format => "wav") %>
-<%= link_to 'Destroy', [@chunk.source, @chunk], :confirm => 'Are you sure?', :method => :delete %>
-<%= link_to 'Back', source_chunks_path(@chunk.source) %>
+  <%= link_to 'Supprimer', [@chunk.source, @chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
+</div>
+
+<%= link_to 'Voir tous les extraits &#8250;', source_chunks_path(@chunk.source) %>
+

@@ -6,3 +6,4 @@ log/*
 tmp/*
 coverage/
 spec/fixtures/test.wav
+rerun.txt

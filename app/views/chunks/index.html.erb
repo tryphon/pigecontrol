@@ -1,24 +1,34 @@
-<h1>Listing chunks</h1>
-
-<table>
-  <tr>
-    <th>Begin</th>
-    <th>End</th>
-    <th>Completion</th>
-  </tr>
+<%= title_tag "Extraits" %>
 
 <% for chunk in @chunks %>
-  <tr>
-    <td><%=h chunk.begin %></td>
-    <td><%=h chunk.end %></td>
-    <td><%=h chunk.completion_rate %></td>
-    <td><%= link_to 'Show', [chunk.source, chunk] %></td>
-    <td><%= link_to_if chunk.status.completed?, 'Download', source_chunk_path(chunk.source, chunk, :format => "wav") %></td>
-    <td><%= link_to 'Destroy', [chunk.source, chunk], :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <h3><a href="#"><%= link_to chunk.title, source_chunk_path(chunk.source, chunk) %></a></h3>
+  <div class="description">
+    du <%= I18n.localize chunk.begin %> au <%= I18n.localize chunk.end %>
+  </div>
+  <div class="details in_actions">
+    <span class="length"><%= chunk.duration.to_i / 60 %> min.</span>
+  </div>
+  <div class="actions">
+    <%= link_to_if chunk.status.completed?, 'Télécharger', source_chunk_path(chunk.source, chunk, :format => "wav"), :class => "download" %>
+    <%= link_to 'Supprimer', [chunk.source, chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
+  </div>
 <% end %>
-</table>
 
-<br />
+<% if @chunks.empty? %>
+<p class="empty">Aucun extrait n'est disponible pour l'instant.</p>  
+<% end %>
 
-<%= link_to 'New chunk', new_source_chunk_path(@source) %>
+<div class="actions">
+  <%= link_to 'Créer un extrait', new_source_chunk_path(@source), :class => "create" %>
+</div>
+
+<div class="inline_help">
+  <p>
+    L'enregistrement de votre antenne est continu. Ainsi à tout moment, vous pouvez extraire
+    une émission, une chronique ou la réponse d'un invité pour la rediffuser ou la mettre en ligne.
+  </p>
+  <p>
+    Il suffit pour cela, soit d'indiquer <%= link_to "une heure de début et de fin", new_source_chunk_path(@source) %>,
+    soit de sélectionner <%= link_to "2&nbsp;repères temporels", source_labels_path(@source) %>.
+  </p>
+</div>

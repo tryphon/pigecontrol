@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091118085519) do
+ActiveRecord::Schema.define(:version => 20100130073632) do
 
   create_table "chunks", :force => true do |t|
     t.datetime "begin"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20091118085519) do
     t.integer  "source_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -29,6 +30,14 @@ ActiveRecord::Schema.define(:version => 20091118085519) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "labels", :force => true do |t|
+    t.string   "name"
+    t.datetime "timestamp"
+    t.integer  "source_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -46,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20091118085519) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "storage_limit"
   end
 
 end

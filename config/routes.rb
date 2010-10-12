@@ -1,7 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :sources do |source|
     source.resources :chunks
+    source.resources :labels, :member => { :select => :get }
   end
 
-  map.root :controller => "chunks", :action => "index", :source_id => "1"
+  map.resource :label_selection, :controller => :label_selection
+
+  map.root :controller => "welcome"
 end
