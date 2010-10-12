@@ -43,6 +43,11 @@
           <li><%= link_to "Créer un repère manuel", new_source_label_path(Source.default) %></li>
         </ul>
 
+        <ul>
+          <li><%= link_to Input.human_name, input_path %></li>
+          <li><%= link_to Network.human_name, network_path %></li>
+          <li><%= link_to SavePoint.human_name, new_save_point_path %></li>
+        </ul>
         <h2>Sélection</h2>
 
         <p>
