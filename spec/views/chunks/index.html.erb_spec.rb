@@ -5,8 +5,9 @@ describe "/chunks/index.html.erb" do
 
   before(:each) do
     assigns[:chunks] = @chunks = Array.new(2) {
-      Factory(:chunk, :completion_rate => 0.8)
+      Factory(:chunk, :completion_rate => 0.8, :source => Factory(:source))
     }
+    assigns[:source] = @source = Factory(:source)
   end
 
   it "renders a list of chunks" do
