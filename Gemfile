@@ -1,6 +1,7 @@
 source :gemcutter
 
 gem "rails", "2.3.8"
+gem "rack", "~> 1.1.0"
 
 gem "inherited_resources", "= 1.0.6"
 gem "will_paginate", "~> 2.3.11"
