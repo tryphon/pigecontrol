@@ -14,6 +14,7 @@ end
 
 group :test do
   gem "factory_girl"
-  gem 'rspec-rails', '= 1.3.2'
+  gem 'rspec', '= 1.3.1'
+  gem 'rspec-rails', '= 1.3.3'
   gem 'remarkable_rails'
 end
