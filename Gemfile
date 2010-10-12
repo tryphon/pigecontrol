@@ -5,6 +5,7 @@ gem "rack", "~> 1.1.0"
 
 gem "inherited_resources", "= 1.0.6"
 gem "will_paginate", "~> 2.3.11"
+gem "SyslogLogger"
 gem "delayed_job"
 
 group :development do
@@ -13,6 +14,6 @@ end
 
 group :test do
   gem "factory_girl"
-  gem 'rspec-rails', '>= 1.3.2'
+  gem 'rspec-rails', '= 1.3.2'
   gem 'remarkable_rails'
 end
