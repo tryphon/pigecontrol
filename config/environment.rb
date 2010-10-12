@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -23,13 +23,25 @@ Rails::Initializer.run do |config|
   # Specify gems that this application depends on. 
   # They can then be installed with "rake gems:install" on new installations.
   # You have to specify the :lib option for libraries, where the Gem name (sqlite3-ruby) differs from the file itself (sqlite3)
+  config.load_paths << "#{Rails.root}/app/presenters"
+  Dir["#{Rails.root}/vendor/plugins/*/app/presenters"].each do |directory|
+    config.load_paths << directory
+  end
+
+  config.after_initialize do
+    Dir["#{Rails.root}/config/locales/**/*.yml"].each do |locale_file|
+      I18n.load_path << locale_file
+    end
+    Dir["#{Rails.root}/vendor/plugins/*/config/locales/**/*.yml"].each do |locale_file|
+      I18n.load_path << locale_file
+    end
+  end
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-
   # inherited_resources 1.1.0 is only compatible with Rails 3
-  config.gem "inherited_resources", :version => "1.0.3"
+  config.gem "inherited_resources", :version => "1.0.6"
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "delayed_job", :source => 'http://gemcutter.org'
 
