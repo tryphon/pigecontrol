@@ -17,4 +17,15 @@ group :test do
   gem 'rspec', '= 1.3.1'
   gem 'rspec-rails', '= 1.3.3'
   gem 'remarkable_rails'
+  gem "ZenTest"
+end
+
+group :cucumber do
+  gem 'webrat'
+  gem 'database_cleaner'
+  gem 'cucumber-rails'
+  gem 'cucumber'
+  gem 'rspec-rails', '= 1.3.3'
+  gem 'pickle'
+  gem 'factory_girl'
 end
