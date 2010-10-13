@@ -24,6 +24,7 @@ config.action_mailer.delivery_method = :test
 config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false
 config.gem "factory_girl"
 config.gem "remarkable_rails", :lib => false
+config.gem "markup_validity"
 
 config.after_initialize do
   def Chunk.test_storage_directory

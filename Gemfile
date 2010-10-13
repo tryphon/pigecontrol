@@ -18,6 +18,7 @@ group :test do
   gem 'rspec-rails', '= 1.3.3'
   gem 'remarkable_rails'
   gem "ZenTest"
+  gem "markup_validity"
 end
 
 group :cucumber do
