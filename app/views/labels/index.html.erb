@@ -3,8 +3,8 @@
 <% @labels.group_by(&:date).each do |date, labels| %>
   <h3><%= I18n.localize date, :format => :long %></h3>
   <table>
-    <% for label in labels %>
-    <tr <%= 'class="selected"' if user_session.label_selection.include?(label) %>
+    <% for label in labels -%>
+    <tr <%= 'class="selected"' if user_session.label_selection.include?(label) %>>
       <td class="select">
         <%= link_to_select_label(label, user_session.label_selection) %>
       </td>
@@ -14,8 +14,8 @@
       <td>
         <%= link_to truncate(label.name, 60), source_label_path(label.source, label) %>
       </td>
-    <% end %>
     </tr>
+    <% end %>
   </table>
 <% end %>
 
