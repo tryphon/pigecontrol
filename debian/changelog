@@ -1,3 +1,9 @@
+pige (0.4-1) UNRELEASED; urgency=low
+
+  * New upstream release (fixes boxcontrol:#2 and #28)
+
+ -- Alban Peignier <alban@tryphon.eu>  Wed, 13 Oct 2010 19:38:29 +0200
+
 pige (0.3-2) UNRELEASED; urgency=low
 
   * Fix bundle install in debian build

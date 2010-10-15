@@ -25,9 +25,14 @@ describe Chunk do
     @chunk.should have(1).error_on(:end)
   end
 
-  it "should have available records if ends before the last indexed record" do
+  it "should have available records when using past records (no way they appear)" do
     @chunk.source.records.create :end => @chunk.end + 1.hour, :duration => 2.hours
     @chunk.should have(1).error_on(:begin)
+    @chunk.should have(1).error_on(:end)
+  end
+
+  it "should not end after the latest record (chunk scheduling not available for the moment)" do
+    @chunk.source.records.create :end => @chunk.end - 1.hour, :duration => 1.hour
     @chunk.should have(1).error_on(:end)
   end
 

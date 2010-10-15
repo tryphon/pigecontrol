@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+include FileUtils
+
+def record_begins
+  now = Time.now.to_i
+  (now - 3600).step(now, 60).map { |t| Time.at t }
+end
+
+mkdir_p records_dir="tmp/records"
+one_minute_file="./spec/fixtures/one-minute.ogg"
+
+record_begins.each_with_index do |record_begin, index|
+  record_format = index > 50 ? "wav" : "ogg"
+  record_file = "#{records_dir}/#{record_begin.strftime("%Y-%m-%d-%H-%M")}.#{record_format}"
+  unless File.exists?(record_file)
+    puts "create #{record_file}"
+    command = record_format == "ogg" ? "cp" : "sox"
+    system "#{command} #{one_minute_file} #{record_file}"
+  end
+end
+
+puts "Index #{records_dir}"
+system "bin/pige --environment=development index #{records_dir}"

@@ -6,8 +6,8 @@ begin
 
   namespace "package" do
     Package.new(:pige) do |t|
-      t.version = '0.3'
-      t.debian_increment = 2
+      t.version = '0.4'
+      t.debian_increment = 1
 
       t.source_provider = GitExportProvider.new do |source_directory|
         %w{user_interface boxcontrol user_voice}.each do |submodule|
