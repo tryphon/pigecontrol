@@ -134,8 +134,12 @@ class Chunk < ActiveRecord::Base
     unless source.nil? or source.records.empty?
       last_record = source.records.last
 
-      if self.end < last_record.end and self.records.empty?
-        errors.add(:begin, :no_record) 
+      if self.end < last_record.end 
+        if self.records.empty?
+          errors.add(:begin, :no_record) 
+          errors.add(:end, :no_record)
+        end
+      else
         errors.add(:end, :no_record)
       end
     end
