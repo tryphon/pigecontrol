@@ -19,9 +19,9 @@ class Record < ActiveRecord::Base
 
   def self.including_conditions(from, to)
     conditions = 
-      [ ["begin <= ? and end > ?", from, from],
-        ["begin >= ? and end <= ?", from, to],
-        ["begin < ? and end >= ?", to, to] ]
+      [ ["begin <= ? and end > ? ", from, from],
+        ["begin >= ? and end <= ? ", from, to],
+        ["begin < ? and end >= ? ", to, to] ]
 
     expression_parts = []
     parameters = []
@@ -97,6 +97,7 @@ class Record < ActiveRecord::Base
   end
 
   def self.index_file(filename)
+    logger.debug "Index record #{filename}"
     Record.find_or_create_by_filename :filename => File.expand_path(filename), :begin => Time.utc(*filename.scan(/\d+/))
   end
 
