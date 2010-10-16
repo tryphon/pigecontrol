@@ -20,6 +20,7 @@ fr:
             end:
               before_begin: "avant l'horaire de début"
               no_record: "en dehors des enregistrements disponibles"
+              not_available_yet: "non encore disponible"
   will_paginate:
     previous: Précédent
     next: Suivant

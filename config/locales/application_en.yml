@@ -1,4 +1,26 @@
 en:
+  activerecord:
+    attributes:
+      label:
+        name: Name
+        timestamp: Timestamp
+      chunk:
+        begin: Time of beginning 
+        end: Time of end
+    models:
+      chunk: Chunk
+    errors:
+      models:
+        chunk:
+          attributes:
+            base:
+              source_cant_store: "needs more storage space than available"
+            begin:
+              no_record: "beyond available records"
+            end:
+              before_begin: "before time of beginning"
+              no_record: "beyond available records"
+              not_available_yet: "not available yet"
   will_paginate:
     previous: Previous
     next: Next
