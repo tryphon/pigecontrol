@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100130073632) do
+ActiveRecord::Schema.define(:version => 20100507163510) do
 
   create_table "chunks", :force => true do |t|
     t.datetime "begin"
@@ -49,6 +49,19 @@ ActiveRecord::Schema.define(:version => 20100130073632) do
     t.integer  "source_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "releases", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "checksum"
+    t.string   "description_url"
+    t.string   "status"
+    t.datetime "status_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "download_size"
+    t.integer  "url_size"
   end
 
   create_table "sources", :force => true do |t|
