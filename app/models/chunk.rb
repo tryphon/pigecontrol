@@ -28,7 +28,7 @@ class Chunk < ActiveRecord::Base
   def records
     if self.begin and self.end
       list = Record.uniq self.source.records.including(self.begin, self.end)
-      if list.last.end <= self.end
+      if not list.empty? and list.last.end <= self.end
         []
       else
         list
