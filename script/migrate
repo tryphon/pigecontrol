@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+# Simplified script to perform db:migrate 
+# without Rakefile dependencies (schema dump, etc)
+
+RAILS_ENV=(ENV['RAILS_ENV'] or ARGV.shift or "production")
+require File.dirname(__FILE__) + '/../config/environment'
+
+ActiveRecord::Migrator.migrate("db/migrate/", nil)
