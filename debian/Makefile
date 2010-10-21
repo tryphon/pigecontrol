@@ -15,10 +15,9 @@ build:
 	rm -f config/database.yml
 
 install:
-	cp -a app bin public vendor config lib db ${DESTDIR}usr/share/pige
+	cp -a app bin public vendor config lib db script ${DESTDIR}usr/share/pige
 	rm -f ${DESTDIR}usr/share/pige/config/environments/production.rb
 	cp debian/database.yml debian/production.rb debian/apache2.conf ${DESTDIR}etc/pige/
-	cp debian/syslog_logger.rb ${DESTDIR}usr/share/pige/lib
 
 clean:
 	rm -rf vendor/rails vendor/bundle vendor/gems db/production.sqlite3

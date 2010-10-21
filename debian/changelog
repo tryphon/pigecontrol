@@ -1,3 +1,21 @@
+pige (0.6-1) UNRELEASED; urgency=low
+
+  * New upstream release (fixes release management after reboot)
+
+ -- Alban Peignier <alban@tryphon.eu>  Thu, 21 Oct 2010 23:22:53 +0200
+
+pige (0.5-2) UNRELEASED; urgency=low
+
+  * Add resources to make possible rake db:migrate (closes #9)
+
+ -- Alban Peignier <alban@tryphon.eu>  Tue, 19 Oct 2010 12:03:36 +0200
+
+pige (0.5-1) UNRELEASED; urgency=low
+
+  * New upstream release (fixes #30, #31)
+
+ -- Alban Peignier <alban@tryphon.eu>  Mon, 18 Oct 2010 07:53:36 +0200
+
 pige (0.4-1) UNRELEASED; urgency=low
 
   * New upstream release (fixes boxcontrol:#2 and #28)
