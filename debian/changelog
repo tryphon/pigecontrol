@@ -1,3 +1,9 @@
+pige (0.7-1) UNRELEASED; urgency=low
+
+  * New upstream release (refs #31)
+
+ -- Alban Peignier <alban@tryphon.eu>  Fri, 22 Oct 2010 15:12:17 +0200
+
 pige (0.6-1) UNRELEASED; urgency=low
 
   * New upstream release (fixes release management after reboot)
