@@ -40,7 +40,7 @@ describe "Partial /label_selections/label_selection" do
     it "should display selected label timestamp" do
       @label.timestamp = Time.parse("17:00:00 UTC")
       render_partial
-      response.body.should have_tag("li", /17:00:00/)
+      response.body.should have_tag("li", /19:00:00/)
     end
 
     it "should display label name (first 40 characters)" do
