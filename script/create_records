@@ -5,7 +5,7 @@ include FileUtils
 
 def record_begins
   now = Time.now.to_i
-  (now - 3600).step(now, 60).map { |t| Time.at t }
+  (now - 3600).step(now, 60).map { |t| Time.at(t).utc }
 end
 
 mkdir_p records_dir="tmp/records"
