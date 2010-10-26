@@ -2,10 +2,11 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 Event.observe(window, "load", function() {
-    download_pending_event = $$('.download-pending').first();
-    if (download_pending_event) {
-        new PendingChunkObserver(download_pending_event.href);
-    };
+    $$('.download-pending.chunk').each(function(pending_link) {
+      if (pending_link) {
+        new PendingChunkObserver(pending_link.href);
+      };
+    });                                               
 });
 
 /*
@@ -20,8 +21,9 @@ PendingChunkObserver = Class.create({
     },
     reload_when_completed: function(transport) {
         var chunk = transport.responseText.evalJSON().chunk;
+        console.log(chunk);
         if (chunk.completion_rate >= 1) {
-            window.location = this.link;
+            window.location = window.location;
         }
     },
     check_if_chunk_is_completed: function() {

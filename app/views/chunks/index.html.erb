@@ -1,7 +1,8 @@
 <%= title_tag "Extraits" %>
 
 <% for chunk in @chunks %>
-  <h3><a href="#"><%= link_to chunk.title, source_chunk_path(chunk.source, chunk) %></a></h3>
+  <% div_for chunk do %>
+  <h3><%= link_to chunk.title, source_chunk_path(chunk.source, chunk) %></h3>
   <div class="description">
     du <%= I18n.localize chunk.begin %> au <%= I18n.localize chunk.end %>
   </div>
@@ -9,9 +10,9 @@
     <span class="length"><%= chunk.duration.to_i / 60 %> min.</span>
   </div>
   <div class="actions">
-    <%= link_to_if chunk.status.completed?, 'Télécharger', source_chunk_path(chunk.source, chunk, :format => "wav"), :class => "download" %>
-    <%= link_to 'Supprimer', [chunk.source, chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
+    <%= link_to_download_chunk chunk %>
   </div>
+  <% end %>
 <% end %>
 
 <% if @chunks.empty? %>

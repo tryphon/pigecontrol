@@ -15,11 +15,15 @@ describe "/chunks/index.html.erb" do
     response.should have_tag("h3", @chunks.first.title)
   end
 
-  it "should render a Download link when chunck is completed" do
-    completed_chunk = @chunks.first
-    completed_chunk.completion_rate = 1
+  it "should use link_to_download_chunk for each Chunk" do
+    @chunks.each do |chunk|
+      template.should_receive(:link_to_download_chunk).with(chunk).and_return("<a href='/chunks/#{chunk.id}'></a>")
+    end
 
     render
-    response.should have_tag("a[href=?]", source_chunk_path(completed_chunk.source, completed_chunk, :format => "wav"))
+
+    @chunks.each do |chunk|
+      response.should have_tag("a[href=?]", "/chunks/#{chunk.id}")
+    end
   end
 end
