@@ -27,12 +27,7 @@ class Chunk < ActiveRecord::Base
 
   def records
     if self.begin and self.end
-      list = Record.uniq self.source.records.including(self.begin, self.end)
-      if not list.empty? and list.last.end <= self.end
-        []
-      else
-        list
-      end
+      Record.uniq self.source.records.including(self.begin, self.end)
     else
       []
     end
@@ -139,7 +134,7 @@ class Chunk < ActiveRecord::Base
     unless source.nil? or source.records.empty?
       last_record = source.records.last
 
-      if self.end < last_record.end 
+      if self.end <= last_record.end 
         if self.records.empty?
           errors.add(:begin, :no_record) 
           errors.add(:end, :no_record)

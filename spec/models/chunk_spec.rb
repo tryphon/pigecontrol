@@ -36,6 +36,11 @@ describe Chunk do
     @chunk.should have(1).error_on(:end)
   end
 
+  it "should accept to end at the latest record end" do
+    @chunk.source.records.create! :begin => @chunk.begin, :end => @chunk.end, :filename => "dummy"
+    @chunk.should be_valid
+  end
+
   describe "status" do
     
     it "should be created when completion_rate is nil" do
@@ -82,6 +87,12 @@ describe Chunk do
     it "should return an empty array when end is not defined" do
       @chunk.end = nil
       @chunk.records.should be_empty
+    end
+
+    it "should not return an empty array when end is the last record end (#33)" do
+      @chunk.source.records.stub!(:including).and_return(@records)
+      @chunk.end = @records.last.end
+      @chunk.records.should_not be_empty
     end
     
   end
