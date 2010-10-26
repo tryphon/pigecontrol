@@ -25,7 +25,7 @@ Event.observe(window, "load", function() {
   When release is downloaded, we're reloading the page.
 */
 Event.observe(window, "load", function() {
-    download_pending_event = $$('.download-pending').first();
+    download_pending_event = $$('.download-pending.release').first();
     if (download_pending_event) {
         new ReleaseDownloadObserver(download_pending_event.href, download_pending_event.getAttribute("data-release-id"));
     };
@@ -39,7 +39,6 @@ ReleaseDownloadObserver = Class.create({
     },
     reload_when_downloaded: function(transport) {
         var release = transport.responseText.evalJSON().release;
-        console.log(release);
         if (release.status != 'download_pending') {
             this.reload_page();
         }
