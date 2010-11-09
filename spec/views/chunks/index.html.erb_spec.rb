@@ -23,7 +23,9 @@ describe "/chunks/index.html.erb" do
     render
 
     @chunks.each do |chunk|
-      response.should have_tag("a[href=?]", "/chunks/#{chunk.id}")
+      response.should have_tag("div[class=actions]") do 
+        with_tag("a[href=?]", "/chunks/#{chunk.id}")
+      end
     end
   end
 end
