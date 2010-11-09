@@ -38,7 +38,7 @@ describe "Partial /label_selections/label_selection" do
     end
 
     it "should display selected label timestamp" do
-      @label.timestamp = Time.parse("17:00:00 UTC")
+      @label.timestamp = Time.parse("19:00:00")
       render_partial
       response.body.should have_tag("li", /19:00:00/)
     end
