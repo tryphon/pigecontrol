@@ -5,6 +5,7 @@ fr:
         name: Nom
         timestamp: Horaire
       chunk:
+        title: Titre
         begin: Horaire de début
         end: Horaire de fin
     models:

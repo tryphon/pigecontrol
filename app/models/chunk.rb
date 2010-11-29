@@ -56,7 +56,9 @@ class Chunk < ActiveRecord::Base
   end
 
   def filename
-    @filename ||= "#{Chunk.storage_directory}/#{self.id}.wav"
+    base = sanitize_filename self.title
+    base = self.id if base.empty?
+    @filename ||= "#{Chunk.storage_directory}/#{base}.wav"
   end
 
   def id=(id)
@@ -150,5 +152,9 @@ class Chunk < ActiveRecord::Base
       errors.add_to_base(:source_cant_store)
     end
   end
-    
+
+  def sanitize_filename(filename)
+    filename.gsub(/[^\w\.\-]/,'_')
+  end
+  
 end

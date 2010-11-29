@@ -4,6 +4,10 @@
   <%= f.error_messages %>
 
   <p>
+    <%= f.label :title, Chunk.human_attribute_name(:title) %><br/>
+    <%= f.text_field :title %>
+  </p>
+  <p>
     <%= f.label :begin, Chunk.human_attribute_name(:begin) %><br/>
     <%= f.datetime_select :begin, :include_seconds => true %>
   </p>
