@@ -16,7 +16,11 @@ class Chunk < ActiveRecord::Base
   end
 
   def default_title
-    "Extrait du #{I18n.localize self.begin}"
+    unless self.begin.nil?
+      "Extrait du #{I18n.localize self.begin}"
+    else
+      "Extrait numero #{self.id}"
+    end
   end
 
   def duration
@@ -57,7 +61,7 @@ class Chunk < ActiveRecord::Base
 
   def filename
     base = sanitize_filename self.title
-    base = self.id if base.empty?
+    base = self.id if base.empty? or base.nil?
     @filename ||= "#{Chunk.storage_directory}/#{base}.wav"
   end
 

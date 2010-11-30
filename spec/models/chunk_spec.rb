@@ -99,11 +99,11 @@ describe Chunk do
 
   describe "filename" do
 
-    it "should be :storage_directory/:id.wav" do
+    it "should be :storage_directory/:sanitized_title.wav if :title defined" do
       Chunk.stub!(:storage_directory).and_return("storage_directory")
-      @chunk.id = 1
+      @chunk.title = "toto et titi"
 
-      @chunk.filename.should == "storage_directory/1.wav"
+      @chunk.filename.should == "storage_directory/toto_et_titi.wav"
     end
 
   end
