@@ -31,4 +31,10 @@ describe "/chunks/show.html.erb" do
     response.should have_text(/20:30:17/)
   end
 
+  it "should show vorbis format when the chunk format is vorbis" do
+    @chunk.format = :vorbis
+    render
+    response.should have_text(/Ogg/)
+  end
+
 end

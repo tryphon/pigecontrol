@@ -9,6 +9,10 @@
   Horaire de fin :<br/>
   <%= I18n.localize @chunk.end, :format => :long %>
   </p>
+  <p>
+  Format :<br/>
+  <%= @chunk.presenter.format %>
+  </p>
   <% if @chunk.status.completed? %>
   Prêt pour être téléchargé
   <% else %>

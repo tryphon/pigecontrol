@@ -20,6 +20,7 @@ describe Chunk do
     Chunk.new.completion_rate.should be_nil
   end
 
+
   it "should validate that end is after begin" do
     @chunk.end = @chunk.begin - 1
     @chunk.should have(1).error_on(:end)
@@ -39,6 +40,30 @@ describe Chunk do
   it "should accept to end at the latest record end" do
     @chunk.source.records.create! :begin => @chunk.begin, :end => @chunk.end, :filename => "dummy"
     @chunk.should be_valid
+  end
+
+  describe "format" do
+
+    it "should support symbols" do
+      @chunk.format = :mp3
+      @chunk.format.should == :mp3
+    end
+
+    it { should allow_values_for(:format, :wav, :vorbis, :mp3) }
+    it { should_not allow_values_for(:format, :wma) }
+
+  end
+
+  describe "file extension" do
+
+    it "should give .ogg ext when format is :vorbis" do
+      @chunk.format = :vorbis
+      @chunk.file_extension.should == "ogg"
+    end
+    it "should give .mp3 ext when format is :mp3" do
+      @chunk.format = :mp3
+      @chunk.file_extension.should == "mp3"
+    end
   end
 
   describe "status" do
@@ -99,11 +124,12 @@ describe Chunk do
 
   describe "filename" do
 
-    it "should be :storage_directory/:sanitized_title.wav if :title defined" do
+    it "should be :storage_directory/:sanitized_title.:format if :title defined" do
       Chunk.stub!(:storage_directory).and_return("storage_directory")
       @chunk.title = "toto et titi"
+      @chunk.stub :file_extension => "ext"
 
-      @chunk.filename.should == "storage_directory/toto_et_titi.wav"
+      @chunk.filename.should == "storage_directory/toto_et_titi.ext"
     end
 
   end
@@ -237,7 +263,7 @@ describe Chunk do
     end
 
     it "should use chunk filename as sox output" do
-      @sox.should_receive(:output).with(@chunk.filename)
+      @sox.should_receive(:output).with(@chunk.filename, :compression => 6)
       @chunk.create_file!
     end
 

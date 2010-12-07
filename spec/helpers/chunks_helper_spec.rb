@@ -22,7 +22,8 @@ describe ChunksHelper do
         end
 
         it "should go to source_chunk_path with wav format" do
-          subject.should have_tag("a[href=?]", source_chunk_path(chunk.source, chunk, :format => "wav"))
+          chunk.format = :mp3
+          subject.should have_tag("a[href=?]", source_chunk_path(chunk.source, chunk, :format => "mp3"))
         end
 
         it "should have class 'download'" do

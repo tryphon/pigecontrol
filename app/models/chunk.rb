@@ -3,16 +3,34 @@ require 'ftools'
 class Chunk < ActiveRecord::Base
   belongs_to :source
 
-  validates_presence_of :begin, :end
+  validates_presence_of :begin, :end, :format
   validate :end_is_after_begin
   validate :records_available
   validate :source_can_store_it
+  validates_inclusion_of :format, :in => [:wav, :vorbis, :mp3]
 
   after_create :check_file_status
   before_destroy :delete_file
 
+  def self.requires_cbr?(format)
+    format == :aacp
+  end
+  
+  def self.requires_quality?(format)
+    not requires_cbr? format
+  end
+
+  def self.requires_bitrate?(format)
+    requires_cbr? format
+  end
+
   def title
-    read_attribute(:title) or default_title
+    raw_title = read_attribute(:title)
+    raw_title.blank? ? default_title : raw_title
+  end
+
+  def file_extension
+    format==:vorbis ? "ogg" : format.to_s
   end
 
   def default_title
@@ -62,7 +80,7 @@ class Chunk < ActiveRecord::Base
   def filename
     base = sanitize_filename self.title
     base = self.id if base.empty? or base.nil?
-    @filename ||= "#{Chunk.storage_directory}/#{base}.wav"
+    @filename ||= "#{Chunk.storage_directory}/#{base}.#{self.file_extension}"
   end
 
   def id=(id)
@@ -78,7 +96,7 @@ class Chunk < ActiveRecord::Base
         records.each do |record|
           sox.input record.filename
         end
-        sox.output filename
+        sox.output filename, :compression => 6
         sox.effect :trim, self.begin - records.first.begin, duration
       end
       logger.info "Completed file for Chunk #{id}: #{filename}"
@@ -128,6 +146,19 @@ class Chunk < ActiveRecord::Base
     end
   end
 
+  def format=(format)
+    write_attribute :format, format or format.to_s
+  end
+
+  def format
+    raw_format = read_attribute(:format)
+    raw_format ? raw_format.to_sym : :wav
+  end
+
+  def presenter
+    @presenter ||= ChunkPresenter.new(self)
+  end
+  
   private
 
   def end_is_after_begin
@@ -160,5 +191,5 @@ class Chunk < ActiveRecord::Base
   def sanitize_filename(filename)
     filename.gsub(/[^\w\.\-]/,'_')
   end
-  
+
 end

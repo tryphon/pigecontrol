@@ -48,15 +48,45 @@ module Sox
 
     def command_arguments
       returning([]) do |arguments|
-        arguments << inputs.collect(&:command_arguments)
+        #arguments << inputs.collect(&:command_arguments)
+        arguments << self.playlist_filename
         arguments << output.command_arguments
         arguments << effects.collect(&:command_arguments).join(' : ')
       end.flatten.delete_if(&:blank?).join(' ')
     end
 
+    def create_playlist
+      ::File.open(self.playlist_filename,"w") do |playlist|
+        inputs.each do |input|
+          playlist.puts input.filename
+        end
+      end
+    end
+
+    def playlist_filename
+      "#{Dir.tmpdir}/#{self.id}.m3u"
+    end
+
+    def id
+      @uuid ||= Time.now.usec
+    end
+
+    def delete_playlist
+      ::File.delete self.playlist_filename
+    end
+
     def run
       Sox.logger.debug "Run #{self.command_line}" if Sox.logger
-      system self.command_line
+      # creating the m3u playlist
+      self.create_playlist
+      success = false
+      begin
+        success = system self.command_line
+      ensure
+        # deleting m3u playlist
+        self.delete_playlist
+      end
+      success
     end
 
     def run!

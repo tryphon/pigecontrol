@@ -26,12 +26,14 @@ end
 describe Sox::Command do
 
   it {
+    playlist = ""
     Sox::Command.new do |sox|
       sox.input "input1.wav"
       sox.input "input2", :type => "ogg"
       
       sox.output "output", :type => "ogg", :compression => 8
-    end.command_line.should == "sox input1.wav --type ogg input2 --compression 8 --type ogg output"
+      playlist = sox.playlist_filename
+    end.command_line.should == "sox #{playlist} --compression 8 --type ogg output"
   }
 
   before(:each) do
@@ -86,8 +88,9 @@ describe Sox::Command do
       @command.inputs = Array.new(3) { |n| mock_file "input#{n}" }
       @command.output = mock_file("output")
       @command.effects = Array.new(3) { |n| mock_effect "effect#{n}" }
+      playlist = @command.playlist_filename
       
-      @command.command_arguments.should == "input0 input1 input2 output effect0 : effect1 : effect2"
+      @command.command_arguments.should == "#{playlist} output effect0 : effect1 : effect2"
     end
 
   end
@@ -109,6 +112,20 @@ describe Sox::Command do
     
     it "should invoke system with command_line" do
       @command.should_receive(:system).with(@command.command_line)
+      @command.run
+    end
+
+    it "should create a playlist" do
+      @command.stub!(:delete_playlist)
+      @command.stub!(:playlist_filename).and_return("playlist_filename")
+      @command.should_receive(:playlist_filename)
+      @command.run
+    end
+
+    it "should delete a playlist" do
+      @command.stub!(:create_playlist)
+      @command.stub!(:playlist_filename).and_return("playlist_filename")
+      @command.should_receive(:playlist_filename)
       @command.run
     end
 

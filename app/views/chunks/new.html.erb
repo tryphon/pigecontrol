@@ -4,16 +4,20 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :title, Chunk.human_attribute_name(:title) %><br/>
-    <%= f.text_field :title %>
-  </p>
-  <p>
     <%= f.label :begin, Chunk.human_attribute_name(:begin) %><br/>
     <%= f.datetime_select :begin, :include_seconds => true %>
   </p>
   <p>
     <%= f.label :end, Chunk.human_attribute_name(:end) %><br/>
     <%= f.datetime_select :end, :include_seconds => true %>
+  </p>
+  <p>
+    <%= f.label :title, Chunk.human_attribute_name(:title) %><br/>
+    <%= f.text_field :title %>
+  </p>
+  <h3>Format de sortie</h3>
+  <p>
+    <%= format_radio_buttons f %>
   </p>
   <p>
     <%= f.submit "Créer" %>
