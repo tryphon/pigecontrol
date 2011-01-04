@@ -26,14 +26,12 @@ end
 describe Sox::Command do
 
   it {
-    playlist = ""
     Sox::Command.new do |sox|
       sox.input "input1.wav"
       sox.input "input2", :type => "ogg"
       
       sox.output "output", :type => "ogg", :compression => 8
-      playlist = sox.playlist_filename
-    end.command_line.should == "sox #{playlist} --compression 8 --type ogg output"
+    end.command_line.should == "sox input1.wav --type ogg input2 --compression 8 --type ogg output"
   }
 
   before(:each) do
@@ -77,20 +75,36 @@ describe Sox::Command do
   describe "command_arguments" do
 
     def mock_file(command_arguments)
-      mock(Sox::Command::File, :command_arguments => command_arguments)
+      mock(Sox::Command::File, :command_arguments => command_arguments, :options => {}, :filename => "dummy")
     end
 
     def mock_effect(command_arguments)
       mock(Sox::Command::Effect, :command_arguments => command_arguments)
     end
-    
-    it "should concat inputs, output and effects command arguments" do
+
+    before(:each) do
       @command.inputs = Array.new(3) { |n| mock_file "input#{n}" }
       @command.output = mock_file("output")
       @command.effects = Array.new(3) { |n| mock_effect "effect#{n}" }
-      playlist = @command.playlist_filename
-      
-      @command.command_arguments.should == "#{playlist} output effect0 : effect1 : effect2"
+    end
+    
+    it "should concat inputs, output and effects command arguments" do
+      @command.command_arguments.should == "input0 input1 input2 output effect0 : effect1 : effect2"
+    end
+
+    context "when playlist is useful " do
+      before(:each) do
+        @command.playlist.stub :useful? => true
+      end
+
+      it "should concat playlist path, output and effects command arguments" do
+        @command.command_arguments.should == "#{@command.playlist.path} output effect0 : effect1 : effect2" 
+      end
+
+      it "should create playlist if needed" do
+        @command.playlist.should_receive(:create)
+        @command.command_arguments
+      end
     end
 
   end
@@ -115,18 +129,45 @@ describe Sox::Command do
       @command.run
     end
 
-    it "should create a playlist" do
-      @command.stub!(:delete_playlist)
-      @command.stub!(:playlist_filename).and_return("playlist_filename")
-      @command.should_receive(:playlist_filename)
+    it "should delete playlist" do
+      @command.playlist.should_receive(:delete)
       @command.run
     end
 
-    it "should delete a playlist" do
-      @command.stub!(:create_playlist)
-      @command.stub!(:playlist_filename).and_return("playlist_filename")
-      @command.should_receive(:playlist_filename)
-      @command.run
+    it "should return true if command line is successful" do
+      @command.stub :system => true
+      @command.run.should be_true
+    end
+
+    it "should return false if command line fails" do
+      @command.stub :system => false
+      @command.run.should be_false
+    end
+
+  end
+
+  describe "run!" do
+
+    it "should not raise error when run returns true" do
+      @command.stub :run => true
+      lambda { @command.run! }.should_not raise_error
+    end
+    
+    it "should raise an error when run returns false" do
+      @command.stub :run => false
+      lambda { @command.run! }.should raise_error
+    end
+
+  end
+
+  describe "playlist" do
+    
+    it "should have .m3u extension (sox requirement)" do
+      @command.playlist.path.should match(/\.m3u$/)
+    end
+
+    after(:each) do
+      @command.playlist.delete
     end
 
   end
@@ -166,6 +207,62 @@ describe Sox::Command do
       @effect.command_arguments.should == "name argument1 argument2"
     end
     
+  end
+
+  describe Sox::Command::Playlist do
+
+    def mock_file(name, options = {})
+      mock Sox::Command::File, :filename => name, :options => options
+    end
+
+    subject { Sox::Command::Playlist.new [mock_file("input")] }
+
+    describe "create" do
+      
+      it "should create a playlist file with input files" do
+        subject.stub :inputs => [mock_file("input1"), mock_file("input2")]
+        IO.read(subject.create).should == "input1\ninput2\n"
+      end
+
+      after(:each) do
+        subject.delete
+      end
+
+    end
+
+    describe "delete" do
+      
+      it "should close playlist if exists" do
+        subject.instance_variable_set("@file", file = mock)
+        file.should_receive(:close).with(true)
+        subject.delete
+      end
+
+      it "should do nothing when file doesn't exist'" do
+        lambda { subject.delete }.should_not raise_error
+      end
+
+    end
+
+    describe "useful? " do
+
+      it "should be useful if concatenated filenames are longer than 500 characters" do
+        subject.stub :inputs => Array.new(51) { mock_file("a" * 10) }
+        subject.should be_useful
+      end
+
+      it "should not be useful if one of the input file has an option" do
+        subject.stub :inputs => [ mock_file("dummy", :option => true) ]
+        subject.should_not be_useful
+      end
+
+      it "should not be useful if concatenated filenames use less than 500 characters" do
+        subject.stub :inputs => Array.new(50) { mock_file("a" * 10) }
+        subject.should_not be_useful
+      end
+
+    end
+
   end
 
 end

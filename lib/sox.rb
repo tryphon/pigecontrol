@@ -27,7 +27,7 @@ module Sox
     end
 
     def input(filename, options = {})
-      self.inputs << File.new(filename, options)
+      inputs << File.new(filename, options)
     end
 
     def output(*arguments)
@@ -39,7 +39,7 @@ module Sox
     end
 
     def effect(name, *arguments)
-      self.effects << Effect.new(name, *arguments)
+      effects << Effect.new(name, *arguments)
     end
 
     def command_line
@@ -48,49 +48,72 @@ module Sox
 
     def command_arguments
       returning([]) do |arguments|
-        #arguments << inputs.collect(&:command_arguments)
-        arguments << self.playlist_filename
+        if playlist.useful?
+          arguments << playlist.create
+        else
+          arguments << inputs.collect(&:command_arguments)
+        end
         arguments << output.command_arguments
         arguments << effects.collect(&:command_arguments).join(' : ')
       end.flatten.delete_if(&:blank?).join(' ')
     end
 
-    def create_playlist
-      ::File.open(self.playlist_filename,"w") do |playlist|
-        inputs.each do |input|
-          playlist.puts input.filename
-        end
-      end
-    end
-
-    def playlist_filename
-      "#{Dir.tmpdir}/#{self.id}.m3u"
-    end
-
-    def id
-      @uuid ||= Time.now.usec
-    end
-
-    def delete_playlist
-      ::File.delete self.playlist_filename
+    def playlist
+      @playlist ||= Playlist.new(inputs)
     end
 
     def run
-      Sox.logger.debug "Run #{self.command_line}" if Sox.logger
-      # creating the m3u playlist
-      self.create_playlist
-      success = false
+      Sox.logger.debug "Run #{command_line}" if Sox.logger
+
       begin
-        success = system self.command_line
+        system command_line
       ensure
-        # deleting m3u playlist
-        self.delete_playlist
+        playlist.delete
       end
-      success
     end
 
     def run!
       raise "sox execution failed" unless run
+    end
+
+    class Playlist
+
+      attr_accessor :inputs
+
+      def initialize(inputs)
+        @inputs = inputs
+      end
+
+      def file
+        @file ||= Tempfile.new(['sox-command-playlist','.m3u'])
+      end
+
+      def path
+        file.path
+      end
+      
+      def create
+        ::File.open(file.path,"w") do |playlist|
+          inputs.each do |input|
+            playlist.puts input.filename
+          end
+        end
+
+        file.path
+      end
+
+      def delete
+        if @file
+          @file.close(true)
+          @file = nil
+        end
+      end
+
+      def useful?
+        inputs.all? { |input| input.options.empty? } and
+          inputs.sum { |i| i.filename.size } > 500
+      end
+
     end
 
     class File 
@@ -108,7 +131,7 @@ module Sox
             "--#{name} #{value}"
           end.join(' ') + " "
         end
-        "#{format_options}#{self.filename}"
+        "#{format_options}#{filename}"
       end
 
       def sorted_options
