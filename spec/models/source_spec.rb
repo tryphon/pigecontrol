@@ -78,15 +78,15 @@ describe Source do
 
   end
 
-  describe "can_store?" do
+  describe "can_store? " do
 
     before(:each) do
       @source.stub!(:remaining_storage_space).and_return(10.megabytes)
     end
 
-    def be_able_to_store(chunk)
-      simple_matcher("be able to store a Chunk of #{chunk.size / 1.megabyte} MB") do |actual|
-        actual.can_store?(chunk)
+    Spec::Matchers.define :be_able_to_store do |chunk|
+      match do |source|
+        source.can_store?(chunk)
       end
     end
 

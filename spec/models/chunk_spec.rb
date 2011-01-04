@@ -146,9 +146,9 @@ describe Chunk do
       Chunk.storage_directory.should == @dummy_dir
     end
 
-    def exist
-      simple_matcher("exists") do |actual|
-        File.exists? actual
+    Spec::Matchers.define :exist do 
+      match do |file|
+        File.exists? file
       end
     end
 
