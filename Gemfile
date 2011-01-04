@@ -19,6 +19,7 @@ group :test do
   gem 'remarkable_rails'
   gem "ZenTest"
   gem "markup_validity"
+  gem "rcov"
 end
 
 group :cucumber do
