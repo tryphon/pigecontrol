@@ -11,8 +11,10 @@ describe "/labels/index.html.erb" do
   end
 
   it "should be a strict xhtml document" do
-    render :layout => "application"
-    response.body.should be_xhtml_strict
+    with_markup_validity do
+      render :layout => "application"
+      response.body.should be_xhtml_strict
+    end
   end
 
 end
