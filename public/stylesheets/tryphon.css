@@ -18,6 +18,7 @@ img {
   vertical-align: middle;
 }
 strong { font-weight: bold; }
+em { font-style: italic; }
 #access { display: none; }
 #header {
   border-bottom: 4px solid #cccccc;
@@ -234,6 +235,11 @@ strong { font-weight: bold; }
   font-size: 90%;
   margin: 4px 0;
 }
+#sidebar p.languages {
+  margin: -5px 0 10px 0;
+  padding: 0px;
+  text-align: center;
+}
 #sidebar form.search { margin: 0; }
 #sidebar form.search input {
   float: left;
@@ -314,6 +320,10 @@ form { margin: 12px; }
 form p { margin: 7px 0 !important; }
 form .textile-toolbar { width: 100%; }
 form textarea.textile { width: 100%; }
+form ul li {
+  padding: 0 !important;
+  margin-left: 0 !important;
+}
 form .textile_editor_help {
   padding: 4px 0 10px 10px;
   font-size: 0.9em;
