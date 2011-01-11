@@ -14,6 +14,9 @@ build:
 	rm -rf vendor/gems/actionmailer-* vendor/gems/actionpack-* vendor/gems/activerecord-* vendor/gems/activeresource-* vendor/gems/activesupport-* vendor/gems/rails-*
 	rm -f config/database.yml
 
+# don't use Bundler
+	rm config/preinitializer.rb
+
 install:
 	cp -a app bin public vendor config lib db script ${DESTDIR}usr/share/pige
 	rm -f ${DESTDIR}usr/share/pige/config/environments/production.rb
