@@ -11,6 +11,7 @@ gem "delayed_job"
 group :development do
   gem "sqlite3-ruby"
   gem "less"
+  gem "rake-debian-build"
 end
 
 group :test do
