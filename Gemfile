@@ -10,6 +10,7 @@ gem "delayed_job"
 
 group :development do
   gem "sqlite3-ruby"
+  gem "less"
 end
 
 group :test do
