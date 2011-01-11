@@ -38,11 +38,22 @@ Feature: Manage chunks
     And I should see "Extrait supprimé(e) avec succès"
     And the chunk should not exist
 
-  Scenario: Download a chunk
+  Scenario: Download a wav
     Given a chunk exists 
     And the chunk is completed
     And I am on the chunk's page
     When I follow "Télécharger"
     Then I should download a wav file
+
+  Scenario: Create and download an mp3 chunk
+    Given I am on the new chunk page
+    And I select "1 Janvier 2010 7:00" as the "Horaire de début" date and time
+    And I select "1 Janvier 2010 8:00" as the "Horaire de fin" date and time
+    And I choose "MP3" 
+    And I press "Créer"
+    When all chunks are completed
+    And I reload the current page
+    And I follow "Télécharger"
+    Then I should download a mp3 file
     
     
