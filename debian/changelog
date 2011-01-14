@@ -1,3 +1,15 @@
+pige (0.10-1) UNRELEASED; urgency=low
+
+  * New upstream release. Fixes #35, #36 and #37
+
+ -- Alban Peignier <alban@tryphon.eu>  Fri, 14 Jan 2011 17:57:19 +0100
+
+pige (0.9-2) UNRELEASED; urgency=low
+
+  * Remove libsox-fmt-all from dependencies
+
+ -- Alban Peignier <alban@tryphon.eu>  Fri, 14 Jan 2011 15:20:05 +0100
+
 pige (0.9-1) UNRELEASED; urgency=low
 
   * New upstream release
