@@ -15,3 +15,8 @@ Then /^I should download a mp3 file$/ do
   response.content_type.should == "audio/mpeg"
   response.header["Content-Disposition"].should match(/attachment; filename=".*\.mp3"/)
 end
+
+Then /^I should download a ogg file$/ do
+  response.content_type.should == "application/ogg"
+  response.header["Content-Disposition"].should match(/attachment; filename=".*\.ogg"/)
+end

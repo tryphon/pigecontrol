@@ -45,15 +45,20 @@ Feature: Manage chunks
     When I follow "Télécharger"
     Then I should download a wav file
 
-  Scenario: Create and download an mp3 chunk
+  Scenario Outline: Create and download a chunk
     Given I am on the new chunk page
     And I select "1 Janvier 2010 7:00" as the "Horaire de début" date and time
     And I select "1 Janvier 2010 8:00" as the "Horaire de fin" date and time
-    And I choose "MP3" 
+    And I choose "<format>" 
     And I press "Créer"
     When all chunks are completed
     And I reload the current page
     And I follow "Télécharger"
-    Then I should download a mp3 file
+    Then I should download a <extension> file
     
-    
+    Examples:
+    | format     | extension |
+    | Ogg/Vorbis | ogg       |
+    | MP3        | mp3       |
+    | Wave       | wav       |
+

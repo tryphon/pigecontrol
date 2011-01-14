@@ -22,16 +22,15 @@ describe ChunksController do
       File.stub!(:exists?).and_return(true)
     end
 
-    def self.it_should_return_chunk_in_format(format, response_format = nil)
-      response_format ||= format
+    def self.it_should_return_chunk_in_format(format)
       it "should assign the requested chunk in #{format} format" do
         controller.should_receive(:send_file).with(@chunk.file, :type => format)
-        get :show, :id => @chunk, :source_id => @chunk.source, :format => response_format.to_s
+        get :show, :id => @chunk, :source_id => @chunk.source, :format => format.to_s
       end
     end
 
     it_should_return_chunk_in_format :wav
-    it_should_return_chunk_in_format :vorbis, :ogg
+    it_should_return_chunk_in_format :ogg
     it_should_return_chunk_in_format :mp3
 
   end
