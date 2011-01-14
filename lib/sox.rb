@@ -1,3 +1,5 @@
+require 'tempfile'
+
 module Sox
 
   @@logger = nil
