@@ -9,6 +9,7 @@ class Chunk < ActiveRecord::Base
   validate :source_can_store_it
   validates_inclusion_of :format, :in => [:wav, :vorbis, :mp3]
 
+  before_create :use_default_title
   after_create :check_file_status
   before_destroy :delete_file
 
@@ -24,21 +25,20 @@ class Chunk < ActiveRecord::Base
     requires_cbr? format
   end
 
-  def title
-    raw_title = read_attribute(:title)
-    raw_title.blank? ? default_title : raw_title
-  end
-
   def file_extension
-    format==:vorbis ? "ogg" : format.to_s
+    format == :vorbis ? "ogg" : format.to_s
   end
 
   def default_title
     unless self.begin.nil?
-      "Extrait du #{I18n.localize self.begin}"
+      "Extrait du #{I18n.localize(self.begin, :locale => :fr)}"
     else
       "Extrait numero #{self.id}"
     end
+  end
+
+  def use_default_title
+    self.title = default_title if title.blank?
   end
 
   def duration
@@ -78,14 +78,8 @@ class Chunk < ActiveRecord::Base
   end
 
   def filename
-    base = sanitize_filename self.title
-    base = self.id if base.empty? or base.nil?
-    @filename ||= "#{Chunk.storage_directory}/#{base}.#{self.file_extension}"
-  end
-
-  def id=(id)
-    @filename = nil
-    super
+    base = title.present? ? sanitize_filename(title) : id.to_s
+    "#{Chunk.storage_directory}/#{base}.#{file_extension}"
   end
 
   def create_file!
@@ -96,7 +90,7 @@ class Chunk < ActiveRecord::Base
         records.each do |record|
           sox.input record.filename
         end
-        sox.output filename, :compression => 6
+        sox.output filename, :compression => file_compression
         sox.effect :trim, self.begin - records.first.begin, duration
       end
       logger.info "Completed file for Chunk #{id}: #{filename}"
@@ -107,6 +101,10 @@ class Chunk < ActiveRecord::Base
       logger.info "Failed to create file for Chunk #{id}"
       update_attribute :completion_rate, nil 
     end
+  end
+
+  def file_compression
+    format == :mp3 ? -1 : 6
   end
 
   def complete_with(file)
