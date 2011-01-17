@@ -206,6 +206,35 @@ describe Record do
 
   end
 
+  describe "filename" do
+
+    subject { Record.new }
+    
+    it "should be used to compute begin if not defined" do
+      subject.filename = "2009/11-Nov/16-Mon/18h17.wav"
+      subject.valid?
+      subject.begin.should == Time.utc(2009,11,16,18,17)
+    end
+
+    it "should not be used to compute begin if it doesn't contain nubers" do
+      subject.filename = "dummy"
+      subject.valid?
+      subject.begin.should be_nil
+    end
+
+  end
+
+  describe "filename_time_parts" do
+
+    let(:numbers) { Array.new(10) { |n| n.to_s } }
+    
+    it "should scan numbers in filename" do
+      @record.filename = numbers.join("-")
+      @record.filename_time_parts.should == numbers
+    end
+
+  end
+
 end
 
 describe Record, "including" do

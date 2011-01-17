@@ -80,7 +80,15 @@ class Record < ActiveRecord::Base
   end
   attr_writer :duration
 
+  def filename_time_parts
+    filename.scan(/\d+/)
+  end
+
   def compute_time_range
+    if self.begin.nil? and self.end.nil? and filename.present?
+      self.begin = Time.utc(*filename_time_parts) unless filename_time_parts.empty?
+    end
+
     if not self.end and self.begin and self.duration
       self.end = self.begin + self.duration
     elsif not self.begin and self.end
@@ -98,7 +106,7 @@ class Record < ActiveRecord::Base
 
   def self.index_file(filename)
     logger.debug "Index record #{filename}"
-    Record.find_or_create_by_filename :filename => File.expand_path(filename), :begin => Time.utc(*filename.scan(/\d+/))
+    Record.find_or_create_by_filename :filename => File.expand_path(filename) # FIXME , :begin => Time.utc(*filename.scan(/\d+/))
   end
 
   def self.index_directory(directory)

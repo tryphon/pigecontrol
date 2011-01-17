@@ -1,24 +1,28 @@
-#!/usr/bin/env ruby
+#!/bin/sh
 
-require 'optparse'
+args=`getopt h: $*`
+if test $? != 0
+     then
+         echo 'Usage: pige -h host index file'
+         exit 1
+fi
+set -- $args
 
-options = { :rails_env => (ENV['RAILS_ENV'] or "production") }
-option_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: pige [options] index directory/files"
-  
-  opts.on("-e", "--environment ENV", "Rails environment to be used") do |v|
-    options[:rails_env] = v
-  end
-end
-option_parser.parse!
+host="localhost"
 
-command = ARGV.shift
+while [ "$1" != "--" ]; do
+  case "$1" in
+      -h) shift;host=$1;shift;;
+  esac
+done
+shift # remove --
 
-if command == "index"
-  RAILS_ENV=options[:rails_env]
-  require File.dirname(__FILE__) + '/../config/environment'
+if [ "$1" == "index" ]; then
+  shift
+  while [ $# -gt 0 ]; do
+    curl --silent --fail --request POST "http://$host/sources/1/records.json?record\[filename\]=$1" > /dev/null
+    shift
+  done
+fi
 
-  Record.index ARGV.first
-else
-  puts option_parser
-end
+exit $?

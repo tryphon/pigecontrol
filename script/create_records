@@ -22,4 +22,4 @@ record_begins.each_with_index do |record_begin, index|
 end
 
 puts "Index #{records_dir}"
-system "bin/pige --environment=development index #{records_dir}"
+system "bin/pige -h pige.local index " + Dir.glob("#{records_dir}/**/*.{wav,ogg}").join(' ')

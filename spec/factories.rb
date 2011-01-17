@@ -11,7 +11,7 @@ end
 Factory.define :record do |record|
   record.begin 15.minutes.ago
   record.duration 15.minutes
-  record.filename { |n| "file#{n}.wav" }
+  record.sequence(:filename) { |n| "file-2011-01-01-18-%02d.wav" % (n % 60) }
 end
 
 Factory.define :label do |label|
