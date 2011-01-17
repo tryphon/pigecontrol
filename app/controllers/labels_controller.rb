@@ -7,7 +7,6 @@ class LabelsController < InheritedResources::Base
 
   def create
     create! do |success, failure|
-      logger.info @label.inspect
       success.html do
         redirect_to source_labels_path(label.source) 
       end
