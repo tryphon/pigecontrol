@@ -24,3 +24,7 @@ en:
   will_paginate:
     previous: Previous
     next: Next
+  labels:
+    codes:
+      program_started: "Manual - Begin"
+      program_stopped: "Manual - End"

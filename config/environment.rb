@@ -90,4 +90,11 @@ Rails::Initializer.run do |config|
   config.to_prepare do
     Sox.logger = Rails.logger
   end
+
+  # FIXME
+  config.load_once_paths += %W( #{RAILS_ROOT}/lib )
+
+  config.after_initialize do
+    UDP::Receiver.init
+  end
 end

@@ -25,3 +25,7 @@ fr:
   will_paginate:
     previous: Précédent
     next: Suivant
+  labels:
+    codes:
+      program_started: "Manuel - Début"
+      program_stopped: "Manuel - Fin"
