@@ -7,6 +7,7 @@ gem "inherited_resources", "= 1.0.6"
 gem "will_paginate", "~> 2.3.11"
 gem "SyslogLogger"
 gem "delayed_job"
+gem "eventmachine"
 
 group :development do
   gem "sqlite3-ruby"
