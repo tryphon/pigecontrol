@@ -90,7 +90,7 @@ describe Chunk do
     before(:each) do
       @chunk.stub!(:source).and_return(mock(Source, :records => mock("source records")))
 
-      @records = Array.new(3) { |n| mock Record, :time_range => n, :quality => 1, :end => @chunk.end-(n-4)*5.minutes}
+      @records = Array.new(3) { |n| mock Record, :begin => n, :quality => 1, :end => @chunk.end-(n-4)*5.minutes}
       @chunk.source.records.stub!(:including).and_return(@records)
     end
     

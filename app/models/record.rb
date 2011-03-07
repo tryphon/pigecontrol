@@ -39,9 +39,9 @@ class Record < ActiveRecord::Base
     high_quality_records = {}
 
     records.each do |record|
-      existing_record = high_quality_records[record.time_range]
+      existing_record = high_quality_records[record.begin]
       if existing_record.nil? or record.quality > existing_record.quality
-        high_quality_records[record.time_range] = record
+        high_quality_records[record.begin] = record
       end
     end
 
