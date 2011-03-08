@@ -100,8 +100,14 @@ describe LabelsHelper do
       @selector.link_to.should have_tag("a[href=?]", @selector.path)
     end
 
-    it "should create a link with 'Sélectionner ce repère' as title" do
-      @selector.link_to.should have_tag("a[title=?]", "Sélectionner ce repère")
+    it "should create a link with 'Sélectionner ce repère comme début' as title" do
+      @selector.stub :begin? => true
+      @selector.link_to.should have_tag("a[title=?]", "Sélectionner ce repère comme début")
+    end
+
+    it "should create a link with 'Sélectionner ce repère comme fin' as title" do
+      @selector.stub :begin? => false
+      @selector.link_to.should have_tag("a[title=?]", "Sélectionner ce repère comme fin")
     end
    
   end

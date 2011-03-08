@@ -18,7 +18,11 @@ module LabelsHelper
     end
 
     def link_to
-      helper.link_to_if link?, image_tag, path, :title => "Sélectionner ce repère"
+      helper.link_to_if link?, image_tag, path, :title => title
+    end
+
+    def title
+      "Sélectionner ce repère comme #{(begin? ? 'début' : 'fin')}"
     end
 
     def link?
@@ -44,7 +48,11 @@ module LabelsHelper
     end
 
     def image_alt
-      endpoint == :begin ? "&#8249;" : "&#8250;"
+      begin? ? "&#8249;" : "&#8250;"
+    end
+
+    def begin?
+      endpoint == :begin
     end
 
   end
