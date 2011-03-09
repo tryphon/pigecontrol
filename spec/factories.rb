@@ -3,6 +3,7 @@ Factory.define :source do |source|
 end
 
 Factory.define :chunk do |chunk|
+  chunk.sequence(:title) { |n| "Test #{n}" }
   chunk.begin Time.now
   chunk.end { |c| c.begin + 5.minutes }
   chunk.source Source.default

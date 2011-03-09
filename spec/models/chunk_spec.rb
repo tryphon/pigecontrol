@@ -122,11 +122,22 @@ describe Chunk do
     
   end
 
+  describe "title" do
+
+    it { should validate_uniqueness_of(:title) }
+    it { should_not validate_presence_of(:title) }
+
+    it "should not accept a title giving an existing filename" do
+      Factory.build(:chunk, :title => File.basename(@chunk.filename, ".#{@chunk.file_extension}")).should_not be_valid
+    end
+    
+  end
+
   describe "filename" do
 
     it "should be :storage_directory/:sanitized_title.:format if :title defined" do
       Chunk.stub!(:storage_directory).and_return("storage_directory")
-      @chunk.title = "toto et titi"
+      @chunk.title = "Toto et Titi"
       @chunk.stub :file_extension => "ext"
 
       @chunk.filename.should == "storage_directory/toto_et_titi.ext"

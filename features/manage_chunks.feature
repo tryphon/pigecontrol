@@ -15,12 +15,14 @@ Feature: Manage chunks
 
   Scenario: List all chunks
     Given the following chunks exist
-    | begin                | end                  |
-    | January 1, 2010 7:00 | January 1, 2010 8:00 |
-    | January 2, 2010 8:00 | January 2, 2010 9:00 |
+    | title     | begin                | end                  |
+    | Extrait 1 | January 1, 2010 7:00 | January 1, 2010 8:00 |
+    | Extrait 2 | January 2, 2010 8:00 | January 2, 2010 9:00 |
     When I am on the chunks page
-    Then I should see "Extrait du 01 janvier 2010 07:00"
-    And I should see "Extrait du 02 janvier 2010 08:00"
+    Then I should see "Extrait 1"
+    And I should see "01 janvier 2010 07:00"
+    And I should see "Extrait 2"
+    And I should see "02 janvier 2010 08:00"
 
   Scenario: Create a new chunk
     Given I am on the new chunk page

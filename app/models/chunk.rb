@@ -9,9 +9,12 @@ class Chunk < ActiveRecord::Base
   validate :source_can_store_it
   validates_inclusion_of :format, :in => [:wav, :vorbis, :mp3]
 
-  before_create :use_default_title
+  before_validation_on_create :use_default_title
   after_create :check_file_status
   before_destroy :delete_file
+
+  validates_uniqueness_of :title
+  validate :filename_uniqueness
 
   def self.requires_cbr?(format)
     format == :aacp
@@ -159,6 +162,14 @@ class Chunk < ActiveRecord::Base
   
   private
 
+  def filename_uniqueness
+    return if errors.on(:title)
+
+    errors.add(:title, :taken) if Chunk.all.any? do |other|
+      self != other and other.filename == filename
+    end
+  end
+
   def end_is_after_begin
     if self.duration and self.duration <= 0
       errors.add(:end, :before_begin) 
@@ -187,7 +198,7 @@ class Chunk < ActiveRecord::Base
   end
 
   def sanitize_filename(filename)
-    filename.gsub(/[^\w\.\-]/,'_')
+    filename.downcase.gsub(/[^\w\.\-]/,'_')
   end
 
 end
