@@ -4,10 +4,6 @@ class ChunksController < InheritedResources::Base
   actions :all, :except => [ :edit, :update ]
   respond_to :html, :xml, :json
 
-  def index
-    @chunks = Chunk.find(:all, :order => "id DESC")
-  end
-
   def show
     show! do |format|
       format.wav { send_file @chunk.file, :type => :wav }
@@ -25,6 +21,10 @@ class ChunksController < InheritedResources::Base
   end
 
   protected
+
+  def collection
+    @chunks ||= end_of_association_chain.find(:all, :order => "created_at DESC")
+  end
 
   def source
     association_chain.first
