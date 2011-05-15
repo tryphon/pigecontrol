@@ -2,7 +2,7 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 Event.observe(window, "load", function() {
-    $$('.download-pending.chunk').each(function(pending_link) {
+    $$('body.chunks .download-pending.chunk').each(function(pending_link) {
       if (pending_link) {
         new PendingChunkObserver(pending_link.href);
       };
@@ -21,7 +21,6 @@ PendingChunkObserver = Class.create({
     },
     reload_when_completed: function(transport) {
         var chunk = transport.responseText.evalJSON().chunk;
-        console.log(chunk);
         if (chunk.completion_rate >= 1) {
             window.location = window.location;
         }
