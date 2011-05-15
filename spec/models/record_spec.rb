@@ -1,3 +1,4 @@
+# -*- coding: undecided -*-
 require 'spec_helper'
 
 describe Record do
@@ -292,7 +293,6 @@ describe Record, "uniq" do
   end
   
   it "should keep the record with the best when two cover the same range" do
-    puts [high_quality_record, low_quality_record].inspect
     Record.uniq([high_quality_record, low_quality_record]).should == [ high_quality_record ]
   end
 
@@ -305,3 +305,4 @@ describe Record, "uniq" do
   end
 
 end
+
