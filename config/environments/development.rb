@@ -20,6 +20,7 @@ config.to_prepare do
   Input.current_class = TunerInput
 
   Release.latest_url = "public/updates/latest.yml"
+  # Release.latest_url = "http://download.tryphon.eu/pigebox/latest.yml"
   Release.current_url = "public/current.yml"
   Release.install_command = "/bin/true"
 end
