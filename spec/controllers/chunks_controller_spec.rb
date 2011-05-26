@@ -11,7 +11,7 @@ describe ChunksController do
       selection.stub!(:source).and_return(@chunk.source)
       selection.stub!(:chunk).and_return(@chunk)
 
-      user_session = mock(UserSession, :label_selection => selection)
+      user_session = mock(UserSession, :label_selection => selection, :language => :fr)
       controller.stub!(:user_session).and_return(user_session)
     end
   end

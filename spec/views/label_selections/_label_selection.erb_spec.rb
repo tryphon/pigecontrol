@@ -13,7 +13,7 @@ describe "Partial /label_selections/label_selection" do
 
   it "should be empty when LabelSelection is empty" do
     render_partial    
-    response.body.should be_empty
+    response.body.should_not have_tag("div.label_selection")
   end
 
   describe "when a label is selected" do

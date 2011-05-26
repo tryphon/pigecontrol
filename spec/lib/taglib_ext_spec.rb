@@ -28,7 +28,7 @@ end
 describe TagLib::File do
 
   it "should support wav files" do
-    TagLib::File.open(test_file(:wav)) { |f| f.length }.should be_close(15.05,0.01)
+    TagLib::File.open(test_file(:wav)) { |f| f.length }.should be_close(14,0.01)
   end
 
 end

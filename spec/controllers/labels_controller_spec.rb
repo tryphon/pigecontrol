@@ -74,4 +74,15 @@ describe LabelsController do
 
   end
 
+  describe "DELETE /destroy" do
+
+    let(:label) { Factory(:label) }
+    
+    it "should clear LabelSelection if destroyed label is selected" do
+      delete :destroy, {:id => label.id, :source_id => label.source}, :label_selection => [label.id]
+      controller.send(:user_session).label_selection.should be_empty
+    end
+
+  end
+
 end

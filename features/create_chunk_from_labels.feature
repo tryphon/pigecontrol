@@ -15,7 +15,7 @@ Feature: Create chunk from labels
     And another label exists with timestamp: "18:00:00"
     When I select the 2nd label
     Then I should be on the new chunk page
-    And I should see "Nouvel extrait défini à partir des deux repères"
+    And I should see "Extrait défini à partir des deux repères sélectionnés"
     And the "Horaire de début" datetime should contain "17:00:00"    
     And the "Horaire de fin" datetime should contain "18:00:00"    
 

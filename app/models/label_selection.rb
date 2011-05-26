@@ -91,7 +91,7 @@ class LabelSelection
       (empty? or labels.first.timestamp < label.timestamp)
   end
 
-  def self.human_name
+  def self.human_name(options = {})
     I18n.translate("activerecord.attributes.models.label_selection")
   end
 

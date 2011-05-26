@@ -44,8 +44,8 @@ describe ChunksHelper do
 
         subject { helper.link_to_download_chunk(chunk) }
         
-        it "should have 'En préparation' as name" do
-          subject.should have_tag("a", "En préparation")
+        it "should have chunk pending status as name" do
+          subject.should have_tag("a", I18n.translate("chunks.status.pending"))
         end
 
         it "should go to source_chunk_path" do

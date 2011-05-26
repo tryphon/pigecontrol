@@ -101,13 +101,13 @@ describe LabelsHelper do
     end
 
     it "should create a link with 'Sélectionner ce repère comme début' as title" do
-      @selector.stub :begin? => true
-      @selector.link_to.should have_tag("a[title=?]", "Sélectionner ce repère comme début")
+      @selector.stub :endpoint => :begin
+      @selector.link_to.should have_tag("a[title=?]", I18n.translate("label_selection.actions.select_begin"))
     end
 
     it "should create a link with 'Sélectionner ce repère comme fin' as title" do
-      @selector.stub :begin? => false
-      @selector.link_to.should have_tag("a[title=?]", "Sélectionner ce repère comme fin")
+      @selector.stub :endpoint => :end
+      @selector.link_to.should have_tag("a[title=?]", I18n.translate("label_selection.actions.select_end"))
     end
    
   end

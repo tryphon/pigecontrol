@@ -24,7 +24,7 @@ class LabelsController < InheritedResources::Base
   end
 
   def destroy
-    if user_session.label_selection.include? Label.find(params[:id])
+    if user_session.label_selection.include? label
       user_session.label_selection.clear
     end
     destroy!

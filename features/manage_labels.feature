@@ -29,5 +29,5 @@ Feature: Manage labels
     And I fill in "Nom" with "Label 1"
     And I select "1 Janvier 2010 7:00:15" as the "Horaire" date and time
     When I press "Créer"
-    Then I should see "Label créé(e) avec succès"
+    Then I should see "Repère créé(e) avec succès"
     And I should see "1 janvier 2010 07:00:15"

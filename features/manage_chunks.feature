@@ -30,7 +30,7 @@ Feature: Manage chunks
     And I select "1 Janvier 2010 8:00" as the "Horaire de fin" date and time
     When I press "Créer"
     Then I should see "Extrait créé(e) avec succès"
-    And I should see "Extrait du 01 janvier 2010 07:00"
+    And I should see "Extrait 01 janvier 2010 07:00"
 
   Scenario: Destroy a chunk
     Given a chunk exists
