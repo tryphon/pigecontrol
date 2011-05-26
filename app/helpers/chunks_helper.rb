@@ -2,9 +2,9 @@
 module ChunksHelper
   def link_to_download_chunk(chunk)
     if chunk.status.completed?
-      link_to 'Télécharger', source_chunk_path(chunk.source, chunk, :format => chunk.file_extension), :class => "download"
+      link_to t("chunks.actions.download"), source_chunk_path(chunk.source, chunk, :format => chunk.file_extension), :class => "download"
     else
-      link_to 'En préparation', source_chunk_path(chunk.source, chunk), :class => "download-pending chunk", :title => "Vérifier l'état"
+      link_to t("chunks.status.pending"), source_chunk_path(chunk.source, chunk), :class => "download-pending chunk", :title => t("chunks.actions.show")
     end
   end
 

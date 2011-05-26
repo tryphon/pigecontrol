@@ -1,3 +1,5 @@
+<%= render :partial => 'label_selections/label_selection_inline_help' %>
+
 <% unless label_selection.empty? %>
 <% div_for label_selection do %>
 <ul>
@@ -10,8 +12,8 @@
 </ul>
 
 <div class="actions">
-  <%= link_to "Nouvel extrait", new_source_chunk_path(label_selection.source), :title => "Nouvel extrait à partir de ce(s) repère(s)", :class => "create" %>
-  <%= link_to "Vider", label_selection_path, :method => :delete, :title => "Vider la sélection de repère", :class => "destroy" %>
+  <%= link_to t("label_selection.actions.create_chunk"), new_source_chunk_path(label_selection.source), :title => t("label_selection.actions.create_chunk_title"), :class => "create" %>
+  <%= link_to t("label_selection.actions.destroy"), label_selection_path, :method => :delete, :title => t("label_selection.actions.destroy_title"), :class => "destroy" %>
 </div>
 <% end %>
 <% end -%>

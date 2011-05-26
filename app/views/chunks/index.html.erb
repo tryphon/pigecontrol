@@ -1,10 +1,10 @@
-<%= title_tag "Extraits" %>
+<%= title_tag Chunk.human_name.pluralize %>
 
 <% for chunk in @chunks %>
   <% div_for chunk do %>
   <h3><%= link_to chunk.title, source_chunk_path(chunk.source, chunk) %></h3>
   <div class="description">
-    du <%= I18n.localize chunk.begin %> au <%= I18n.localize chunk.end %>
+    <%= t(".from") %> <%= I18n.localize chunk.begin %> <%= t(".to") %> <%= I18n.localize chunk.end %>
   </div>
   <div class="details in_actions">
     <span class="length"><%= chunk.duration.to_i / 60 %> min.</span>
@@ -20,16 +20,9 @@
 <% end %>
 
 <div class="actions">
-  <%= link_to 'Créer un extrait', new_source_chunk_path(@source), :class => "create" %>
+  <%= link_to t("chunks.actions.create"), new_source_chunk_path(@source), :class => "create" %>
 </div>
 
 <div class="inline_help">
-  <p>
-    L'enregistrement de votre antenne est continu. Ainsi à tout moment, vous pouvez extraire
-    une émission, une chronique ou la réponse d'un invité pour la rediffuser ou la mettre en ligne.
-  </p>
-  <p>
-    Il suffit pour cela, soit d'indiquer <%= link_to "une heure de début et de fin", new_source_chunk_path(@source) %>,
-    soit de sélectionner <%= link_to "2&nbsp;repères temporels", source_labels_path(@source) %>.
-  </p>
+  <%= render :partial => "index_inline_help" %>
 </div>

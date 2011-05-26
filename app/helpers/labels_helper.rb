@@ -22,7 +22,7 @@ module LabelsHelper
     end
 
     def title
-      "Sélectionner ce repère comme #{(begin? ? 'début' : 'fin')}"
+      helper.translate("label_selection.actions.select_#{endpoint}")
     end
 
     def link?

@@ -13,12 +13,13 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
 
-  helper_method :user_session
+  include UserInterface::LocaleManagement
+  include UserInterface::UserSessionManagement
 
   protected
 
-  def user_session
-    @user_session ||= UserSession.new(session)
+  def user_session(defaults = {})
+    @user_session ||= UserSession.new session, :language => accepted_language
   end
 
 end

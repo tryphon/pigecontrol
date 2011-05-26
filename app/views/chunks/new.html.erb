@@ -1,4 +1,4 @@
-<%= title_tag "Créer un extrait" %>
+<%= title_tag t(".title") %>
 
 <% form_for([@chunk.source, @chunk]) do |f| %>
   <%= f.error_messages %>
@@ -15,21 +15,18 @@
     <%= f.label :title, Chunk.human_attribute_name(:title) %><br/>
     <%= f.text_field :title %>
   </p>
-  <h3>Format de sortie</h3>
+  <h3><%= Chunk.human_attribute_name(:format) %> </h3>
   <p>
     <%= format_radio_buttons f %>
   </p>
   <p>
-    <%= f.submit "Créer" %>
-    ou <%= link_to 'revenir &#8250;', source_chunks_path(@chunk.source) %>
+    <%= f.submit t(".submit") %>
+    <%= t("or") %> <%= link_to "#{t('.cancel')} &#8250;", source_chunks_path(@chunk.source) %>
   </p>
 <% end %>
 
 <% if user_session.label_selection.empty? %>
 <div class="inline_help">
-  <p>
-    Vous ne connaissez pas exactement le début et l'heure de l'extrait de vous souhaiter récupérer ?
-    Sélectionnez <%= link_to "2&nbsp;repères temporels", source_labels_path(@chunk.source) %>.
-  </p>
+  <%= render :partial => "new_inline_help" %>
 </div>
 <% end %>

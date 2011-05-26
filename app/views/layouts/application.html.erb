@@ -17,8 +17,8 @@
     <div id="header">
       <div>
         <ul id="menu">
-          <li><%= link_to "Tableau de bord", source_chunks_path(Source.default) %></li>
-          <li><a href="#">Aide</a></li>
+          <li><%= link_to t(".dashboard"), source_chunks_path(Source.default) %></li>
+          <li><a href="#"><%= t(".help") %></a></li>
         </ul>
       </div>
     </div>
@@ -34,13 +34,13 @@
         <h2>PigeBox<sup>beta</sup></h2>
 
         <ul>
-          <li><%= link_to "Gérer les extraits", source_chunks_path(Source.default) %></li>
-          <li><%= link_to "Créer un extrait", new_source_chunk_path(Source.default) %></li>
+          <li><%= link_to t(".chunks.index"), source_chunks_path(Source.default) %></li>
+          <li><%= link_to t("chunks.actions.create"), new_source_chunk_path(Source.default) %></li>
         </ul>
 
         <ul>
-          <li><%= link_to "Voir les repères", source_labels_path(Source.default) %></li>
-          <li><%= link_to "Créer un repère manuel", new_source_label_path(Source.default) %></li>
+          <li><%= link_to t(".labels.index"), source_labels_path(Source.default) %></li>
+          <li><%= link_to t(".labels.new"), new_source_label_path(Source.default) %></li>
         </ul>
 
         <ul>
@@ -49,18 +49,18 @@
           <li><%= link_to SavePoint.human_name, new_save_point_path %></li>
           <li><%= link_to Release.human_name, releases_path %></li>
         </ul>
-        <h2>Sélection</h2>
-
-        <p>
-          En sélectionnant <%= link_to_unless current_page?(source_labels_path(Source.default)), "2 repères", source_labels_path(Source.default) %>, vous pouvez créer un extrait en quelques clics.
-        </p>
+        <h2><%= LabelSelection.human_name %></h2>
 
         <%= render user_session.label_selection %>
 
-        <h2>Information</h2>
+        <h2><%= t(".information.title") %></h2>
         <%= site_information_tag %>
         <p>
-          Pour plus d'information à propos de <%= link_to "PigeBox", "http://www.tryphon.eu/fr/produits/pigebox" %>, visitez notre site&nbsp;: <%= link_to "tryphon.eu", "http://www.tryphon.eu/fr" %>
+          <%= t(".information.text") %>
+        </p>
+
+        <p class="languages">
+          <%= links_to_languages %>
         </p>
       </div>
     </div>

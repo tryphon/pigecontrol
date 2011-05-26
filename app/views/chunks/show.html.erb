@@ -2,21 +2,21 @@
 
 <div class="description">
   <p>
-  Horaire de début :<br/>
+  <%= Chunk.human_attribute_name(:begin) %> :<br/>
   <%= I18n.localize @chunk.begin, :format => :long %>
   </p>
   <p>
-  Horaire de fin :<br/>
+  <%= Chunk.human_attribute_name(:end) %> :<br/>
   <%= I18n.localize @chunk.end, :format => :long %>
   </p>
   <p>
-  Format :<br/>
+  <%= Chunk.human_attribute_name(:format) %> :<br/>
   <%= @chunk.presenter.format %>
   </p>
   <% if @chunk.status.completed? %>
-  Prêt pour être téléchargé
+  <%= t("chunks.status.completed") %>
   <% else %>
-  En cours de préparation ...
+  <%= t("chunks.status.pending") %>
   <% end %>
 </div>
 <div class="details in_actions">
@@ -28,8 +28,8 @@
 
 <div class="actions">
   <%= link_to_download_chunk @chunk %>
-  <%= link_to 'Supprimer', [@chunk.source, @chunk], :confirm => 'Vous êtes sûr de vouloir supprimer cet extrait ?', :method => :delete, :class => "destroy" %>
+  <%= link_to t("chunks.actions.destroy"), [@chunk.source, @chunk], :confirm => t("chunks.actions.destroy_confirm"), :method => :delete, :class => "destroy" %>
 </div>
 
-<%= link_to 'Voir tous les extraits &#8250;', source_chunks_path(@chunk.source) %>
+<%= link_to "#{t('chunks.actions.index')} &#8250;", source_chunks_path(@chunk.source) %>
 

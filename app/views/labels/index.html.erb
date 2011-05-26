@@ -1,4 +1,4 @@
-<%= title_tag "Repères temporels" %>
+<%= title_tag t(".title") %>
 
 <% @labels.group_by(&:date).each do |date, labels| %>
   <h3><%= I18n.localize date, :format => :long %></h3>
@@ -26,7 +26,9 @@
 <%= will_paginate @labels %>
 
 <div class="actions">
-  <%= link_to 'Nouveau repère', new_source_label_path(@source), :class => "create" %>
+  <%= link_to t('labels.actions.new'), new_source_label_path(@source), :class => "create" %>
 </div>
 
-<%= render :partial => "inline_help" %>
+<div class="inline_help">
+  <%= render :partial => "inline_help" %>
+</div>

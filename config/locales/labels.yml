@@ -1,0 +1,38 @@
+en:
+  activerecord:
+    attributes:
+      label:
+        name: Name
+        timestamp: Timestamp
+  labels:
+    index:
+      title: Timed Labels
+    new:
+      title: Create a manual Label
+      submit: Create
+      cancel: back
+    actions:
+      new: New label
+      destroy: Remove
+      destroy_confirm: You really want to destroy this label ?
+      index: See all labels
+fr:
+  activerecord:
+    attributes:
+      label:
+        name: Nom
+        timestamp: Horaire
+    models:
+      label: Repère
+  labels:
+    index:
+      title: Repères temporels
+    new:
+      title: Créer un repère manuel
+      submit: Créer
+      cancel: revenir
+    actions:
+      new: Nouvel repère
+      destroy: Supprimer
+      destroy_confirm: Vous êtes sûr de vouloir supprimer ce repère ?
+      index: Voir tous les repères

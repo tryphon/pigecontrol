@@ -1,0 +1,23 @@
+en:
+  layouts:
+    application:
+      chunks:
+        index: Manage chunks
+      labels:
+        index: See labels
+        new: Create a manual label
+      information: 
+        text: | 
+          For more information about <a href="http://www.tryphon.eu/en/products/pigebox">PigeBox</a>, please visit our website: <a href="http://www.tryphon.eu/fr">tryphon.eu</a>
+fr:
+  layouts:
+    application:
+      chunks:
+        index: Gérer les extraits
+      labels:
+        index: Voir les repères
+        new: Créer un repère manuel
+      information: 
+        text: | 
+          Pour plus d'information à propos de la <a href="http://www.tryphon.eu/fr/produits/pigebox">PigeBox</a>, visitez notre site&nbsp;: <a href="http://www.tryphon.eu/fr">tryphon.eu</a>
+

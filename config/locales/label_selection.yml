@@ -1,0 +1,31 @@
+en:
+  activerecord:
+    attributes:
+      models:
+        label_selection: Label Selection
+  label_selection:
+    flash:
+      create_chunk: "Chunk defined according the two selected labels"
+    actions:
+      select_begin: Select this label as chunk begin
+      select_end: Select this label as chunk end
+      destroy: Clear
+      destroy_title: Clear this label selection
+      create_chunk: "New Chunk"
+      create_chunk_title: "New Chunk from selected label(s)"
+fr:
+  activerecord:
+    attributes:
+      models:
+        label_selection: Sélection
+  label_selection:
+    flash:
+      create_chunk: "Extrait défini à partir des deux repères sélectionnés"
+    actions:
+      select_begin: "Sélectionner ce repère comme début d'extrait"
+      select_end: "Sélectionner ce repère comme fin d'extrait"
+      destroy: Vider
+      destroy_title: "Vider la sélection de repère"
+      create_chunk: "Nouvel extrait"
+      create_chunk_title: "Nouvel extrait à partir de ce(s) repère(s)"
+      

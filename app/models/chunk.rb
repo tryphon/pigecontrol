@@ -34,9 +34,9 @@ class Chunk < ActiveRecord::Base
 
   def default_title
     unless self.begin.nil?
-      "Extrait du #{I18n.localize(self.begin, :locale => :fr)}"
+      "#{Chunk.human_name} #{I18n.localize(self.begin, :locale => :fr)}"
     else
-      "Extrait numero #{self.id}"
+      "#{Chunk.human_name} #{self.id}"
     end
   end
 

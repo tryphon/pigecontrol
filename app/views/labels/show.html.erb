@@ -1,4 +1,4 @@
-<%= title_tag "Repère \"#{truncate @label.name, 40}\"" %>
+<%= title_tag "#{Label.human_name} \"#{truncate @label.name, 40}\"" %>
 
 <div class="description">
   <p>
@@ -12,8 +12,8 @@
 </div>
 
 <div class="actions">
-  <%= link_to 'Supprimer', [@label.source, @label], :confirm => 'Vous êtes sûr de vouloir supprimer ce repère ?', :method => :delete, :class => "destroy" %>
+  <%= link_to t("chunks.actions.destroy"), [@label.source, @label], :confirm => t("chunks.actions.destroy_confirm"), :method => :delete, :class => "destroy" %>
 </div>
 
-<%= link_to 'Voir tous les repères &#8250;', source_labels_path(@label.source) %>
+<%= link_to "#{t('chunks.actions.index')} &#8250;", source_labels_path(@label.source) %>
 

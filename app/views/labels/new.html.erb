@@ -1,4 +1,4 @@
-<%= title_tag "Créer un repère manuel" %>
+<%= title_tag t(".title") %>
 
 <% form_for([@label.source, @label]) do |f| %>
   <%= f.error_messages %>
@@ -12,9 +12,11 @@
     <%= f.datetime_select :timestamp, :include_seconds => true %>
   </p>
   <p>
-    <%= f.submit "Créer" %>
-    ou <%= link_to 'revenir &#8250;', source_labels_path(@source) %>
+    <%= f.submit t('.submit') %>
+    ou <%= link_to "#{t('.cancel')} &#8250;", source_labels_path(@source) %>
   </p>
 <% end %>
 
-<%= render :partial => "inline_help" %>
+<div class="inline_help">
+  <%= render :partial => "inline_help" %>
+</div>

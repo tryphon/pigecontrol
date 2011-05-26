@@ -16,7 +16,7 @@ class LabelsController < InheritedResources::Base
   def select
     user_session.label_selection << label
     if user_session.label_selection.completed?
-      flash[:notice] = "Nouvel extrait défini à partir des deux repères"
+      flash[:notice] = t("label_selection.flash.create_chunk")
       redirect_to new_source_chunk_path(label.source)
     else
       redirect_to :back

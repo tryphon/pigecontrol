@@ -1,12 +1,8 @@
-class UserSession
-
-  def initialize(session)
-    @session = session
-  end
+class UserSession < UserInterface::UserSession
 
   def label_selection
-    @label_selection ||= LabelSelection.new(@session[:label_selection]).on_change do |labels|
-      @session[:label_selection] = labels.collect(&:id)
+    @label_selection ||= LabelSelection.new(session[:label_selection]).on_change do |labels|
+      session[:label_selection] = labels.collect(&:id)
     end
   end
 

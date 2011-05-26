@@ -1,0 +1,78 @@
+en:
+  activerecord:
+    attributes:
+      chunk:
+        begin: Time of beginning 
+        end: Time of end
+        format: Output format
+    errors:
+      models:
+        chunk:
+          attributes:
+            base:
+              source_cant_store: "need more storage space than available"
+            begin:
+              no_record: "outside of available records"
+            end:
+              before_begin: "before time of beginning"
+              no_record: "outside of available records"
+              not_available_yet: "not yet available"
+  chunks:
+    index:
+      from: from
+      to: to
+    new:
+      format: Output format
+      submit: Create
+      cancel: back
+      title: Create a Chunk
+    actions:
+      download: Download
+      create: Create a chunk
+      destroy: Remove
+      destroy_confirm: You really want to destroy this chunk ?
+      index: See all chunks
+      show: Check chunk status
+    status:
+      completed: Ready to download
+      pending: Pending ...
+fr:
+  activerecord:
+    attributes:
+      chunk:
+        title: Titre
+        begin: Horaire de début
+        end: Horaire de fin
+        format: Format de sortie
+    models:
+      chunk: Extrait
+    errors:
+      models:
+        chunk:
+          attributes:
+            base:
+              source_cant_store: "nécessite plus d'espace de stockage que disponible"
+            begin:
+              no_record: "en dehors des enregistrements disponibles"
+            end:
+              before_begin: "avant l'horaire de début"
+              no_record: "en dehors des enregistrements disponibles"
+              not_available_yet: "non encore disponible"
+  chunks:
+    index:
+      from: du
+      to: au
+    new:
+      submit: Créer
+      cancel: revenir
+      title: Créer un Extrait
+    actions:
+      download: Télécharger
+      create: Créer un extrait
+      destroy: Supprimer
+      destroy_confirm: Vous êtes sûr de vouloir supprimer cet extrait ?
+      index: Voir tous les extraits
+      show: "Vérifier l'état"
+    status:
+      completed: Prêt à être téléchargé
+      pending: En cours de préparation ...
