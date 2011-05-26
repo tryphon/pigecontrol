@@ -41,7 +41,7 @@ describe Record do
 
     it "should support wav file" do
       @record.filename = test_file(:wav)
-      @record.file_duration.should be_close(14,0.1)
+      @record.file_duration.should be_close(15,0.1)
     end
 
     it "should be nil when file isn't found" do
