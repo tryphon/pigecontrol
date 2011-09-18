@@ -8,10 +8,10 @@ gem "will_paginate", "~> 2.3.11"
 gem "SyslogLogger"
 gem "delayed_job"
 gem "rtaglib"
+gem "eventmachine"
 
 group :development, :test do
   # To use eventmachine debian package
-  gem "eventmachine"
   gem "capistrano"
   gem "capistrano-ext"
 end
