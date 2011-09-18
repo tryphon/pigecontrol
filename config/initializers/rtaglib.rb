@@ -1,0 +1,1 @@
+require 'rtaglib_ext'

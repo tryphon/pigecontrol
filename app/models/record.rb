@@ -1,3 +1,5 @@
+require 'tagfile'
+
 class Record < ActiveRecord::Base
 
   belongs_to :source
@@ -63,7 +65,7 @@ class Record < ActiveRecord::Base
   def file_duration
     return nil if self.filename.blank?
 
-    TagLib::File.open(self.filename) do |file|
+    TagFile::File.open(self.filename) do |file|
       file.length
     end
   rescue Exception => e

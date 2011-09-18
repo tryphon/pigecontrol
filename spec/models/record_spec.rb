@@ -55,13 +55,13 @@ describe Record do
     end
 
     it "should TagLib to known file duration" do
-      taglib_file = mock TagLib::File, :length => 10
-      TagLib::File.should_receive(:open).with(@record.filename).and_yield(taglib_file)
+      taglib_file = mock TagFile::File, :length => 10
+      TagFile::File.should_receive(:open).with(@record.filename).and_yield(taglib_file)
       @record.file_duration.should == taglib_file.length
     end
 
-    it "should be nil when TagLib::File fails" do
-      TagLib::File.stub!(:open).and_raise("error")
+    it "should be nil when TagFile::File fails" do
+      TagFile::File.stub!(:open).and_raise("error")
       @record.file_duration.should be_nil
     end
     
