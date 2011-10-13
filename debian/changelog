@@ -1,6 +1,12 @@
+pige (0.13-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Alban Peignier <alban@tryphon.eu>  Sun, 18 Sep 2011 11:44:28 +0200
+
 pige (0.12-1) UNRELEASED; urgency=low
 
-  * Nez upstream release. Fixes #45
+  * New upstream release. Fixes #45
 
  -- Alban Peignier <alban@tryphon.eu>  Mon, 09 May 2011 20:26:23 +0200
 

@@ -2,7 +2,7 @@ PATH := ${HOME}/.gem/ruby/1.8/bin:${HOME}/.bundle/ruby/1.8/bin:${PATH}
 
 build:
 	gem install --no-rdoc --no-ri --user-install bundler
-	bundle install --deployment --without=test development cucumber
+	MAKEFLAGS="" bundle install --deployment --without=test development cucumber || true
 	ln -s bundle/ruby/1.8/gems vendor/gems
 
 	cp config/database.yml.sample config/database.yml

@@ -1,21 +1,24 @@
 set :application, "pige"
 
-set :repository,  "git://www.dbx.tryphon.priv/pige"
+set :repository,  "git://www.tryphon.priv/pige"
 set :scm, :git
 set :git_enable_submodules, true
 
 set :deploy_to, "/var/www/pige"
 
-server "radio.dbx.tryphon.priv", :app, :web, :db, :primary => true
+server "radio.dbx1.tryphon.priv", :app, :web, :db, :primary => true
 
 # after "deploy:setup", "db:create"
 
 set :keep_releases, 5
 after "deploy:update", "deploy:cleanup" 
 set :use_sudo, false
+default_run_options[:pty] = true
 
 after "deploy:update_code", "deploy:symlink_shared", "deploy:gems", "deploy:current_yml"
 after "deploy:migrations", "deploy:fix_db_permissions"
+
+set :rake, "bundle exec rake"
 
 namespace :deploy do
   # Prevent errors when chmod isn't allowed by server
@@ -40,7 +43,7 @@ namespace :deploy do
 
   desc "Install gems"
   task :gems, :roles => :app do
-    sudo "rake --rakefile=#{release_path}/Rakefile gems:install RAILS_ENV=production"
+    run "cd #{release_path} && umask 002 && bundle install --path=#{shared_path}/bundle --without=development:test:cucumber"
   end
 
   desc "Create a current.yml file"

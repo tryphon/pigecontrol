@@ -1,6 +1,13 @@
 # Don't change this file!
 # Configure your app in config/environment.rb and config/environments/*.rb
 
+begin
+  require "bundler"
+  Bundler.setup
+rescue Exception => e
+  puts "WARNING: Bundler isn't available (#{e.to_s})"
+end
+
 RAILS_ROOT = "#{File.dirname(__FILE__)}/.." unless defined?(RAILS_ROOT)
 
 require 'thread'
