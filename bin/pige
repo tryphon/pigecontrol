@@ -17,12 +17,26 @@ while [ "$1" != "--" ]; do
 done
 shift # remove --
 
-if [ "$1" == "index" ]; then
-  shift
-  while [ $# -gt 0 ]; do
-    curl --silent --fail --request POST "http://$host/sources/1/records.json?record\[filename\]=$1" > /dev/null
-    shift
-  done
-fi
+function http_request() {
+    curl --silent --fail $@ > /dev/null
+}
+
+command=$1
+shift
+
+case $command in
+    index)
+        while [ $# -gt 0 ]; do
+            http_request --request POST "http://$host/sources/1/records.json?record\[filename\]=$1"
+            shift
+        done
+        ;;
+    remove)
+        while [ $# -gt 0 ]; do
+            http_request --request DELETE "http://$host/sources/1/records$1"
+            shift
+        done
+        ;;
+esac
 
 exit $?
