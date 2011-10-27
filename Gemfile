@@ -22,6 +22,7 @@ group :development do
   gem "rake-debian-build"
   gem "autotest"
   gem "autotest-notification"
+  gem "guard"
 end
 
 group :test do
