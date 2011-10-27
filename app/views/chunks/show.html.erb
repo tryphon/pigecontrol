@@ -22,7 +22,7 @@
 <div class="details in_actions">
   <span class="length"><%= @chunk.duration.to_i / 60 %> min.</span>
   <% if @chunk.status.completed? %>
-  <span class="size"><%= @chunk.size / 1.megabyte %> Mo</span>
+  <span class="size"><%= number_to_human_size @chunk.size %></span>
   <% end %>
 </div>
 
