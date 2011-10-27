@@ -96,5 +96,7 @@ Rails::Initializer.run do |config|
 
   config.after_initialize do
     UDP::Receiver.init
+
+    Record.destroy_all_invalid
   end
 end

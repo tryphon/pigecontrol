@@ -38,7 +38,7 @@ describe Chunk do
   end
 
   it "should accept to end at the latest record end" do
-    @chunk.source.records.create! :begin => @chunk.begin, :end => @chunk.end, :filename => "dummy"
+    Factory(:record, :begin => @chunk.begin, :end => @chunk.end, :source => @chunk.source)
     @chunk.should be_valid
   end
 

@@ -54,10 +54,12 @@ Spec::Runner.configure do |config|
 
   config.before(:each) {
     FileUtils.mkdir_p Chunk.test_storage_directory
+    FileUtils.mkdir_p "tmp/tests"
   }
 
   config.after(:each) {
     FileUtils.rm_rf Chunk.test_storage_directory
+    FileUtils.rm_rf "tmp/tests"
   }
 
 end

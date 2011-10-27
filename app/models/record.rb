@@ -7,7 +7,7 @@ class Record < ActiveRecord::Base
   validates_presence_of :begin, :end, :filename
   validates_uniqueness_of :filename
 
-  validate :end_is_after_begin
+  validate :end_is_after_begin, :file_exists
 
   before_validation :compute_time_range
 
@@ -119,11 +119,31 @@ class Record < ActiveRecord::Base
     end
   end
 
+  def self.destroy_all_invalid
+    logger.info "Check if all records are valid"
+    
+    invalid_records = []
+    Record.find_each do |record|
+      invalid_records << record unless record.valid?
+    end
+
+    unless invalid_records.empty?
+      logger.info "Remove #{invalid_records.count} invalid records"
+      invalid_records.each(&:destroy)
+    end
+  end
+
   private
 
   def end_is_after_begin
     if self.duration and self.duration <= 0
       errors.add(:end, "should be after #{self.begin}") 
+    end
+  end
+
+  def file_exists
+    unless filename.nil? or File.exists?(filename)
+      errors.add(:base, "no associated file #{filename}")
     end
   end
 

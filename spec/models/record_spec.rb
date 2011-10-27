@@ -236,6 +236,18 @@ describe Record do
 
   end
 
+  describe ".destroy_all_invalid" do
+    
+    let!(:invalid_record) { Factory(:record).tap { |r| FileUtils.rm r.filename } }
+
+    it "should destroy invalid records" do
+      Record.destroy_all_invalid
+      # invalid_record.should be_destroyed # Returns nil ?!
+      Record.find_by_id(invalid_record).should be_nil
+    end
+
+  end
+
 end
 
 describe Record, "including" do
