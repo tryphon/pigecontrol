@@ -33,7 +33,7 @@ case $command in
         ;;
     remove)
         while [ $# -gt 0 ]; do
-            http_request --request DELETE "http://$host/sources/1/records$1"
+            http_request --request DELETE "http://$host/sources/1/records/$1"
             shift
         done
         ;;
