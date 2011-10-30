@@ -96,11 +96,5 @@ Rails::Initializer.run do |config|
 
   config.after_initialize do
     UDP::Receiver.init
-
-    begin
-      Record.destroy_all_invalid
-    rescue => e
-      Rails.logger.debug "Can't destroy invalid records : #{e}"
-    end
   end
 end
