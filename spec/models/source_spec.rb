@@ -34,6 +34,11 @@ describe Source do
       Source.find_or_default(1).should == @source
     end
 
+    it "should return default Source if id is '1'" do
+      Source.should_receive(:default).and_return(@source)
+      Source.find_or_default("1").should == @source
+    end
+
     it "should find Source when id isn't 1" do
       Source.should_receive(:find).and_return(@source)
       Source.find_or_default(2).should == @source

@@ -17,7 +17,7 @@ class Source < ActiveRecord::Base
   end
 
   def self.find_or_default(id)
-    id == 1 ? default : find(id)
+    id.to_i == 1 ? default : find(id)
   end
 
   def default_chunk
