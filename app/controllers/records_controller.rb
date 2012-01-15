@@ -1,5 +1,5 @@
 class RecordsController < InheritedResources::Base
-  belongs_to :source
+  belongs_to :source, :finder => :find_or_default
 
   actions :create, :destroy
   respond_to :json

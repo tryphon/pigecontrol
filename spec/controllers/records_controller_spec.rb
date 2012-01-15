@@ -12,6 +12,11 @@ describe RecordsController do
       response.should be_success
     end
 
+    it "should use Source.find_or_default" do
+      Source.should_receive(:find_or_default).and_return(source)
+      post :create, :source_id => source.to_param, :record => { :filename => test_file }, :format => :json
+    end
+
   end
 
   describe "DELETE /destroy" do
@@ -23,6 +28,11 @@ describe RecordsController do
 
     it "should find the record by filename and remove it" do
       delete :destroy, :source_id => source.to_param, :path => record.filename, :format => :json
+      Record.exists?(record).should be_false
+    end
+
+    it "should join path parts" do
+      delete :destroy, :source_id => source.to_param, :path => record.filename.split("/"), :format => :json
       Record.exists?(record).should be_false
     end
 

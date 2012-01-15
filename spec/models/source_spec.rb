@@ -27,6 +27,20 @@ describe Source do
 
   end
 
+  describe ".find_or_default" do
+    
+    it "should return default Source if id is 1" do
+      Source.should_receive(:default).and_return(@source)
+      Source.find_or_default(1).should == @source
+    end
+
+    it "should find Source when id isn't 1" do
+      Source.should_receive(:find).and_return(@source)
+      Source.find_or_default(2).should == @source
+    end
+
+  end
+
   describe "default_chunk" do
     
     it "should be nil when no records exist" do

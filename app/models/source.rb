@@ -16,6 +16,10 @@ class Source < ActiveRecord::Base
     find_or_create_by_name 'default'
   end
 
+  def self.find_or_default(id)
+    id == 1 ? default : find(id)
+  end
+
   def default_chunk
     unless records.empty?
       chunks.build.tap do |chunk|
