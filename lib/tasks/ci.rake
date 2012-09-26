@@ -1,4 +1,4 @@
-namespace :buildbot do
+namespace :ci do
   desc "Prepare CI build"
   task :setup do
     unless uptodate?("config/database.yml", "config/database.yml.sample") 
