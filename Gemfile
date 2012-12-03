@@ -7,8 +7,9 @@ gem "inherited_resources", "= 1.0.6"
 gem "will_paginate", "~> 2.3.11"
 gem "SyslogLogger"
 gem "delayed_job"
-gem "rtaglib"
+gem "taglib-ruby"
 gem "eventmachine"
+gem "strip_attributes"
 
 group :development, :test do
   # To use eventmachine debian package
@@ -23,6 +24,9 @@ group :development do
   gem "autotest"
   gem "autotest-notification"
   gem "guard"
+  gem 'guard-rspec'
+  gem 'guard-bundler'
+  gem 'guard-cucumber'
 end
 
 group :test do
@@ -30,9 +34,11 @@ group :test do
   gem 'rspec', '= 1.3.1'
   gem 'rspec-rails', '= 1.3.3'
   gem 'remarkable_rails'
-  gem "ZenTest"
   gem "markup_validity"
   gem "rcov"
+  
+  # Requires to run spec:plugins
+  gem "metalive"
 end
 
 group :cucumber do
