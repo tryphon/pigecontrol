@@ -1,6 +1,6 @@
 set :application, "pige"
 
-set :repository,  "git://www.tryphon.priv/pige"
+set :repository,  "git://projects.tryphon.priv/pige"
 set :scm, :git
 set :git_enable_submodules, true
 
