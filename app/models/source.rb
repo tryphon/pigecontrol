@@ -5,7 +5,6 @@ class Source < ActiveRecord::Base
   validates_numericality_of :storage_limit, :greater_than_or_equal => 0
 
   has_many :chunks, :dependent => :destroy
-  has_many :records, :dependent => :destroy, :order => "begin"
   has_many :labels, :dependent => :destroy
 
   def before_validation
@@ -21,15 +20,17 @@ class Source < ActiveRecord::Base
   end
 
   def default_chunk
-    unless records.empty?
-      chunks.build.tap do |chunk|
-        beginning_of_last_hour = records.last.end.change(:min => 0)
-        chunk.begin = [beginning_of_last_hour, records.first.begin].max
-        chunk.end = records.last.end
+    if last_record = record_index.last_record
+      logger.debug "Use #{last_record.inspect} for default_chunk times"
+      chunks.build do |chunk|
+        beginning_of_last_hour = last_record.end.change(:min => 0)
+
+        chunk.begin = beginning_of_last_hour
+        chunk.end = last_record.end
       end
     end
   end
-  
+
   def can_store?(chunk)
     chunk.size and remaining_storage_space > chunk.size
   end
@@ -46,6 +47,10 @@ class Source < ActiveRecord::Base
     # TODO the storage directory should be specific to the source
     free_block, block_size = `stat --file-system --printf="%a %S" #{Chunk.storage_directory}`.split.collect(&:to_i)
     free_block*block_size
+  end
+
+  def record_index
+    @record_index ||= Record::Index.new
   end
 
 end

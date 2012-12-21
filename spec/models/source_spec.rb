@@ -11,7 +11,6 @@ describe Source do
   it { should validate_numericality_of(:storage_limit, :greater_than_or_equal => 0) }
 
   it { should have_many(:chunks, :dependent => :destroy) }
-  it { should have_many(:records, :dependent => :destroy) }
   it { should have_many(:labels, :dependent => :destroy) }
 
   describe "default" do
@@ -47,13 +46,20 @@ describe Source do
   end
 
   describe "default_chunk" do
+
+    let(:last_record) { mock :end => 5.minutes.ago }
+    let(:record_index) { mock :last_record => last_record }
+
+    before(:each) do
+      @source.stub :record_index => record_index
+    end
     
     it "should be nil when no records exist" do
+      @source.record_index.stub :last_record
       @source.default_chunk.should be_nil
     end
 
     it "should end at the end of the last record" do
-      last_record = Factory(:record, :source => @source).reload
       @source.default_chunk.end.should == last_record.end
     end
 
@@ -62,13 +68,8 @@ describe Source do
     end
 
     it "should start at the begin of the last record hour (if possible)" do
-      last_record = Factory(:record, :source => @source, :begin => t("09h30"), :end => t("10h30")).reload
+      last_record.stub :end => t("10h30")
       @source.default_chunk.begin.should == t("10h")
-    end
-
-    it "should start at the begin of the first record (if less than 1 hour is recorded)" do
-      record = Factory(:record, :source => @source, :begin => t("09h15"), :end => t("09h30")).reload
-      @source.default_chunk.begin.should == record.begin
     end
 
   end

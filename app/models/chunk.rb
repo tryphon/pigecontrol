@@ -50,12 +50,8 @@ class Chunk < ActiveRecord::Base
     end
   end
 
-  def records
-    if self.begin and self.end
-      Record.uniq self.source.records.including(self.begin, self.end)
-    else
-      []
-    end
+  def record_set
+    source.record_index.set self.begin, self.end
   end
 
   cattr_writer :storage_directory
@@ -88,14 +84,7 @@ class Chunk < ActiveRecord::Base
   def create_file!
     logger.info "Create file for Chunk #{id}"
     update_attribute :completion_rate, 0
-
-    if Sox.command do |sox|
-        records.each do |record|
-          sox.input record.filename
-        end
-        sox.output filename, :compression => file_compression
-        sox.effect :trim, self.begin - records.first.begin, duration
-      end
+    if export_command.run
       logger.info "Completed file for Chunk #{id}: #{filename}"
       update_attribute :completion_rate, 1.0
     end
@@ -103,6 +92,13 @@ class Chunk < ActiveRecord::Base
     unless status.completed?
       logger.info "Failed to create file for Chunk #{id}"
       update_attribute :completion_rate, nil 
+    end
+  end
+
+  def export_command
+    record_set.export_command.tap do |sox|
+      sox.output filename, :compression => file_compression
+      sox.effect :trim, self.begin - record_set.begin, duration
     end
   end
 
@@ -177,11 +173,9 @@ class Chunk < ActiveRecord::Base
   end
 
   def records_available
-    unless source.nil? or source.records.empty?
-      last_record = source.records.last
-
-      if self.end <= last_record.end 
-        if self.records.empty?
+    if source and last_record = source.record_index.last_record and self.end
+      if self.end <= last_record.end
+        if record_set.nil? or record_set.duration < duration
           errors.add(:begin, :no_record) 
           errors.add(:end, :no_record)
         end

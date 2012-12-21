@@ -6,10 +6,7 @@ describe Chunk do
     @chunk = Factory(:chunk)
   end
 
-  after(:each) do
-    # FIXME for unknown reason, @chunk.source is shared between specs ?!
-    @chunk.source.records.clear if @chunk.source.records.respond_to?(:clear)
-  end
+  let(:record) { Factory :record }
 
   it { should validate_presence_of(:begin) }
   it { should validate_presence_of(:end) }
@@ -20,25 +17,29 @@ describe Chunk do
     Chunk.new.completion_rate.should be_nil
   end
 
-
   it "should validate that end is after begin" do
     @chunk.end = @chunk.begin - 1
     @chunk.should have(1).error_on(:end)
   end
 
   it "should have available records when using past records (no way they appear)" do
-    @chunk.source.records.create :end => @chunk.end + 1.hour, :duration => 2.hours
+    @chunk.begin = record.begin - 1
+    @chunk.end = record.end
+
     @chunk.should have(1).error_on(:begin)
     @chunk.should have(1).error_on(:end)
   end
 
   it "should not end after the latest record (chunk scheduling not available for the moment)" do
-    @chunk.source.records.create :end => @chunk.end - 1.hour, :duration => 1.hour
+    @chunk.begin = record.begin
+    @chunk.end = record.end + 1
+
     @chunk.should have(1).error_on(:end)
   end
 
   it "should accept to end at the latest record end" do
-    Factory(:record, :begin => @chunk.begin, :end => @chunk.end, :source => @chunk.source)
+    @chunk.begin = record.begin
+    @chunk.end = @chunk.source.record_index.last_record.end
     @chunk.should be_valid
   end
 
@@ -85,41 +86,17 @@ describe Chunk do
 
   end
 
-  describe "records" do
-
-    before(:each) do
-      @chunk.stub!(:source).and_return(mock(Source, :records => mock("source records")))
-
-      @records = Array.new(3) { |n| mock Record, :begin => n, :quality => 1, :end => @chunk.end-(n-4)*5.minutes}
-      @chunk.source.records.stub!(:including).and_return(@records)
-    end
+  describe "record_set" do
     
-    it "should retrieve source recordings including chunck begin and end" do
-      @chunk.source.records.should_receive(:including).with(@chunk.begin, @chunk.end).and_return(@records)
-      @chunk.records.should == @records
+    it "should retrieve set from source record_index" do
+      record_index = mock(:set => true)
+      # stub_chain refused to work ??
+      @chunk.stub(:source => mock(:record_index => record_index))
+
+      record_index.should_receive(:set).with(@chunk.begin, @chunk.end)
+      @chunk.record_set
     end
 
-    it "should use only uniq records (no records with the same time range)" do
-      @chunk.source.records.stub!(:including).and_return(@records + @records)
-      @chunk.records.should == @records
-    end
-
-    it "should return an empty array when begin is not defined" do
-      @chunk.begin = nil
-      @chunk.records.should be_empty
-    end
-
-    it "should return an empty array when end is not defined" do
-      @chunk.end = nil
-      @chunk.records.should be_empty
-    end
-
-    it "should not return an empty array when end is the last record end (#33)" do
-      @chunk.source.records.stub!(:including).and_return(@records)
-      @chunk.end = @records.last.end
-      @chunk.records.should_not be_empty
-    end
-    
   end
 
   describe "title" do
@@ -252,45 +229,35 @@ describe Chunk do
 
   end
 
-  describe "create_file!" do
+  describe "#export_command" do
 
     before(:each) do
-      @sox = mock(Sox::Command, :input => nil, :output => nil, :effect => nil)
-      Sox.stub!(:command).and_yield(@sox).and_return(true)
-      
-      @records = Array.new(3) do |n| 
-        mock(Record, :filename => "file#{n}", :duration => 10)
-      end
-      @records.first.stub!(:begin).and_return(@chunk.begin)
-
-      @chunk.stub!(:records).and_return(@records)
-    end
-
-    it "should use record files as sox inputs" do
-      @records.each do |record|
-        @sox.should_receive(:input).with(record.filename)
-      end
-      @chunk.create_file!
+      @chunk.stub(:record_set => mock(:export_command => Sox::Command.new, :begin => 3.minutes.ago))
     end
 
     it "should use chunk filename as sox output" do
-      @sox.should_receive(:output).with(@chunk.filename, :compression => 6)
-      @chunk.create_file!
+      @chunk.export_command.output.filename.should == @chunk.filename
+    end
+
+    it "should specify file_compression in sox output" do
+      @chunk.export_command.output.options[:compression].should == @chunk.file_compression
     end
 
     it "should trim the output file when chunk duration is shorter than record files" do
-      @chunk.begin = @records.first.begin
-      @chunk.end = @chunk.begin + 5
+      @chunk.begin = @chunk.record_set.begin + 3.minutes
+      @chunk.end = @chunk.begin + 5.minutes
 
-      @sox.should_receive(:effect).with(:trim, 0, @chunk.duration)
-      @chunk.create_file!
+      @chunk.export_command.effects.first.should == Sox::Command::Effect.new(:trim, 3.minutes, @chunk.duration)
     end
+    
+  end
 
-    it "should trim the output file when chunk begins after the first record begin" do
-      @chunk.begin = @records.first.begin + 5
+  describe "create_file!" do
 
-      @sox.should_receive(:effect).with(:trim, 5, @chunk.duration)
-      @chunk.create_file!
+    let(:export_command) { mock :run => true }
+
+    before(:each) do
+      @chunk.stub :export_command => export_command
     end
 
     it "should be completed when file is created" do
@@ -299,7 +266,7 @@ describe Chunk do
     end
 
     it "should be pending while sox is running" do
-      @sox.stub!(:command).and_return do
+      export_command.stub(:run).and_return do
         @chunk.status.should be_pending
         true
       end
@@ -307,7 +274,7 @@ describe Chunk do
     end
 
     it "should be created when file creation fails" do
-      Sox.stub!(:command).and_return(false)
+      export_command.stub :run => false
       @chunk.create_file!
       @chunk.status.should be_created
     end

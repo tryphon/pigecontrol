@@ -1,3 +1,5 @@
+require 'time_ext'
+
 Factory.define :source do |source|
   source.sequence(:name) { |n| "name-#{n}" }
 end
@@ -7,15 +9,22 @@ Factory.define :chunk do |chunk|
   chunk.begin Time.now
   chunk.end { |c| c.begin + 5.minutes }
   chunk.source Source.default
+  
+  chunk.after_build do |chunk|
+    # tune_records chunk.begin, chunk.end
+  end
 end
 
-Factory.define :record do |record|
-  record.begin 15.minutes.ago
-  record.duration 15.minutes
-  record.sequence(:filename) { |n| "tmp/tests/file-2011-01-01-18-%02d.wav" % (n % 60) }
+Factory.define :record, :default_strategy => :build do |record|
+  record.begin 15.minutes.ago.floor(:min, 5.minutes)
+  record.duration 5.minutes
 
-  record.after_build do |r|
-    FileUtils.cp test_file(:wav), r.filename
+  record.after_build do |record|
+    record.filename = "#{Record::Index.record_directory}/#{Record::Index.new.basename_at(record.begin)}.wav"
+
+    FileUtils.mkdir_p File.dirname(record.filename)
+    FileUtils.cp tune_file(record.duration), record.filename
+    FileUtils.touch record.filename, :mtime => Time.now - 1.minute
   end
 end
 

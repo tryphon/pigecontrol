@@ -26,6 +26,7 @@ Feature: Manage chunks
 
   Scenario: Create a new chunk
     Given I am on the new chunk page
+    And records exist from "1 Janvier 2010 7:00" to "1 Janvier 2010 8:00"
     And I select "1 Janvier 2010 7:00" as the "Horaire de début" date and time
     And I select "1 Janvier 2010 8:00" as the "Horaire de fin" date and time
     When I press "Créer"
