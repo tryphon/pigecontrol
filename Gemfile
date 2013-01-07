@@ -11,6 +11,8 @@ gem "taglib-ruby"
 gem "eventmachine"
 gem "strip_attributes"
 
+gem "pige", :git => "git://projects.tryphon.priv/pige"
+
 group :development, :test do
   # To use eventmachine debian package
   gem "capistrano"

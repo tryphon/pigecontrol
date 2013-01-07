@@ -50,7 +50,7 @@ class Source < ActiveRecord::Base
   end
 
   def record_index
-    @record_index ||= Record::Index.new
+    @record_index ||= Pige::Record::Index.new
   end
 
 end

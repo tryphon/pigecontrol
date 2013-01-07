@@ -15,12 +15,12 @@ Factory.define :chunk do |chunk|
   end
 end
 
-Factory.define :record, :default_strategy => :build do |record|
+Factory.define :record, :class => Pige::Record, :default_strategy => :build do |record|
   record.begin 15.minutes.ago.floor(:min, 5.minutes)
   record.duration 5.minutes
 
   record.after_build do |record|
-    record.filename = "#{Record::Index.record_directory}/#{Record::Index.new.basename_at(record.begin)}.wav"
+    record.filename = "#{Pige::Record::Index.record_directory}/#{Pige::Record::Index.new.basename_at(record.begin)}.wav"
 
     FileUtils.mkdir_p File.dirname(record.filename)
     FileUtils.cp tune_file(record.duration), record.filename

@@ -1,12 +1,12 @@
 class RecordCleaner
 
   def self.setup
-    Record::Index.record_directory = "tmp/tests"
-    FileUtils.mkdir_p Record::Index.record_directory
+    Pige::Record::Index.record_directory = "tmp/tests"
+    FileUtils.mkdir_p Pige::Record::Index.record_directory
   end
 
   def self.clean
-    FileUtils.rm_rf Record::Index.record_directory
+    FileUtils.rm_rf Pige::Record::Index.record_directory
   end
 
 end
