@@ -13,6 +13,9 @@ gem "strip_attributes"
 
 gem "pige", :git => "git://projects.tryphon.priv/pige"
 
+# Requires to run spec:plugins
+gem "metalive"
+
 group :development, :test do
   # To use eventmachine debian package
   gem "capistrano"
@@ -38,9 +41,6 @@ group :test do
   gem 'remarkable_rails'
   gem "markup_validity"
   gem "rcov"
-  
-  # Requires to run spec:plugins
-  gem "metalive"
 end
 
 group :cucumber do
