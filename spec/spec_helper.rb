@@ -55,6 +55,10 @@ Spec::Runner.configure do |config|
   config.before(:each) {
     RecordCleaner.setup
     FileUtils.mkdir_p Chunk.test_storage_directory
+
+    Box::Release.latest_url = "public/updates/latest.yml"
+    Box::Release.current_url = "public/current.yml"
+    Box::Release.install_command = "/bin/true"
   }
 
   config.after(:each) {

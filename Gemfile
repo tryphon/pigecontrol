@@ -17,6 +17,8 @@ gem "taglib-ruby", "~> 0.4.0"
 # Requires to run spec:plugins
 gem "metalive"
 
+gem "box", :git => "git://projects.tryphon.priv/box"
+
 group :development, :test do
   # To use eventmachine debian package
   gem "capistrano"

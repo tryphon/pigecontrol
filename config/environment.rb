@@ -42,6 +42,7 @@ Rails::Initializer.run do |config|
   config.gem 'will_paginate'
   config.gem "delayed_job"
   config.gem "pige"
+  config.gem "box"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
