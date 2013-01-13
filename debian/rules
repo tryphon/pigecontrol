@@ -6,5 +6,5 @@ include /usr/share/cdbs/1/class/makefile.mk
 DEB_MAKE_BUILD_TARGET = build
 DEB_MAKE_INSTALL_TARGET = install DESTDIR=$(DEB_DESTDIR)
 
-configure/pige::
+configure/pigecontrol::
 	cp debian/Makefile $(DEB_BUILDDIR)
