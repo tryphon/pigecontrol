@@ -29,12 +29,14 @@ group :development do
   gem "sqlite3-ruby"
   gem "less"
   gem "rake-debian-build"
-  gem "autotest"
-  gem "autotest-notification"
+end
+
+group :development, :test do
   gem "guard"
   gem 'guard-rspec'
   gem 'guard-bundler'
   gem 'guard-cucumber'
+  gem 'launchy'
 end
 
 group :test do
