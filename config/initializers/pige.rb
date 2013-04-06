@@ -1,1 +1,1 @@
-require 'pige_ext'
+require 'pige'
