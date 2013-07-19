@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: git://projects.tryphon.priv/pige
-  revision: 4e7eeff44ae471ed6cc3188fc11856adee467a39
+  revision: 6fe737c94a0264e7ddc7f34206d04e8d772f92db
   specs:
     pige (0.0.1)
       activesupport

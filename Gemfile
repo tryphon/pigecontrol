@@ -1,4 +1,4 @@
-source :gemcutter
+source 'https://rubygems.org'
 
 gem "rails", "2.3.8"
 gem "rack", "~> 1.1.0"
@@ -17,7 +17,7 @@ gem "taglib-ruby", "~> 0.4.0"
 # Requires to run spec:plugins
 gem "metalive"
 
-gem "box", :git => "git://projects.tryphon.priv/box"
+gem "tryphon-box", :git => "git://projects.tryphon.priv/box"
 
 group :development, :test do
   # To use eventmachine debian package
