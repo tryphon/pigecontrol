@@ -19,8 +19,6 @@ config.action_mailer.raise_delivery_errors = false
 config.to_prepare do
   Input.current_class = TunerInput
 
-  # Box::Release.latest_url = "public/updates/latest.yml"
-  Box::Release.latest_url = "http://download.tryphon.eu/pigebox/latest.yml"
-  Box::Release.current_url = "public/current.yml"
-  Box::Release.install_command = "/bin/true"
+  # Release.latest_url = "public/updates/latest.yml"
+  load File.expand_path("../../box.rb", __FILE__)
 end
