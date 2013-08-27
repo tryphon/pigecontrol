@@ -8,7 +8,7 @@ config.cache_classes = true
 # config.threadsafe!
 
 # Use a different logger for distributed setups
-# config.logger = SyslogLogger.new
+# config.logger = Syslog::Logger.new
 
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false

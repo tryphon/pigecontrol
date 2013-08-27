@@ -5,7 +5,7 @@ gem "rack", "~> 1.1.0"
 
 gem "inherited_resources", "= 1.0.6"
 gem "will_paginate", "~> 2.3.11"
-gem "SyslogLogger"
+gem "SyslogLogger", "~> 2.0"
 gem "delayed_job"
 gem "eventmachine"
 gem "strip_attributes"
