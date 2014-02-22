@@ -8,3 +8,4 @@ coverage/
 spec/fixtures/test.wav
 rerun.txt
 build/*
+.ruby-version
