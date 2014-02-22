@@ -1,5 +1,3 @@
-require 'ftools'
-
 class Chunk < ActiveRecord::Base
   belongs_to :source
 
@@ -19,7 +17,7 @@ class Chunk < ActiveRecord::Base
   def self.requires_cbr?(format)
     format == :aacp
   end
-  
+
   def self.requires_quality?(format)
     not requires_cbr? format
   end
@@ -91,7 +89,7 @@ class Chunk < ActiveRecord::Base
   ensure
     unless status.completed?
       logger.info "Failed to create file for Chunk #{id}"
-      update_attribute :completion_rate, nil 
+      update_attribute :completion_rate, nil
     end
   end
 
@@ -126,7 +124,7 @@ class Chunk < ActiveRecord::Base
   end
 
   def status
-    string_value = case completion_rate 
+    string_value = case completion_rate
     when nil
       "created"
     when 1.0
@@ -155,7 +153,7 @@ class Chunk < ActiveRecord::Base
   def presenter
     @presenter ||= ChunkPresenter.new(self)
   end
-  
+
   private
 
   def filename_uniqueness
@@ -168,7 +166,7 @@ class Chunk < ActiveRecord::Base
 
   def end_is_after_begin
     if self.duration and self.duration <= 0
-      errors.add(:end, :before_begin) 
+      errors.add(:end, :before_begin)
     end
   end
 
@@ -176,7 +174,7 @@ class Chunk < ActiveRecord::Base
     if source and last_record = source.record_index.last_record and self.end
       if self.end <= last_record.end
         if record_set.nil? or record_set.duration < duration
-          errors.add(:begin, :no_record) 
+          errors.add(:begin, :no_record)
           errors.add(:end, :no_record)
         end
       else

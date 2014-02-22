@@ -4,9 +4,9 @@ describe Label do
 
   subject { Factory(:label) }
 
-  it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:timestamp) }
-  it { should belong_to(:source) }
+  # it { should validate_presence_of(:name) }
+  # it { should validate_presence_of(:timestamp) }
+  # it { should belong_to(:source) }
 
   it "should use Time.now as default timestamp" do
     Time.stub :now => (now = Time.now)

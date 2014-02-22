@@ -5,11 +5,11 @@ class LabelSelection
   protected :labels
 
   def initialize(label_identifiers = [])
-    @labels = 
-      unless label_identifiers.blank? 
+    @labels =
+      unless label_identifiers.blank?
         Label.find label_identifiers
-      else 
-        [] 
+      else
+        []
       end
   end
 
@@ -42,7 +42,7 @@ class LabelSelection
 
   def clear
     labels.clear
-    notify_on_change    
+    notify_on_change
   end
 
   def source
@@ -77,7 +77,7 @@ class LabelSelection
 
   def time_range
     if completed?
-      Range.new(self.begin.timestamp, self.end.timestamp) 
+      Range.new(self.begin.timestamp, self.end.timestamp)
     end
   end
 
@@ -93,6 +93,11 @@ class LabelSelection
 
   def self.human_name(options = {})
     I18n.translate("activerecord.attributes.models.label_selection")
+  end
+
+  # div_for call this method
+  def id
+    "selection"
   end
 
 end

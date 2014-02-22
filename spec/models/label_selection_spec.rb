@@ -44,11 +44,11 @@ describe LabelSelection do
   end
 
   it "should be an Enumerable" do
-    @selection.should == Enumerable::Enumerator.new(@selection).to_a
+    @selection.should be_kind_of(Enumerable)
   end
 
   describe "clear" do
-    
+
     it "should remove current selected labels" do
       @selection << @first_label
       @selection.clear
@@ -70,10 +70,10 @@ describe LabelSelection do
     end
 
     it "should be the source of selected labels" do
-      @selection << @first_label 
+      @selection << @first_label
       @selection.source.should == @first_label.source
     end
-    
+
   end
 
   describe "same_source?" do
@@ -81,7 +81,7 @@ describe LabelSelection do
     before(:each) do
       @selection.stub!(:source).and_return(Factory(:source))
     end
-    
+
     it "should be true with LabelSelection source" do
       @selection.should be_same_source(@selection.source)
     end
@@ -95,12 +95,12 @@ describe LabelSelection do
     end
 
     it "should be false with nil" do
-      @selection.should_not be_same_source(nil)      
+      @selection.should_not be_same_source(nil)
     end
 
     it "should be false with nil" do
-      @selection.stub!(:source) 
-      @selection.should_not be_same_source(nil)      
+      @selection.stub!(:source)
+      @selection.should_not be_same_source(nil)
     end
 
   end
@@ -147,7 +147,7 @@ describe LabelSelection do
   end
 
   describe "time_range" do
-    
+
     it "should be nil when selection is not completed" do
       @selection.stub!(:completed?).and_return(false)
       @selection.time_range.should be_nil
@@ -158,7 +158,7 @@ describe LabelSelection do
       @selection << @second_label
       @selection.time_range.should == (@first_label.timestamp..@second_label.timestamp)
     end
-    
+
   end
 
   describe "built chunck" do
@@ -183,7 +183,7 @@ describe LabelSelection do
   end
 
   describe "on_change" do
-    
+
     it "should notify given block when selection changes" do
       @selection << @first_label
 
@@ -200,7 +200,7 @@ describe LabelSelection do
   end
 
   describe "can_begin?" do
-    
+
     it "should be false when selection is completed" do
       @selection.stub!(:completed?).and_return(true)
       @selection.can_begin?(@first_label).should be_false
@@ -214,11 +214,11 @@ describe LabelSelection do
       @selection << @second_label
       @selection.can_begin?(@first_label).should be_true
     end
-    
+
   end
 
   describe "can_end?" do
-    
+
     it "should be false when selection is completed" do
       @selection.stub!(:completed?).and_return(true)
       @selection.can_end?(@first_label).should be_false
@@ -232,7 +232,7 @@ describe LabelSelection do
       @selection << @first_label
       @selection.can_end?(@second_label).should be_true
     end
-    
+
   end
-  
+
 end

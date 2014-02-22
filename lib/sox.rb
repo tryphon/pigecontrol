@@ -14,7 +14,7 @@ module Sox
   #  Sox.command do |sox|
   #    sox.input "input1.wav"
   #    sox.input "input2", :type => "ogg"
-  #    
+  #
   #    sox.output "output", :type => "ogg", :compression => 8
   #  end
   class Command
@@ -49,7 +49,7 @@ module Sox
     end
 
     def command_arguments
-      returning([]) do |arguments|
+      [].tap do |arguments|
         if playlist.useful?
           arguments << playlist.create
         else
@@ -93,7 +93,7 @@ module Sox
       def path
         file.path
       end
-      
+
       def create
         ::File.open(file.path,"w") do |playlist|
           inputs.each do |input|
@@ -118,7 +118,7 @@ module Sox
 
     end
 
-    class File 
+    class File
 
       attr_accessor :filename, :options
 
@@ -141,8 +141,8 @@ module Sox
       end
 
       def ==(other)
-        other and 
-          other.filename == filename and 
+        other and
+          other.filename == filename and
           other.options == options
       end
 
@@ -158,8 +158,8 @@ module Sox
       end
 
       def ==(other)
-        other and 
-          other.name == name and 
+        other and
+          other.name == name and
           other.arguments == arguments
       end
 
