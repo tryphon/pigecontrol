@@ -1,6 +1,6 @@
 <%= title_tag t(".title") %>
 
-<% form_for([@label.source, @label]) do |f| %>
+<%= form_for([@label.source, @label]) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -13,7 +13,7 @@
   </p>
   <p>
     <%= f.submit t('.submit') %>
-    ou <%= link_to "#{t('.cancel')} &#8250;", source_labels_path(@source) %>
+    ou <%= link_to "#{t('.cancel')}", source_labels_path(@source) %>
   </p>
 <% end %>
 

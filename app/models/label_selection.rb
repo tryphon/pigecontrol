@@ -36,7 +36,7 @@ class LabelSelection
 
   def chunk
     unless empty?
-      Chunk.new :begin => labels.first.timestamp, :end => labels.last.timestamp, :source => source
+      source.chunks.build :begin => labels.first.timestamp, :end => labels.last.timestamp
     end
   end
 
@@ -56,6 +56,15 @@ class LabelSelection
 
     other_source = other.respond_to?(:source) ? other.source : other
     source == other_source
+  end
+
+  def same_time_range?(other)
+    return false unless time_range and other
+
+    other_time_range = other.respond_to?(:time_range) ? other.time_range : other
+    [:begin, :end].all? do |attribute|
+      (time_range.send(attribute) - other_time_range.send(attribute)).abs < 1
+    end
   end
 
   def on_change(&block)
@@ -91,13 +100,11 @@ class LabelSelection
       (empty? or labels.first.timestamp < label.timestamp)
   end
 
-  def self.human_name(options = {})
-    I18n.translate("activerecord.attributes.models.label_selection")
-  end
+  extend ActiveModel::Naming
+  include ActiveModel::Conversion
 
-  # div_for call this method
-  def id
-    "selection"
+  def persisted?
+    false
   end
 
 end

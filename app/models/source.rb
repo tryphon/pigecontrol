@@ -7,7 +7,9 @@ class Source < ActiveRecord::Base
   has_many :chunks, :dependent => :destroy
   has_many :labels, :dependent => :destroy
 
-  def before_validation
+  before_validation :set_default_storage_limit
+
+  def set_default_storage_limit
     self.storage_limit ||= 0
   end
 

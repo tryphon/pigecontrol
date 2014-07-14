@@ -2,7 +2,7 @@
 
 <% @labels.group_by(&:date).each do |date, labels| %>
   <h3><%= I18n.localize date, :format => :long %></h3>
-  <table>
+  <table class="labels">
     <% for label in labels -%>
     <tr <%= 'class="selected"' if user_session.label_selection.include?(label) %>>
       <td class="select">
@@ -12,7 +12,7 @@
         <%= link_to label.timestamp.strftime("%H:%M:%S"), source_label_path(label.source, label) %>
       </td>
       <td>
-        <%= link_to truncate(label.name, 60), source_label_path(label.source, label) %>
+        <%= link_to truncate(label.name, :length => 60), source_label_path(label.source, label) %>
       </td>
     </tr>
     <% end %>
@@ -20,7 +20,7 @@
 <% end %>
 
 <% if @labels.empty? %>
-<p class="empty">Aucun repére temporel n'est disponible pour l'instant.</p>  
+<p class="empty">Aucun repére temporel n'est disponible pour l'instant.</p>
 <% end %>
 
 <%= will_paginate @labels %>

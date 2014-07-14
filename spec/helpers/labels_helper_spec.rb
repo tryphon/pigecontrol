@@ -13,7 +13,7 @@ describe LabelsHelper do
     before(:each) do
       @selector = LabelsHelper::EndpointSelector.new @label, @label_selection, :begin, helper
     end
-    
+
     it "should not be a link when label is already in the selection" do
       @label_selection << @label
       @selector.should_not be_link
@@ -40,7 +40,7 @@ describe LabelsHelper do
     end
 
     describe "image_alt" do
-      
+
       it "should be unicode character #8249 when endpoint is begin" do
         @selector.endpoint = :begin
         @selector.image_alt.should == "&#8249;"
@@ -50,7 +50,7 @@ describe LabelsHelper do
         @selector.endpoint = :end
         @selector.image_alt.should == "&#8250;"
       end
-      
+
     end
 
     describe "image_name" do
@@ -61,7 +61,7 @@ describe LabelsHelper do
         @selector.stub!(:endpoint?).and_return(false)
         @selector.stub!(:can_be_endpoint?).and_return(false)
       end
-      
+
       it "should be <endpoint> when selector is endpoint" do
         @selector.stub!(:endpoint?).and_return(true)
         @selector.image_name.should == "endpoint"
@@ -82,38 +82,28 @@ describe LabelsHelper do
       @selector.stub!(:image_name).and_return("image_name")
       @selector.stub!(:image_alt).and_return("image_alt")
 
-      helper.should_receive(:image_tag).with("image_name.png", :alt => "image_alt")      
+      helper.should_receive(:image_tag).with("image_name.png", :alt => "image_alt")
       @selector.image_tag
     end
 
     it "should create a link if needed" do
       @selector.stub!(:link?).and_return(false)
-      @selector.link_to.should_not have_tag("a")
+      @selector.link_to.should_not have_selector("a")
     end
 
     it "should create a link with image_tag as text" do
       @selector.stub!(:image_tag).and_return("image_tag")
-      @selector.link_to.should have_tag("a", "image_tag")
+      @selector.link_to.should have_selector("a", :text => "image_tag")
     end
 
     it "should create a link with path" do
-      @selector.link_to.should have_tag("a[href=?]", @selector.path)
+      @selector.link_to.should have_selector("a[href='#{@selector.path}']")
     end
 
-    it "should create a link with 'Sélectionner ce repère comme début' as title" do
-      @selector.stub :endpoint => :begin
-      @selector.link_to.should have_tag("a[title=?]", I18n.translate("label_selection.actions.select_begin"))
-    end
-
-    it "should create a link with 'Sélectionner ce repère comme fin' as title" do
-      @selector.stub :endpoint => :end
-      @selector.link_to.should have_tag("a[title=?]", I18n.translate("label_selection.actions.select_end"))
-    end
-   
   end
 
   describe "link_to_select_label" do
-    
+
     before(:each) do
     end
 

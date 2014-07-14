@@ -6,10 +6,10 @@ end
 
 Factory.define :chunk do |chunk|
   chunk.sequence(:title) { |n| "Test #{n}" }
-  chunk.begin Time.now
+  chunk.begin Time.zone.now
   chunk.end { |c| c.begin + 5.minutes }
   chunk.source Source.default
-  
+
   chunk.after_build do |chunk|
     # tune_records chunk.begin, chunk.end
   end
@@ -30,7 +30,6 @@ end
 
 Factory.define :label do |label|
   label.name "name"
-  label.timestamp Time.now
+  label.timestamp Time.zone.now
   label.source Source.default
 end
-

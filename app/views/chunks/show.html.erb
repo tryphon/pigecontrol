@@ -31,5 +31,5 @@
   <%= link_to t("chunks.actions.destroy"), [@chunk.source, @chunk], :confirm => t("chunks.actions.destroy_confirm"), :method => :delete, :class => "destroy" %>
 </div>
 
-<%= link_to "#{t('chunks.actions.index')} &#8250;", source_chunks_path(@chunk.source) %>
+<%= link_to "#{t('chunks.actions.index')}", source_chunks_path(@chunk.source) %>
 

@@ -4,6 +4,8 @@ class ChunksController < InheritedResources::Base
   actions :all, :except => [ :edit, :update ]
   respond_to :html, :xml, :json
 
+  respond_to :wav, :ogg, :mp3, :only => :show
+
   def show
     show! do |format|
       format.wav { send_file @chunk.file, :type => :wav }
@@ -15,7 +17,7 @@ class ChunksController < InheritedResources::Base
   def create
     create!
 
-    if @chunk.valid? and @chunk.time_range == label_selection.time_range
+    if @chunk.valid? and label_selection.same_time_range?(@chunk)
       label_selection.clear
     end
   end
@@ -40,7 +42,7 @@ class ChunksController < InheritedResources::Base
         @chunk = label_selection.chunk
       end
 
-      @chunk ||= source.default_chunk 
+      @chunk ||= source.default_chunk
     end
 
     super

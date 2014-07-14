@@ -134,7 +134,7 @@ describe Chunk do
       Chunk.storage_directory.should == @dummy_dir
     end
 
-    Spec::Matchers.define :exist do
+    RSpec::Matchers.define :exist do
       match do |file|
         File.exists? file
       end
@@ -311,15 +311,19 @@ describe Chunk do
       ActiveSupport::StringInquirer.new(string_value)
     end
 
+    let(:delay) { double.tap { |d| @chunk.stub :delay => d } }
+
     it "should create_file later if status is created" do
       @chunk.stub!(:status).and_return(status("created"))
-      @chunk.should_receive(:send_later).with(:create_file!)
+      delay.should_receive :create_file!
+
       @chunk.check_file_status
     end
 
     it "should create_file if status is pending" do
       @chunk.stub!(:status).and_return(status("pending"))
-      @chunk.should_not_receive(:send_later)
+      delay.should_not_receive :create_file!
+
       @chunk.check_file_status
     end
 

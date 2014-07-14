@@ -6,7 +6,7 @@ class ChunkFormatPresenter
     @format, @name, @wikipedia_page = format, name, wikipedia_page
   end
 
-  @@instances = 
+  @@instances =
     [
      ChunkFormatPresenter.new(:wav, "Wave", "Wav"),
      ChunkFormatPresenter.new(:vorbis, "Ogg/Vorbis", "Vorbis"),
@@ -15,14 +15,6 @@ class ChunkFormatPresenter
 
   def wikipedia_url
     "http://#{I18n.locale}.wikipedia.org/wiki/#{wikipedia_page}"
-  end
-
-  def requires_birate?
-    Chunk.requires_bitrate?(format)
-  end
-
-  def requires_quality?
-    Chunk.requires_quality?(format)
   end
 
   def self.find(format)

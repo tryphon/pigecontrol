@@ -7,10 +7,11 @@ describe UserSession do
   end
 
   describe "label_selection" do
-    
+
     it "should create a LabelSelection with http session :label_selection" do
       @http_session[:label_selection] = [1,2]
-      LabelSelection.should_receive(:new).with(@http_session[:label_selection]).and_return(selection = mock(LabelSelection, :null_object => true))
+      LabelSelection.should_receive(:new).with(@http_session[:label_selection]).and_return(selection = double(LabelSelection))
+      selection.stub :on_change => selection
 
       @user_session.label_selection.should == selection
     end

@@ -18,14 +18,11 @@ describe ChunksController do
 
   describe "GET show" do
 
-    before(:each) do
-      File.stub!(:exists?).and_return(true)
-    end
-
     def self.it_should_return_chunk_in_format(format)
       it "should assign the requested chunk in #{format} format" do
-        controller.should_receive(:send_file).with(@chunk.file, :type => format)
+        @chunk.complete_with test_file(format)
         get :show, :id => @chunk, :source_id => @chunk.source, :format => format.to_s
+        response.content_type.should == format
       end
     end
 
@@ -36,7 +33,7 @@ describe ChunksController do
   end
 
   describe "GET new" do
-    
+
     before(:each) do
       @label_selection = mock_label_selection
     end
@@ -63,7 +60,7 @@ describe ChunksController do
       get :new, :source_id => Factory(:source)
       assigns[:chunk].should == @chunk
     end
-    
+
   end
 
   describe "POST create" do
@@ -71,18 +68,18 @@ describe ChunksController do
     before(:each) do
       @label_selection = mock_label_selection
     end
-    
+
     it "should not use the LabelSelection to create Chunk" do
       @label_selection.should_not_receive(:chunk)
       post :create, :source_id => @chunk.source
     end
 
-    it "should clear the LabelSelection when the created Chunk must selection labels" do
+    it "should clear the LabelSelection when the created Chunk matchs selection labels" do
       @label_selection.stub!(:time_range).and_return(Range.new(15.minutes.ago, 10.minutes.ago))
 
       @label_selection.should_receive(:clear)
-      post :create, :source_id => @chunk.source, :chunk => { 
-        :begin => @label_selection.time_range.begin, :end => @label_selection.time_range.end 
+      post :create, :source_id => @chunk.source, :chunk => {
+        :begin => @label_selection.time_range.begin, :end => @label_selection.time_range.end
       }
     end
 

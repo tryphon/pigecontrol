@@ -1,5 +1,9 @@
-begin 
+begin
   require 'markup_validity'
+
+  module RSpec::Matchers
+    include Spec::Matchers
+  end
 
   def with_markup_validity(&block)
     yield
@@ -10,4 +14,3 @@ rescue Nokogiri::XML::SyntaxError
     pending "markup_validity is disabled"
   end
 end
-

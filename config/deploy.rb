@@ -11,7 +11,7 @@ server "radio.dbx1.tryphon.priv", :app, :web, :db, :primary => true
 # after "deploy:setup", "db:create"
 
 set :keep_releases, 5
-after "deploy:update", "deploy:cleanup" 
+after "deploy:update", "deploy:cleanup"
 set :use_sudo, false
 default_run_options[:pty] = true
 
@@ -48,7 +48,7 @@ namespace :deploy do
 
   desc "Create a current.yml file"
   task :current_yml, :roles => :app do
-    now = Time.now
+    now = Time.zone.now
     put "pigebox-#{now.strftime("%Y%m%d-%H%M")}\nstatus_updated_at: #{now.strftime('%F %T')}\ndescription_url: http://www.tryphon.eu/products/pigebox", "#{release_path}/tmp/current.yml"
   end
 

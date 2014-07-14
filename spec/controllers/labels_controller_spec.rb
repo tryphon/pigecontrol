@@ -20,15 +20,15 @@ describe LabelsController do
   end
 
   describe "POST /create" do
-    
+
     it "should redirect to source labels path when label is created" do
-      post :create, :source_id => Source.default, :label => Factory.attributes_for(:label)
+      post :create, :source_id => Source.default, :label => Factory.attributes_for(:label).except(:source)
       response.should redirect_to(source_labels_path(Source.default))
     end
 
     it "should render new template when label is not created" do
       post :create, :source_id => Source.default
-      controller.should render_template('create')
+      controller.should render_template('new')
     end
 
   end
@@ -37,7 +37,7 @@ describe LabelsController do
 
     before(:each) do
       @label = Factory(:label)
-      request.env["HTTP_REFERER"] = '/dummy' 
+      request.env["HTTP_REFERER"] = '/dummy'
     end
 
     describe "when a first label is selected" do
@@ -51,7 +51,7 @@ describe LabelsController do
         get :select, :source_id => @label.source, :id => @label
         response.should redirect_to(request.env["HTTP_REFERER"])
       end
-      
+
     end
 
     describe "when a second label is selected" do
@@ -64,12 +64,12 @@ describe LabelsController do
         get :select, {:source_id => @label.source, :id => @label}, :label_selection => [@first_label.id]
         controller.send(:user_session).label_selection.should == [@first_label, @label]
       end
-      
+
       it "should redirect to new_source_chunk_path" do
         get :select, {:source_id => @label.source, :id => @label}, :label_selection => [@first_label.id]
         response.should redirect_to(new_source_chunk_path(@label.source))
       end
-      
+
     end
 
   end
@@ -77,7 +77,7 @@ describe LabelsController do
   describe "DELETE /destroy" do
 
     let(:label) { Factory(:label) }
-    
+
     it "should clear LabelSelection if destroyed label is selected" do
       delete :destroy, {:id => label.id, :source_id => label.source}, :label_selection => [label.id]
       controller.send(:user_session).label_selection.should be_empty

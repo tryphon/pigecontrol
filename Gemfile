@@ -1,58 +1,73 @@
 source 'https://rubygems.org'
 
-gem "rails", "2.3.18"
-gem "rack", "~> 1.1.0"
+gem 'rails', '~> 3.2.17'
 
-gem "inherited_resources", "= 1.0.6"
-gem "will_paginate", "~> 2.3.11"
-gem "SyslogLogger", "~> 2.0"
-gem "delayed_job"
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+gem 'sqlite3'
+
+gem 'user_interface', :git => 'git://projects.tryphon.priv/user-interface', :branch => 'rails3' #, :path => "~/Projects/UserInterface"
+gem 'boxcontrol', :git => 'git://projects.tryphon.priv/boxcontrol', :branch => 'rails3', :require => 'box_control'#, :path => "~/Projects/BoxControl"
+gem 'tryphon-box', :git => 'git://projects.tryphon.priv/box'#, :path => "~/Projects/Box"
+gem 'inherited_resources'
+
+gem 'rails-i18n'
+gem "SyslogLogger", "~> 2.0", :require => "syslog/logger"
+
+gem 'will_paginate'
+gem 'delayed_job_active_record'
 gem "eventmachine"
-gem "strip_attributes"
-
 gem "pige", :git => "git://projects.tryphon.priv/pige"
-# TagLib 0.5.0 requires tagc0 1.7
-gem "taglib-ruby", "~> 0.4.0"
+gem "taglib-ruby"
 
-# Requires to run spec:plugins
-gem "metalive"
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
 
-gem "tryphon-box", :git => "git://projects.tryphon.priv/box"
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', :platforms => :ruby
 
-group :development, :test do
-  # To use eventmachine debian package
-  gem "capistrano"
-  gem "capistrano-ext"
+  gem 'uglifier', '>= 1.0.3'
 end
 
-group :development do
-  gem "sqlite3-ruby"
-  gem "less"
-  gem "rake-debian-build"
-end
+gem 'jquery-rails'
 
-group :development, :test do
-  gem "guard"
-  gem 'guard-rspec'
-  gem 'guard-bundler'
-  gem 'guard-cucumber'
-  gem 'launchy'
-end
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
 
-group :test do
+# To use Jbuilder templates for JSON
+# gem 'jbuilder'
+
+# Use unicorn as the app server
+# gem 'unicorn'
+
+# Deploy with Capistrano
+# gem 'capistrano'
+
+# To use debugger
+# gem 'debugger'
+
+group :test, :development do
+  gem "rspec-rails", "~> 2.4"
+  gem "capybara"
+
   gem "factory_girl"
-  gem 'rspec', '~> 1.3.1'
-  gem 'rspec-rails', '~> 1.3.3'
-  gem 'test-unit', '1.2.3'
-  gem "markup_validity"
-end
+  gem "shoulda-matchers"
+  gem "markup_validity", :require => false
 
-group :cucumber do
-  gem 'webrat'
-  gem 'database_cleaner'
-  gem 'cucumber-rails'
-  gem 'cucumber'
-  gem 'rspec-rails', '~> 1.3.3'
-  gem 'pickle'
-  gem 'factory_girl'
+  gem "guard"
+  gem "guard-rspec"
+  gem "guard-bundler"
+  gem "guard-cucumber"
+  gem "rb-inotify"
+  gem 'libnotify'
+
+  gem "brakeman", :require => false
+  gem "jasminerice", :git => 'https://github.com/bradphelan/jasminerice.git'
+
+  gem 'simplecov'
+  gem 'simplecov-rcov'
 end

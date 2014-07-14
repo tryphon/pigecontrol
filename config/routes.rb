@@ -1,13 +1,13 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :sources do |source|
-    source.resources :chunks
-    source.resources :labels, :member => { :select => :get }
-    source.resources :records
+Pigecontrol::Application.routes.draw do
+  resources :sources do |source|
+    resources :chunks
+    resources :labels do
+      member { get :select }
+    end
+    resources :records
   end
 
-  map.connect '/sources/:source_id/records/*path' , :controller => 'records' , :action => 'destroy', :conditions => { :method => :delete }
+  resource :label_selection, :controller => :label_selection
 
-  map.resource :label_selection, :controller => :label_selection
-
-  map.root :controller => "welcome"
+  root :to => "welcome#index"
 end

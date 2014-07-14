@@ -1,12 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
-    <title>Pige - <%= title %></title>
+    <title>Tryphon PigeBox - <%= title %></title>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="shortcut icon" href="/favicon.ico" />
-    <link href="/stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/tryphon.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
   </head>
   <body class="<%= controller.controller_name %> <%= controller.action_name %>">
     <ul id="access">
@@ -44,21 +46,20 @@
         </ul>
 
         <ul>
-          <li><%= link_to Input.human_name, input_path %></li>
-          <li><%= link_to Network.human_name, networks_path %></li>
-          <li><%= link_to Ssh.human_name, ssh_path %></li>
-          <li><%= link_to Log.human_name, log_path %></li>
-          <li><%= link_to SavePoint.human_name, new_save_point_path %></li>
-          <li><%= link_to Box::Release.human_name, releases_path %></li>
+          <li><%= link_to Network.model_name.human, networks_path %></li>
+          <li><%= link_to Ssh.model_name.human, ssh_path %></li>
+          <li><%= link_to Log.model_name.human, log_path %></li>
+          <li><%= link_to SavePoint.model_name.human, new_save_point_path %></li>
+          <li><%= link_to Box::Release.model_name.human, releases_path %></li>
         </ul>
-        <h2><%= LabelSelection.human_name %></h2>
+        <h2><%= LabelSelection.model_name.human %></h2>
 
         <%= render user_session.label_selection %>
 
         <h2><%= t(".information.title") %></h2>
         <%= site_information_tag %>
         <p>
-          <%= t(".information.text") %>
+          <%= t(".information.text").html_safe %>
         </p>
 
         <p class="languages">
@@ -72,7 +73,5 @@
         &nbsp;
       </div>
     </div>
-    <%= javascript_include_tag :defaults %>
-    <%= user_voice_feedback %>
   </body>
 </html>

@@ -60,7 +60,7 @@ module LabelsHelper
   def link_to_select_label(label, label_selection = LabelSelection.new)
     [:begin, :end].collect do |endpoint|
       EndpointSelector.new label, label_selection, endpoint, self
-    end.collect(&:link_to).join(' ')
+    end.collect(&:link_to).join(' ').html_safe
   end
 
 end

@@ -1,7 +1,7 @@
-<%= title_tag Chunk.human_name.pluralize %>
+<%= title_tag Chunk.model_name.human.pluralize %>
 
 <% for chunk in @chunks %>
-  <% div_for chunk do %>
+  <%= div_for chunk do %>
   <h3><%= link_to chunk.title, source_chunk_path(chunk.source, chunk) %></h3>
   <div class="description">
     <%= t(".from") %> <%= I18n.localize chunk.begin %> <%= t(".to") %> <%= I18n.localize chunk.end %>
@@ -16,7 +16,7 @@
 <% end %>
 
 <% if @chunks.empty? %>
-<p class="empty">Aucun extrait n'est disponible pour l'instant.</p>  
+<p class="empty">Aucun extrait n'est disponible pour l'instant.</p>
 <% end %>
 
 <div class="actions">

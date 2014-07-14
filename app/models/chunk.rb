@@ -1,4 +1,6 @@
 class Chunk < ActiveRecord::Base
+
+  attr_accessible :begin, :end, :title, :format
   belongs_to :source
 
   validates_presence_of :begin, :end, :format
@@ -7,7 +9,7 @@ class Chunk < ActiveRecord::Base
   validate :source_can_store_it
   validates_inclusion_of :format, :in => [:wav, :vorbis, :mp3]
 
-  before_validation_on_create :use_default_title
+  before_validation :use_default_title, :on => :create
   after_create :check_file_status
   before_destroy :delete_file
 
@@ -32,9 +34,9 @@ class Chunk < ActiveRecord::Base
 
   def default_title
     unless self.begin.nil?
-      "#{Chunk.human_name} #{I18n.localize(self.begin, :locale => :fr)}"
+      "#{Chunk.model_name.human} #{I18n.localize(self.begin, :locale => :fr)}"
     else
-      "#{Chunk.human_name} #{self.id}"
+      "#{Chunk.model_name.human} #{self.id}"
     end
   end
 
@@ -106,17 +108,17 @@ class Chunk < ActiveRecord::Base
 
   def complete_with(file)
     update_attribute :completion_rate, 0
-    if File.copy(file, filename)
+
+    begin
+      FileUtils.cp file, filename
       update_attribute :completion_rate, 1.0
-    else
+    rescue
       update_attribute :completion_rate, nil
     end
   end
 
   def check_file_status
-    if status.created?
-      send_later :create_file!
-    end
+    delay.create_file! if status.created?
   end
 
   def delete_file
@@ -157,8 +159,7 @@ class Chunk < ActiveRecord::Base
   private
 
   def filename_uniqueness
-    return if errors.on(:title)
-
+    return if errors[:title].present?
     errors.add(:title, :taken) if Chunk.all.any? do |other|
       self != other and other.filename == filename
     end
@@ -185,7 +186,7 @@ class Chunk < ActiveRecord::Base
 
   def source_can_store_it
     unless source.nil? or source.can_store?(self)
-      errors.add_to_base(:source_cant_store)
+      errors.add :base, :source_cant_store
     end
   end
 

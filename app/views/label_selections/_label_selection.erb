@@ -1,7 +1,7 @@
 <%= render :partial => 'label_selections/label_selection_inline_help' %>
 
 <% unless label_selection.empty? %>
-<% div_for label_selection do %>
+<%= div_for label_selection do %>
 <ul>
   <% for label in label_selection %>
   <li class="<%= class_for_label_in_selection(label_selection, label) %>">

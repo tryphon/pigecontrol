@@ -5,9 +5,9 @@
 #   Box.logger = Logger.new("log/box.log")
 # end
 
-# Use explicitly ruby1.8 (instead of 'env ruby')
-unless Box.executable.start_with?("/usr/bin/ruby1.8")
-  Box.executable = "/usr/bin/ruby1.8 #{Box.executable}"
+# Use explicitly ruby1.9.1 (instead of 'env ruby')
+unless Box.executable.start_with?("/usr/bin/ruby1.9.1")
+  Box.executable = "/usr/bin/ruby1.9.1 #{Box.executable}"
 end
 
 Box::Release.latest_url = "http://dev.tryphon.priv/dist/pigebox/latest.yml"

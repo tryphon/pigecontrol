@@ -102,10 +102,10 @@ describe Source do
 
     before(:each) do
       @source.stub!(:remaining_storage_space).and_return(10.megabytes)
-      @chunk = Factory :chunk, :source => @source, :begin => Time.now, :end => 10.seconds.from_now
+      @chunk = Factory :chunk, :source => @source, :begin => Time.zone.now, :end => 10.seconds.from_now
     end
 
-    Spec::Matchers.define :be_able_to_store do |chunk|
+    RSpec::Matchers.define :be_able_to_store do |chunk|
       match do |source|
         source.can_store?(chunk)
       end

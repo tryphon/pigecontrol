@@ -29,3 +29,12 @@ end
 def tune_records(records_begin, records_end)
   RecordFactory.new(records_begin, records_end).create
 end
+
+RSpec.configure do |config|
+  config.before do
+    RecordCleaner.setup
+  end
+  config.after do
+    RecordCleaner.clean
+  end
+end

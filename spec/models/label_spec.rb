@@ -8,8 +8,10 @@ describe Label do
   # it { should validate_presence_of(:timestamp) }
   # it { should belong_to(:source) }
 
-  it "should use Time.now as default timestamp" do
-    Time.stub :now => (now = Time.now)
+  let(:now) { Time.zone.now }
+
+  it "should use Time.zone.now as default timestamp" do
+    Time.zone.stub :now => now
     Label.new.timestamp.should == now
   end
 
