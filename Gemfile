@@ -21,7 +21,7 @@ gem "eventmachine"
 gem "pige", :git => "git://projects.tryphon.priv/pige"
 gem "taglib-ruby"
 
-gem 'audiobank-client', :git => 'git://projects.tryphon.priv/audiobank-client', :path => "~/Projects/AudioBankClient"
+gem 'audiobank-client', :git => 'git://projects.tryphon.priv/audiobank-client' #, :path => "~/Projects/AudioBankClient"
 gem 'parallel'
 gem 'listen'
 
