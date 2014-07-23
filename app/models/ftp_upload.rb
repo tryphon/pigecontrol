@@ -21,6 +21,8 @@ class FtpUpload < Upload
     ensure
       ftp.close
     end
+
+    true
   end
 
   def set_default_target
