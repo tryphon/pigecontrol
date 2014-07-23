@@ -5,10 +5,10 @@
 # Required-Stop:     $network $named $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-### END INIT INFO                                                                                                                                          
+### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/share/pige/bin/pige-job
+DAEMON=/usr/share/pigecontrol/bin/pige-job
 DAEMON_OPTS=""
 DAEMON_USER="www-data"
 NAME="pige"
@@ -23,7 +23,7 @@ test -x $DAEMON || exit 0
 start_daemon() {
     if [ -n "$DAEMON_USER" ] ; then
 	      start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid --chuid $DAEMON_USER \
-	          --startas $DAEMON --background --make-pidfile -- $DAEMON_OPTS 
+	          --startas $DAEMON --background --make-pidfile -- $DAEMON_OPTS
     else
 	      echo ""
 	      echo "$NAME not configured to start, please edit /etc/default/$NAME enable"

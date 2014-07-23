@@ -24,5 +24,5 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 
 config.after_initialize do
-  Chunk.storage_directory = "/var/lib/pige/chunks"
+  Chunk.storage_directory = "/var/lib/pigecontrol/chunks"
 end

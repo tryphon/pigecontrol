@@ -5,14 +5,14 @@ case "$1" in
         pige_user="www-data"
         pige_group="adm"
 
-        chunks_directory="/var/lib/pige/chunks"
+        chunks_directory="/var/lib/pigecontrol/chunks"
         # Create chunk store directory and set permissions.
         if [ ! -d "$chunks_directory" ]; then
             install --directory --mode 02775 --owner=$pige_user --group=$pige_group "$chunks_directory"
         fi
 
         # Create log file if needed
-        log_file="/var/log/pige/production.log"
+        log_file="/var/log/pigecontrol/production.log"
         if [ ! -f "$log_file" ]; then
             touch "$log_file"
             chown $pige_user:$pige_group "$log_file"
@@ -20,7 +20,7 @@ case "$1" in
         fi
 
         # Create database directory if needed
-        database_directory="/var/lib/pige/db"
+        database_directory="/var/lib/pigecontrol/db"
         if [ ! -d $database_directory ]; then
             install --directory --mode 02775 --owner=$pige_user --group=$pige_group "$database_directory"
         fi
@@ -28,7 +28,7 @@ case "$1" in
         # Create empty database file if needed
         database_file="$database_directory/production.sqlite3"
         if [ ! -f $database_file ]; then
-            install --mode 0664 --owner=$pige_user --group=$pige_group "/usr/share/pige/db/production.sqlite3" $database_directory
+            install --mode 0664 --owner=$pige_user --group=$pige_group "/usr/share/pigecontrol/db/production.sqlite3" $database_directory
         fi
     ;;
 

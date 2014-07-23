@@ -1,10 +1,10 @@
-set :application, "pige"
+set :application, "pigecontrol"
 
-set :repository,  "git://projects.tryphon.priv/pige"
+set :repository,  "git://projects.tryphon.priv/pigecontrol"
 set :scm, :git
 set :git_enable_submodules, true
 
-set :deploy_to, "/var/www/pige"
+set :deploy_to, "/var/www/pigecontrol"
 
 server "radio.dbx1.tryphon.priv", :app, :web, :db, :primary => true
 
