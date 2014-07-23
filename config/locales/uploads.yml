@@ -1,0 +1,30 @@
+fr:
+  uploads:
+    index:
+      title: "Transferts"
+    status:
+      canceled: "Annulé"
+      done: "Terminé"
+      retry: "Essai %{retry_count}"
+      uploading: "En cours"
+      waiting: "En attente"
+    actions:
+      cancel: "Annuler"
+  audiobank_uploads:
+    new_document: "Nouveau Document"
+  flash:
+    uploads:
+      cancel:
+        notice: "Transfert annulé"
+en:
+  uploads:
+    index:
+      title: "Uploads"
+    status:
+      retry: "Try %{retry_count}"
+  audiobank_uploads:
+    new_document: "New Document"
+  flash:
+    uploads:
+      cancel:
+        notice: "Upload canceled"

@@ -8,7 +8,7 @@ gem 'rails', '~> 3.2.17'
 gem 'sqlite3'
 
 gem 'user_interface', :git => 'git://projects.tryphon.priv/user-interface', :branch => 'rails3' #, :path => "~/Projects/UserInterface"
-gem 'boxcontrol', :git => 'git://projects.tryphon.priv/boxcontrol', :branch => 'rails3', :require => 'box_control'#, :path => "~/Projects/BoxControl"
+gem 'boxcontrol', :git => 'git://projects.tryphon.priv/boxcontrol', :branch => 'rails3', :require => 'box_control' #, :path => "~/Projects/BoxControl"
 gem 'tryphon-box', :git => 'git://projects.tryphon.priv/box'#, :path => "~/Projects/Box"
 gem 'inherited_resources'
 
@@ -20,6 +20,10 @@ gem 'delayed_job_active_record'
 gem "eventmachine"
 gem "pige", :git => "git://projects.tryphon.priv/pige"
 gem "taglib-ruby"
+
+gem 'audiobank-client', :git => 'git://projects.tryphon.priv/audiobank-client', :path => "~/Projects/AudioBankClient"
+gem 'parallel'
+gem 'listen'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -57,6 +61,7 @@ group :test, :development do
   gem "factory_girl"
   gem "shoulda-matchers"
   gem "markup_validity", :require => false
+  gem 'fake_ftp'
 
   gem "guard"
   gem "guard-rspec"

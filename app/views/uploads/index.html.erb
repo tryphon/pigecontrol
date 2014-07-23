@@ -1,0 +1,35 @@
+<%= title_tag t(".title") %>
+
+<table class="uploads">
+  <% @uploads.each do |upload| %>
+  <tr>
+    <td>
+      <%= upload.status %>
+    </td>
+    <td>
+      <%= upload.user_link_to %>
+    </td>
+    <td>
+      <%= number_to_human_size upload.size %>
+    </td>
+    <td>
+      <%= upload.account.name %>
+    </td>
+    <td>
+      <% if upload.pending? %>
+        <%= link_to t('uploads.actions.cancel'), cancel_upload_path(upload), :method => :put %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<% if @uploads.empty? %>
+<p class="empty">Aucun repére temporel n'est disponible pour l'instant.</p>
+<% end %>
+
+<%= will_paginate @uploads %>
+
+<div class="actions">
+  <%# link_to t('uploads.actions.new'), new_upload_path(@source), :class => "create" %>
+</div>

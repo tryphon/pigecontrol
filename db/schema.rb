@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140709203008) do
+ActiveRecord::Schema.define(:version => 20140721210300) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.string   "url"
+    t.string   "credential"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "chunks", :force => true do |t|
     t.datetime "begin"
@@ -75,6 +84,18 @@ ActiveRecord::Schema.define(:version => 20140709203008) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "storage_limit"
+  end
+
+  create_table "uploads", :force => true do |t|
+    t.string   "file"
+    t.string   "status"
+    t.datetime "retry_at"
+    t.integer  "retry_count"
+    t.string   "type"
+    t.integer  "account_id"
+    t.string   "target"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end

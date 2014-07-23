@@ -8,6 +8,9 @@ Pigecontrol::Application.routes.draw do
   end
 
   resource :label_selection, :controller => :label_selection
+  resources :uploads do
+    member { put :cancel }
+  end
 
   root :to => "welcome#index"
 end
