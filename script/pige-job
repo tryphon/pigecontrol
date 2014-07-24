@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-ENV["RAILS_ENV"] ||= ($1  or "production")
+ENV["RAILS_ENV"] ||= (ARGV.first  or "production")
 require File.expand_path('../../config/environment', __FILE__)
 
 Thread.new do
