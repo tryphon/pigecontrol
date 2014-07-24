@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-RAILS_ENV=[$1, ENV['RAILS_ENV'], "production"].compact.first
-require File.dirname(__FILE__) + '/../config/environment'
+ENV["RAILS_ENV"] ||= ($1  or "production")
+require File.expand_path('../../config/environment', __FILE__)
 
 Thread.new do
   Delayed::Worker.new.start
