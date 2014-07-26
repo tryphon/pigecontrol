@@ -2,6 +2,7 @@ fr:
   uploads:
     index:
       title: "Transferts"
+      empty: "Aucun transfert n'est défini pour l'instant"
     status:
       canceled: "Annulé"
       done: "Terminé"
@@ -20,6 +21,7 @@ en:
   uploads:
     index:
       title: "Uploads"
+      empty: "No available upload right now"
     status:
       retry: "Try %{retry_count}"
   audiobank_uploads:

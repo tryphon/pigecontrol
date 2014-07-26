@@ -25,7 +25,7 @@
 </table>
 
 <% if @uploads.empty? %>
-<p class="empty">Aucun repére temporel n'est disponible pour l'instant.</p>
+<p class="empty"><%= t(".empty") %></p>
 <% end %>
 
 <%= will_paginate @uploads %>
