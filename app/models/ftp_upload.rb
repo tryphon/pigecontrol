@@ -26,7 +26,7 @@ class FtpUpload < Upload
   end
 
   def set_default_target
-    self.target ||= File.basename(file)
+    self.target ||= File.basename(file) if file
   end
 
   def target_uri
