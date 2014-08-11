@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require user_interface
+//= require box_control
 //= require_tree .
