@@ -1,4 +1,4 @@
-<%= title_tag "#{Label.human_name} \"#{truncate @label.name, 40}\"" %>
+<%= title_tag "#{Label.model_name.human} \"#{truncate @label.name, :length => 40}\"" %>
 
 <div class="description">
   <p>
@@ -16,4 +16,3 @@
 </div>
 
 <%= link_to "#{t('chunks.actions.index')}", source_labels_path(@label.source) %>
-
