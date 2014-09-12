@@ -11,8 +11,8 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/share/pigecontrol/bin/pige-job
 DAEMON_OPTS=""
 DAEMON_USER="www-data"
-NAME="pige"
-DESC="pige background job"
+NAME="pigecontrol"
+DESC="PigeControl background job"
 
 test -x $DAEMON || exit 0
 
