@@ -7,4 +7,5 @@ Thread.new do
   Delayed::Worker.new.start
 end
 
+UDP::Receiver.init
 Upload.daemon
