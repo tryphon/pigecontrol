@@ -2,7 +2,7 @@ en:
   activerecord:
     attributes:
       chunk:
-        begin: Time of beginning 
+        begin: Time of beginning
         end: Time of end
         format: Output format
     errors:
@@ -21,6 +21,7 @@ en:
     index:
       from: from
       to: to
+      empty: "No available Chunk for the moment."
     new:
       format: Output format
       submit: Create
@@ -62,6 +63,7 @@ fr:
     index:
       from: du
       to: au
+      empty: "Aucun extrait n'est disponible pour l'instant."
     new:
       submit: Créer
       cancel: revenir
