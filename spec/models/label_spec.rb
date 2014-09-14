@@ -23,4 +23,19 @@ describe Label do
 
   end
 
+  describe "check_label_count" do
+
+    before do
+      Factory.create_list :label, 30
+    end
+
+    it "should remove oldes Labels to achieve 95% of max_label_count" do
+      subject.stub max_label_count: 20
+      subject.check_label_count
+      Label.count.should == 19
+    end
+
+
+  end
+
 end
