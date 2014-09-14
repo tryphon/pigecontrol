@@ -8,7 +8,7 @@ class LabelsController < InheritedResources::Base
   def create
     create! do |success, failure|
       success.html do
-        redirect_to source_labels_path(label.source) 
+        redirect_to source_labels_path(label.source)
       end
     end
   end
@@ -37,7 +37,8 @@ class LabelsController < InheritedResources::Base
   end
 
   def collection
-    @labels ||= end_of_association_chain.paginate(:page => params[:page], :per_page => 10, :order => 'timestamp desc')
+    options = params.slice(:per_param, :page, :term, :before, :after, :on)
+    @labels ||= LabelSearch.new(end_of_association_chain, options).search
   end
 
 end

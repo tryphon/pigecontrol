@@ -1,7 +1,7 @@
 class Label < ActiveRecord::Base
 
   belongs_to :source
-  validates_presence_of :name, :timestamp
+  validates_presence_of :name, :timestamp, :source_id
 
   attr_accessible :name, :timestamp
 

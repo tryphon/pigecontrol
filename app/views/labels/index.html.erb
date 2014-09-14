@@ -1,5 +1,11 @@
 <%= title_tag t(".title") %>
 
+<%= form_tag(source_labels_path(@source), method: :get) do |f| %>
+  <%= label_tag :term, t(".search") %>
+  <%= text_field_tag :term, params[:term] %>
+
+<% end %>
+
 <% @labels.group_by(&:date).each do |date, labels| %>
   <h3><%= I18n.localize date, :format => :long %></h3>
   <table class="labels">
@@ -20,7 +26,9 @@
 <% end %>
 
 <% if @labels.empty? %>
-<p class="empty">Aucun repére temporel n'est disponible pour l'instant.</p>
+<p class="empty">
+  <%= params[:term] ? t(".empty_search") : t(".empty") %>
+</p>
 <% end %>
 
 <%= will_paginate @labels %>

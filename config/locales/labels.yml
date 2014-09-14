@@ -7,6 +7,9 @@ en:
   labels:
     index:
       title: Timed Labels
+      search: Search
+      empty: "No label is available for the moment."
+      empty_search: "No label matchs the specified criteria."
     new:
       title: Create a manual Label
       submit: Create
@@ -27,12 +30,15 @@ fr:
   labels:
     index:
       title: Repères temporels
+      search: Rechercher
+      empty: "Aucun repére temporel n'est disponible pour l'instant."
+      empty_search: "Aucun repére temporel ne correspond aux critères."
     new:
       title: Créer un repère manuel
       submit: Créer
       cancel: revenir
     actions:
-      new: Nouvel repère
+      new: Nouveau repère
       destroy: Supprimer
       destroy_confirm: Vous êtes sûr de vouloir supprimer ce repère ?
       index: Voir tous les repères

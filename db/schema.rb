@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20140721210300) do
     t.datetime "end"
     t.float    "completion_rate"
     t.integer  "source_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "title"
     t.string   "format"
   end
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(:version => 20140721210300) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "queue"
   end
 
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(:version => 20140721210300) do
     t.string   "name"
     t.datetime "timestamp"
     t.integer  "source_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "records", :force => true do |t|
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(:version => 20140721210300) do
     t.datetime "end"
     t.string   "filename"
     t.integer  "source_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "records", ["filename"], :name => "index_records_on_filename"
@@ -73,16 +73,16 @@ ActiveRecord::Schema.define(:version => 20140721210300) do
     t.string   "description_url"
     t.string   "status"
     t.datetime "status_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "download_size"
     t.integer  "url_size"
   end
 
   create_table "sources", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "storage_limit"
   end
 

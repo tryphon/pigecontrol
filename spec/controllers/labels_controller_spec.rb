@@ -4,9 +4,9 @@ describe LabelsController do
 
   describe "GET /index" do
 
-    it "should paginate labels per 10" do
+    it "should paginate labels per 20" do
       get :index, :source_id => Source.default
-      assigns[:labels].per_page.should == 10
+      assigns[:labels].per_page.should == 20
     end
 
     it "should order labels, newer first" do

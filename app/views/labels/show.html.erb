@@ -12,7 +12,7 @@
 </div>
 
 <div class="actions">
-  <%= link_to t("chunks.actions.destroy"), [@label.source, @label], :confirm => t("chunks.actions.destroy_confirm"), :method => :delete, :class => "destroy" %>
+  <%= link_to t("chunks.actions.destroy"), [@label.source, @label], :confirm => t("labels.actions.destroy_confirm"), :method => :delete, :class => "destroy" %>
 </div>
 
 <%= link_to "#{t('labels.actions.index')}", source_labels_path(@label.source) %>

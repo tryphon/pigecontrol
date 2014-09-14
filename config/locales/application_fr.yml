@@ -23,8 +23,9 @@ fr:
               no_record: "en dehors des enregistrements disponibles"
               not_available_yet: "non encore disponible"
   will_paginate:
-    previous: Précédent
-    next: Suivant
+    previous_label: Précédent
+    next_label: Suivant
+    page_gap: ...
   labels:
     codes:
       program_started: "Manuel - Début"

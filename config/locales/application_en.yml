@@ -5,7 +5,7 @@ en:
         name: Name
         timestamp: Timestamp
       chunk:
-        begin: Time of beginning 
+        begin: Time of beginning
         end: Time of end
     models:
       chunk: Chunk

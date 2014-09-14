@@ -29,7 +29,7 @@ Factory.define :record, :class => Pige::Record, :default_strategy => :build do |
 end
 
 Factory.define :label do |label|
-  label.name "name"
+  label.sequence(:name) { |n| "Name #{n}" }
   label.timestamp Time.zone.now
   label.source Source.default
 end
