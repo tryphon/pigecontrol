@@ -66,7 +66,6 @@ group :test, :development do
   gem "guard"
   gem "guard-rspec"
   gem "guard-bundler"
-  gem "guard-cucumber"
   gem "rb-inotify"
   gem 'libnotify'
 
