@@ -15,6 +15,18 @@ class Label < ActiveRecord::Base
     timestamp.to_date
   end
 
+  @@blank_expression = /\A[\W_]*\z/
+  cattr_accessor :blank_expression
+  
+  def blank?
+    name =~ blank_expression if blank_expression
+  end
+  validate :validate_not_blank
+
+  def validate_not_blank
+    errors.add :name, :blank if blank?
+  end
+
   @@max_label_count = 5000
   cattr_accessor :max_label_count
 

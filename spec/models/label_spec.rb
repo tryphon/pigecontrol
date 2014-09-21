@@ -35,6 +35,19 @@ describe Label do
       Label.count.should == 19
     end
 
+  end
+
+  describe "#blank?" do
+
+    context "with name ' - '" do
+      before { subject.name = ' - ' }
+      it { should be_blank }
+    end
+    
+    context "with name 'abc'" do
+      before { subject.name = 'abc' }
+      it { should_not be_blank }
+    end
 
   end
 
