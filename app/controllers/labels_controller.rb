@@ -37,7 +37,7 @@ class LabelsController < InheritedResources::Base
   end
 
   def collection
-    options = params.slice(:per_param, :page, :term, :before, :after, :on)
+    options = params.slice(:per_page, :page, :term, :before, :after, :on)
     @labels ||= LabelSearch.new(end_of_association_chain, options).search
   end
 
