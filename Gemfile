@@ -20,6 +20,7 @@ gem 'delayed_job_active_record'
 gem "eventmachine"
 gem "pige", :git => "git://projects.tryphon.priv/pige"
 gem "taglib-ruby"
+gem 'rack-cors', :require => 'rack/cors'
 
 gem 'audiobank-client', :git => 'git://projects.tryphon.priv/audiobank-client' #, :path => "~/Projects/AudioBankClient"
 gem 'parallel'
