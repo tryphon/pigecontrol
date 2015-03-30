@@ -8,7 +8,7 @@ gem 'rails', '~> 3.2.17'
 gem 'sqlite3'
 
 gem 'user_interface', :git => 'git://projects.tryphon.priv/user-interface' #, :path => "~/Projects/UserInterface"
-gem 'boxcontrol', :git => 'git://projects.tryphon.priv/boxcontrol', :require => 'box_control' #, :path => "~/Projects/BoxControl"
+gem 'boxcontrol', :git => 'git://projects.tryphon.priv/boxcontrol', :require => 'box_control'#, :path => "~/Projects/BoxControl"
 gem 'tryphon-box', :git => 'git://projects.tryphon.priv/box'#, :path => "~/Projects/Box"
 gem 'inherited_resources'
 
