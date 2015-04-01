@@ -7,7 +7,7 @@ describe "/chunks/show.html.erb" do
 
   it "renders attributes in description" do
     render
-    response.should have_selector("div[class=description]", :text => /#{I18n.localize(chunk.begin)}/)
+    response.should have_selector("div[class=description]", :text => /#{I18n.localize(chunk.begin, :format => :long)}/)
   end
 
   it "should display a link_to_download_chunk in actions" do

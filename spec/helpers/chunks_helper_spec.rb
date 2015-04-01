@@ -18,7 +18,7 @@ describe ChunksHelper do
         subject { helper.link_to_download_chunk(chunk) }
 
         it "should have link 'Télécharger' go to download chunk wav" do
-          subject.should have_selector("a[href='#{source_chunk_path(chunk.source, chunk, :format => "wav")}']",  :text => "Télécharger")
+          subject.should have_selector("a[href='#{source_chunk_path(chunk.source, chunk, :format => "wav")}']",  :text => "Download")
         end
 
       end

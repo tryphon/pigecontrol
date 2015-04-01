@@ -21,7 +21,7 @@ describe UDP::Receiver do
     before(:each) do
       UDP::Receiver::Message.stub :new => message
     end
-    
+
     it "should create a Message" do
       UDP::Receiver::Message.should_receive(:new).with("dummy").and_return(message)
       subject.receive_data("dummy")
@@ -43,7 +43,7 @@ describe UDP::Receiver do
       subject.should_not_receive(:send_data)
       subject.receive_data("dummy")
     end
-    
+
     it "should log an error when exception is raised" do
       message.stub!(:create_label).and_raise("error")
       Rails.logger.should_receive(:error)
@@ -68,7 +68,7 @@ describe UDP::Receiver::Message do
   subject { message }
 
   describe "raw_name" do
-    
+
     it "should return text after 'label: '" do
       message("label: dummy").raw_name.should == "dummy"
     end
@@ -84,17 +84,17 @@ describe UDP::Receiver::Message do
   end
 
   describe "name" do
-    
+
     it "should be nil if raw_name is blank" do
       message(:raw_name => "").name.should be_nil
     end
 
-    it "should be 'Manuel - Début' if raw_name is 'program_started'" do
-      message(:raw_name => "program_started").name.should == "Manuel - Début"
+    it "should be 'Manual - Begin' if raw_name is 'program_started'" do
+      message(:raw_name => "program_started").name.should == "Manual - Begin"
     end
 
-    it "should be 'Manuel - Fin' if raw_name is 'program_stopped'" do
-      message(:raw_name => "program_stopped").name.should == "Manuel - Fin"
+    it "should be 'Manual - End' if raw_name is 'program_stopped'" do
+      message(:raw_name => "program_stopped").name.should == "Manual - End"
     end
 
     it "should be raw_name if not a predefined code" do
@@ -126,7 +126,7 @@ describe UDP::Receiver::Message do
     before(:each) do
       subject.stub :label => label
     end
-    
+
     it "should save label" do
       label.should_receive(:save)
       subject.create_label
