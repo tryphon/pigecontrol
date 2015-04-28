@@ -61,7 +61,7 @@ class Upload < ActiveRecord::Base
       begin
         upload!
       rescue Exception => e
-        Rails.logger.debug "Upload #{self.inspect} failed : #{e}"
+        Rails.logger.error "Upload #{self.inspect} failed : #{e}"
         false
       end
 

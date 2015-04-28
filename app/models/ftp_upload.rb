@@ -11,7 +11,7 @@ class FtpUpload < Upload
 
     begin
       # ftp.debug_mode = true
-      ftp.login
+      ftp.login user, password
       ftp.chdir File.dirname(target_uri.path)
       # ftp.resume = true
       ftp.passive = true
@@ -25,6 +25,12 @@ class FtpUpload < Upload
     Rails.logger.info "Upload #{target_uri} finished"
 
     true
+  end
+
+  delegate :password, to: :account, allow_nil: true
+
+  def user
+    account.try(:user) || "anonymous"
   end
 
   def set_default_target
