@@ -68,7 +68,33 @@ class Upload < ActiveRecord::Base
     change_status(success ? 'done' : 'retry')
   end
 
+  after_save :remove_file_if_needed
+  def remove_file_if_needed
+    return if pending?
+    return unless File.exist?(file)
+    return if others.uploading_file?(file)
+
+    remove_file
+  end
+
+  def remove_file
+    Rails.logger.info "Remove upload file #{file}"
+    FileUtils.rm file
+  end
+
+  def others
+    Upload.where(["id <> ?", self.id])
+  end
+
+  def self.uploading_file?(file)
+    pending.where(file: file).exists?
+  end
+
   def self.pending
+    where status: %w{waiting uploading retry}
+  end
+
+  def self.to_upload
     where(:status => %w{waiting retry}).where("retry_at is null or retry_at < ?", Time.now).order(:retry_count, :retry_at)
   end
 
@@ -77,26 +103,26 @@ class Upload < ActiveRecord::Base
   end
 
   def self.loop!(options = {})
-    options = { :queue_count => 3 }.merge(options)
+    options = { :queue_count => 2 }.merge(options)
 
     queue_count = options[:queue_count]
     Parallel.in_processes(:count => queue_count) do |queue_id|
       loop do
         begin
-          pending_upload = Upload.transaction do
-            Upload.pending.lock.first.try :uploading
+          next_upload = Upload.transaction do
+            Upload.to_upload.lock.first.try :uploading
           end
 
-          if pending_upload
-            if pending_upload.file_age < 30
+          if next_upload
+            if next_upload.file_age < 30
               Rails.logger.debug "Queue #{queue_id} : File under modifications, wait for 30s"
-              pending_upload.update_attributes :status => "waiting", :retry_at => 30.seconds.from_now
+              next_upload.update_attributes :status => "waiting", :retry_at => 30.seconds.from_now
             else
-              Rails.logger.debug "Queue #{queue_id} : Upload #{pending_upload.id}"
-              pending_upload.upload
+              Rails.logger.debug "Queue #{queue_id} : Upload #{next_upload.id}"
+              next_upload.upload
             end
           else
-            Rails.logger.debug "Queue #{queue_id} : No pending upload, sleep"
+            Rails.logger.debug "Queue #{queue_id} : No upload to process, sleep"
             sleep 30 * (1 + rand)
           end
         rescue Exception => e
@@ -121,13 +147,14 @@ class Upload < ActiveRecord::Base
 
         (added + modified).each do |file|
           Account.all.each do |account|
+            Rails.logger.info "Create upload to #{account.class} for #{file}"
             account.upload file
-          end unless Upload.where(:file => file).exists?
+          end unless uploading_file?(file)
         end
 
-        Upload.where(:file => removed).destroy_all
+        Upload.where(:file => removed).pending.update_all status: 'canceled'
       rescue Exception => e
-        Rails.logger.error "Error in listening #{watch_directory}"
+        Rails.logger.error "Error in listening #{watch_directory} : #{e}"
       end
     end
     listener.start

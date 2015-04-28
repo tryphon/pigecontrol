@@ -3,11 +3,11 @@ require 'net/ftp'
 class FtpUpload < Upload
 
   def upload!
-    Rails.logger.info "Upload #{file} to #{target_uri}"
-
     ftp = Net::FTP.new
-    Rails.logger.debug "Connect to #{target_uri.host}:#{target_uri.port}"
+    Rails.logger.info "Connect to #{target_uri.host}:#{target_uri.port}"
     ftp.connect target_uri.host, target_uri.port
+
+    Rails.logger.info "Upload #{file} to #{target_uri}"
 
     begin
       # ftp.debug_mode = true
@@ -21,6 +21,8 @@ class FtpUpload < Upload
     ensure
       ftp.close
     end
+
+    Rails.logger.info "Upload #{target_uri} finished"
 
     true
   end

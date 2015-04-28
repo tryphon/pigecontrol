@@ -20,12 +20,13 @@ describe FtpUpload do
     end
 
     let(:local_file) { "tmp/uploaded_file" }
+    let(:local_file_content) { SecureRandom.hex }
 
     it "should put local_file on target_url" do
-      File.write local_file, SecureRandom.hex, :mode => "wb"
+      File.write local_file, local_file_content, :mode => "wb"
       upload = FtpUpload.new(:file => local_file, :target => "dummy.flac", :account => FtpAccount.new(:url => "ftp://localhost:21212"))
       upload.upload
-      ftp_server.file("dummy.flac").data.should == File.read(local_file)
+      ftp_server.file("dummy.flac").data.should == local_file_content
     end
 
   end
